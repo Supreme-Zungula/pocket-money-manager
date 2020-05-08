@@ -6,8 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Domain.Services\Domain.Services.csproj" />
   </ItemGroup>
 
 
