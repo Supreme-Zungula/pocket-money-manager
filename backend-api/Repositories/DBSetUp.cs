@@ -22,11 +22,12 @@ namespace Repositories
 
         public void UsersCollection(MongoDatabase db)
         {
-            db.CreateCollection("Users");
+            if (db.CollectionExists("Users") == false)
+                db.CreateCollection("Users");
 
             //for testing
             MongoCollection<User> collection = db.GetCollection<User>("Users");
-            User p = new User { FamilyId = 1, FirstName = "Test", LastName = "Test", Id = 0, Relationship = "test" };
+            User p = new User { FamilyId = 1, FirstName = "NewID", LastName = "Test", Id = ObjectId.GenerateNewId(), Relationship = "test" };
             collection.Save(p);
         }
     }
