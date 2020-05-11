@@ -13,7 +13,7 @@ namespace backend_api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private static List<UserModel> user = new List<UserModel> { new UserModel { FamilyId = 1, Id = 2, FirstName = "Test", LastName = "test", Relationship = "man" } };
+        private static List<UserModel> user = new List<UserModel> { new UserModel { FamilyId = 1, FirstName = "Test", LastName = "test", Relationship = "man" } };
         private readonly SetupDB set = new SetupDB();
 
         [Obsolete]
