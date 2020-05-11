@@ -1,4 +1,5 @@
 ﻿using Domain.DefinitionObjects;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +11,7 @@ namespace backend_api.Models
     public class UserModel
     {
         [Key]
-        public int Id { get; set; }
+        public ObjectId Id { get; set; }
         public int FamilyId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
