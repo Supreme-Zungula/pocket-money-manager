@@ -13,9 +13,17 @@ namespace backend_api.Models
         [Key]
         public ObjectId Id { get; set; }
         public int FamilyId { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
-        public string Relationship { get; set; }
+        [Required]
+        public string Role { get; set; }
+        [Required]
+        [MinLength(10)]
+        public string Phone { get; set; }
+        [Required]
+        public string Password { get; set; }
 
         public static UserModel FromDomain(User user)
         {
@@ -25,7 +33,8 @@ namespace backend_api.Models
                 FamilyId = user.FamilyId,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Relationship = user.Relationship
+                Role = user.Role,
+                Phone = user.Phone
             };
         }
 
@@ -37,7 +46,8 @@ namespace backend_api.Models
                 FamilyId = this.FamilyId,
                 FirstName = this.FirstName,
                 LastName = this.LastName,
-                Relationship = this.Relationship,
+                Role = this.Role,
+                Phone = this.Phone
             };
         }
     }
