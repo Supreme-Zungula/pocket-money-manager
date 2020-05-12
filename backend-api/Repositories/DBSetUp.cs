@@ -27,7 +27,7 @@ namespace Repositories
 
             //for testing
             MongoCollection<User> collection = db.GetCollection<User>("Users");
-            User p = new User { FamilyId = 1, FirstName = "NewID", LastName = "Test", Id = ObjectId.GenerateNewId(), Relationship = "test" };
+            User p = new User { FamilyId = ObjectId.GenerateNewId().Increment, FirstName = "NewID", LastName = "Testings", Role = "father" };
             collection.Save(p);
         }
     }
