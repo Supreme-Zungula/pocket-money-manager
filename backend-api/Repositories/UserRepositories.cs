@@ -1,5 +1,6 @@
 ﻿using Data;
 using Domain.DefinitionObjects;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,12 @@ namespace Repositories
         private IMongoCollection<UserData> Users;
         public List<User> list;
 
+        //for testing update
+        public static List<User> list2;
+
         public UserRepositories()
         {
-            Users = database.Connect();
+            Users = database.GetUserCollection();
             var filter = Builders<UserData>.Filter.Empty;
             
             foreach (UserData user in Users.Find(filter).ToListAsync().Result)
@@ -28,8 +32,7 @@ namespace Repositories
                 else
                     list.Add(ToDomain(user));
             }
-
-            Console.WriteLine(list);
+            list2 = list;
         }
 
 
@@ -61,9 +64,10 @@ namespace Repositories
             };
         }
 
-        public void DeleteUser(User useDetails)
+        public void DeleteUser(ObjectId id)
         {
-            throw new NotImplementedException();
+            var filter = Builders<UserData>.Filter.Eq("_id", id);
+            Users.DeleteOne(filter);
         }
 
         public void RegisterUser(User userDetails)
@@ -72,14 +76,37 @@ namespace Repositories
             Users.InsertOne(FromDomain(userDetails));
         }
 
-        public void UpdateUser(User useDetails)
+        public void UpdateUser(User userDetails, ObjectId id)
         {
-            throw new NotImplementedException();
+            var filter = Builders<UserData>.Filter.Eq("_id", id);
+            Users.ReplaceOne(filter, FromDomain(userDetails));
         }
 
         public void UserLogin(User userDetails)
         {
             throw new NotImplementedException();
+        }
+
+        public User GetUserById(ObjectId id)
+        {
+            var filter = Builders<UserData>.Filter.Eq("_id", id);
+            User result = null;
+            foreach (UserData user in Users.Find(filter).ToListAsync().Result)
+            {
+                result = ToDomain(user);
+            }
+            return result;
+        }
+
+        public User GetUserByPhone(string phone)
+        {
+            var filter = Builders<UserData>.Filter.Eq("Phone", phone);
+            User result = null;
+            foreach (UserData user in Users.Find(filter).ToListAsync().Result)
+            {
+                result = ToDomain(user);
+            }
+            return result;
         }
     }
 }
