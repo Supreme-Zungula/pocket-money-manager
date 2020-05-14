@@ -17,7 +17,8 @@ namespace Repositories
             MongoServer server = client.GetServer();
             MongoDatabase db = server.GetDatabase("PocketMoneyDB");
 
-            UsersCollection(db);
+           //UsersCollection(db);
+            TransactionsCollection(db);
         }
 
         public void UsersCollection(MongoDatabase db)
@@ -29,6 +30,21 @@ namespace Repositories
             MongoCollection<User> collection = db.GetCollection<User>("Users");
             User p = new User { FamilyId = ObjectId.GenerateNewId().Increment, FirstName = "NewID", LastName = "Testings", Role = "father" };
             collection.Save(p);
+        }
+
+        public void TransactionsCollection(MongoDatabase db)
+        {
+            if (db.CollectionExists("Transactions") == false)
+                db.CreateCollection("Transactions");
+
+        }
+
+        public void BankAccountsCollection(MongoDatabase db)
+        {
+            if (db.CollectionExists("BankAccounts") == false)
+            {
+                db.CreateCollection("BankAccounts");
+            }
         }
     }
 }

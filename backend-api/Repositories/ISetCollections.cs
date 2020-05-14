@@ -8,5 +8,6 @@ namespace Repositories
     interface ISetCollections
     {
         void UsersCollection(MongoDatabase db);
+        void TransactionsCollection(MongoDatabase db);
     }
 }
