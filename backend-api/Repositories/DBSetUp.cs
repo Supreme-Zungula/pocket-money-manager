@@ -24,11 +24,6 @@ namespace Repositories
         {
             if (db.CollectionExists("Users") == false)
                 db.CreateCollection("Users");
-
-            //for testing
-            MongoCollection<User> collection = db.GetCollection<User>("Users");
-            User p = new User { FamilyId = ObjectId.GenerateNewId().Increment, FirstName = "NewID", LastName = "Testings", Role = "father", Password="wewewew", Phone="0987654421" };
-            collection.Save(p);
         }
     }
 }
