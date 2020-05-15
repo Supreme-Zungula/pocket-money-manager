@@ -12,10 +12,12 @@ namespace Repositories
     {
         private GetDB database = new GetDB();
         private IMongoCollection<UserData> Users;
-        public List<User> list;
-
-        //for testing update
-        public static List<User> list2;
+        public List<User> UsersList;
+        
+        public List<User> GetAllUsers()
+        {
+            return UsersList;
+        }
 
         public UserRepositories()
         {
@@ -24,15 +26,14 @@ namespace Repositories
             
             foreach (UserData user in Users.Find(filter).ToListAsync().Result)
             {
-                if (list == null)
-                    list = new List<User>()
+                if (UsersList == null)
+                    UsersList = new List<User>()
                     {
                         ToDomain(user)
                     };
                 else
-                    list.Add(ToDomain(user));
+                    UsersList.Add(ToDomain(user));
             }
-            list2 = list;
         }
 
 
