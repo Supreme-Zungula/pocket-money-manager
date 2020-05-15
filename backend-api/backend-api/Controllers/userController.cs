@@ -22,12 +22,31 @@ namespace backend_api.Controllers
         private readonly UserModel userModel = new UserModel();
 
         [Obsolete]
-        public ActionResult<List<UserModel>> Get()
+        public ActionResult SetUp()
         {
-            //set.Setup();
-            User use = new User { FirstName = "tess", LastName = "dfdfadf", Password = "ddfdfdf", Phone = "000099888", Role = "dhdhd" };
-            //userService.Register(use);
-            return Ok(user);
+            set.Setup();
+            return Ok("SetUp Successfully");
+        }
+
+        [HttpGet]
+        [Route("allUsers")]
+        public ActionResult<List<UserModel>> GetAll()
+        {
+            var Users = userService.GetAllUsers();
+            var userModel = Users.Select(person => UserModel.FromDomain(person));
+
+            return Ok(userModel.ToList());
+        }
+
+        [HttpGet]
+        [Route("getbyphone/{Phone}")]
+        public ActionResult<List<UserModel>> GetUserByPhone(string phone)
+        {
+            
+            UserModel existingUser = UserModel.FromDomain(userService.GetUserByPhone(phone));
+            //var userModel = Users.Select(person => UserModel.FromDomain(person));
+
+            return Ok(existingUser);
         }
 
         [HttpPost]
@@ -43,17 +62,17 @@ namespace backend_api.Controllers
         public ActionResult Put(UserModel userDetails)
         {
             //this is for testing update
-            var lis = userService.getl2();
+            /*var lis = userService.getl2();
             foreach (var l in lis)
             {
                 userDetails.Id = l.Id;
-            }
+            }*/
             //the object id will come from the frontend code behind
 
             UserModel existingUser = UserModel.FromDomain(userService.GetUserById(userDetails.Id));
             
             //also for testing
-            userDetails.FamilyId = existingUser.FamilyId;
+            //userDetails.FamilyId = existingUser.FamilyId;
 
             if (existingUser == null)
             {
@@ -65,8 +84,7 @@ namespace backend_api.Controllers
                 return Ok();
             }
         }
-
-
+        
         [HttpDelete]
         [Route("{Phone}")]
         public ActionResult Delete(string phone)
