@@ -10,7 +10,13 @@ namespace Domain.Services
 {
     public class UserCrudService
     {
-        private readonly UserRepositories repositories = new UserRepositories(); 
+        private readonly UserRepositories repositories = new UserRepositories();
+
+        public List<User> GetAllUsers()
+        {
+            return repositories.GetAllUsers();
+        }
+
         public void Register(User userDetails)
         {
             repositories.RegisterUser(userDetails);
@@ -36,13 +42,6 @@ namespace Domain.Services
         public void DeleteUser(ObjectId id)
         {
             repositories.DeleteUser(id);
-        }
-
-        //for testing update
-        public List<User> getl2()
-        {
-            var l = UserRepositories.list2;
-            return l;
         }
     }
 }
