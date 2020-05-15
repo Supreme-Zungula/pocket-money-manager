@@ -18,7 +18,6 @@ namespace backend_api.Controllers
     {
         private UserCrudService userService = new UserCrudService();
         private readonly SetupDB set = new SetupDB();
-        private readonly UserModel userModel = new UserModel();
 
         [Obsolete]
         public ActionResult SetUp()
