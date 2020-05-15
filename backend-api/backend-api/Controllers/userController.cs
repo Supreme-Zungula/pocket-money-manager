@@ -17,7 +17,6 @@ namespace backend_api.Controllers
     public class UserController : ControllerBase
     {
         private UserCrudService userService = new UserCrudService();
-        private static readonly List<UserModel> user = new List<UserModel> { new UserModel { FirstName = "Test", LastName = "test", Role = "man" } };
         private readonly SetupDB set = new SetupDB();
         private readonly UserModel userModel = new UserModel();
 
@@ -44,7 +43,6 @@ namespace backend_api.Controllers
         {
             
             UserModel existingUser = UserModel.FromDomain(userService.GetUserByPhone(phone));
-            //var userModel = Users.Select(person => UserModel.FromDomain(person));
 
             return Ok(existingUser);
         }
@@ -61,18 +59,8 @@ namespace backend_api.Controllers
         [HttpPut]
         public ActionResult Put(UserModel userDetails)
         {
-            //this is for testing update
-            /*var lis = userService.getl2();
-            foreach (var l in lis)
-            {
-                userDetails.Id = l.Id;
-            }*/
-            //the object id will come from the frontend code behind
 
             UserModel existingUser = UserModel.FromDomain(userService.GetUserById(userDetails.Id));
-            
-            //also for testing
-            //userDetails.FamilyId = existingUser.FamilyId;
 
             if (existingUser == null)
             {
