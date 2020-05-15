@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Domain.DefinitionObjects
 {
-  public class BankAccount
+ /*  public class BankAccount
   {
     private decimal _balance;
     private Guid _accountNo;
@@ -13,7 +13,13 @@ namespace Domain.DefinitionObjects
     public BankAccount() : this(Guid.NewGuid(), 0,
     new List<Transaction>(), "")
     {
-      _transactions.Add(new Transaction(0m, 0m, "account created", DateTime.Now));
+      _transactions.Add( new Transaction { 
+          Deposit= 0m, 
+          Withdrawal = 0m, 
+          Reference = "account created", 
+          Date = DateTime.Now 
+        } 
+      );
     }
     public BankAccount(Guid Id, decimal balance,
     IList<Transaction> transactions, string customerRef)
@@ -68,5 +74,5 @@ namespace Domain.DefinitionObjects
 
   public class InsufficientFundsException : ApplicationException
   {
-  }
+  } */
 }

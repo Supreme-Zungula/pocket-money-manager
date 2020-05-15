@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -11,13 +9,14 @@ namespace Data
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
+        public string AccountNo { get; set; }
         public decimal Deposit
-        { get; internal set; }
+        { get; set; }
         public decimal Withdrawal
-        { get; internal set; }
+        { get;  set; }
         public string Reference
-        { get; internal set; }
+        { get; set; }
         public DateTime Date
-        { get; internal set; }
+        { get; set; }
     }
 }

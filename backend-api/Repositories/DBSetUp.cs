@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Domain.DefinitionObjects;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -19,6 +17,7 @@ namespace Repositories
 
            //UsersCollection(db);
             TransactionsCollection(db);
+            BooksCollection(db);
         }
 
         public void UsersCollection(MongoDatabase db)
@@ -44,6 +43,14 @@ namespace Repositories
             if (db.CollectionExists("BankAccounts") == false)
             {
                 db.CreateCollection("BankAccounts");
+            }
+        }
+        
+        public void BooksCollection(MongoDatabase db)
+        {
+            if (db.CollectionExists("Books") == false)
+            {
+                db.CreateCollection("Books");
             }
         }
     }

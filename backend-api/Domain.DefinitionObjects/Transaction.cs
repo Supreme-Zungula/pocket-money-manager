@@ -4,26 +4,20 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Domain.DefinitionObjects
 {
-    public class Transaction
-    {
-        public Transaction (decimal deposit, decimal withdrawal, string reference, DateTime date)
-        {
-            this.Deposit = deposit;
-            this.Withdrawal = withdrawal;
-            this.Reference = reference;
-            this.Date = date;
-        }
-
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
-        public decimal Deposit
-        { get; internal set; }
-        public decimal Withdrawal
-        { get; internal set; }
-        public string Reference
-        { get; internal set; }
-        public DateTime Date
-        { get; internal set; }
-    }
+  public class Transaction
+  {
+ 
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; }
+    public string AccountNo { get; set; }
+    public decimal Deposit
+    { get; set; }
+    public decimal Withdrawal
+    { get; set; }
+    public string Reference
+    { get;  set; }
+    public DateTime Date
+    { get; set; }
+  }
 }

@@ -1,6 +1,7 @@
 ﻿using MongoDB.Driver;
 using Data;
 using Domain.DefinitionObjects;
+using System;
 
 namespace Repositories
 {
@@ -12,16 +13,11 @@ namespace Repositories
 
     public TransactionRepository()
     {
-      try
-      {
+     
         _client = new MongoClient(DatabaseSettings.ConnectionString);
         _database = _client.GetDatabase(DatabaseSettings.DatabaseName);
         _transactions = _database.GetCollection<Transaction>("Transactions");
-      }
-      catch (MongoClientException ex)
-      {
-        throw ex;
-      }
+      
     }
 
     public IMongoCollection<Transaction> GetTransactions()
@@ -36,8 +32,9 @@ namespace Repositories
 
     public Transaction AddTransaction(Transaction transaction)
     {
-      _transactions.InsertOne(transaction);
-      return transaction;
+        transaction.Date = DateTime.Now;
+        _transactions.InsertOne(transaction);
+        return transaction;
     }
 
     public void UpdateTransaction(string id, Transaction transactionIn)
@@ -53,6 +50,32 @@ namespace Repositories
     public void RemoveTransaction(string id)
     {
       _transactions.DeleteOne(tran => tran.Id == id);
+    }
+
+    public static TransactionData FromDomain(Transaction transaction)
+    {
+        return new TransactionData
+        {
+            Id = transaction.Id,
+            AccountNo = transaction.AccountNo,
+            Deposit = transaction.Deposit,
+            Withdrawal = transaction.Withdrawal,
+            Reference = transaction.Reference,
+            Date = transaction.Date
+        };
+    }
+
+    public static Transaction ToDomain(TransactionData transaction)
+    {
+        return new Transaction
+        {
+            Id = transaction.Id,
+            AccountNo = transaction.AccountNo,
+            Deposit = transaction.Deposit,
+            Withdrawal = transaction.Withdrawal,
+            Reference = transaction.Reference,
+            Date = transaction.Date
+        };
     }
   }
 }

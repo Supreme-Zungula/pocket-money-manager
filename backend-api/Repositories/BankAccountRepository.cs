@@ -9,7 +9,7 @@ namespace Repositories
 {
     public class BankAccountRepository
     {
-        private readonly IMongoClient _client;
+        /* private readonly IMongoClient _client;
         private readonly IMongoDatabase _database;
         private IMongoCollection<BankAccount> _accounts;
 
@@ -50,6 +50,6 @@ namespace Repositories
         public void DeleteAccount(Guid accNo)
         {
             _accounts.DeleteOne(account => account.AccountNo == accNo);
-        }
+        } */
     }
 }
