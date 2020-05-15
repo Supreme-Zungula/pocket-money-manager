@@ -2,13 +2,17 @@
 using System.ComponentModel.DataAnnotations;
 using Domain.DefinitionObjects;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace backend_api.Models
 {
     public class TransactionModel
     {
         [Key]
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
+        public string AccountNo { get; set; }
         public decimal Deposit
         { get; internal set; }
         public decimal Withdrawal
@@ -17,23 +21,6 @@ namespace backend_api.Models
         { get; internal set; }
         public DateTime Date
         { get; internal set; }
-
-        public static TransactionModel FromDomain(Transaction transaction)
-        {
-            return new TransactionModel
-            {
-                Id = transaction.Id,
-                Deposit = transaction.Deposit,
-                Withdrawal = transaction.Withdrawal,
-                Reference = transaction.Reference,
-                Date = transaction.Date
-            };
-        }
-
-        public Transaction ToDomain()
-        {
-            return new Transaction(this.Deposit, this.Withdrawal, this.Reference, this.Date);
-        }
         
     }
 }

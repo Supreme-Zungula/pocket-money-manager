@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Domain.Services;
 using backend_api.Models;
 using Data;
-using System;
+using Domain.DefinitionObjects;
 
 namespace backend_api.Controllers
 {
@@ -21,22 +21,14 @@ namespace backend_api.Controllers
 
     // GET: api/Transaction
     [HttpGet]
-    public ActionResult<List<TransactionModel>> Get()
+    public ActionResult<List<Transaction>> Get()
     {
-      var transctions = _transactionService.GetTransactions();
-      List<TransactionModel> transactionsList = new List<TransactionModel>();
-
-      foreach (var tran in transctions)
-      {
-
-        transactionsList.Add(TransactionModel.FromDomain(tran));
-      }
-      return transactionsList;
+        return _transactionService.GetTransactions();
     }
 
     // GET: api/Transaction/5
     [HttpGet("{id:length(24)}", Name = "GetTransaction")]
-    public ActionResult<TransactionModel> Get(string id)
+    public ActionResult<Transaction> Get(string id)
     {
       var trans = _transactionService.GetTransaction(id);
 
@@ -45,45 +37,25 @@ namespace backend_api.Controllers
         return NotFound();
       }
 
-      return TransactionModel.FromDomain(trans);
+      return trans;
     }
 
     // POST: api/Transaction
     [HttpPost]
-    public ActionResult<TransactionModel> Post([FromBody] string requestBody)
+    public ActionResult<TransactionModel> Post (Transaction transactionIn)
     {
-        TransactionModel transactionIn = new TransactionModel();
-        System.Console.WriteLine("TransactionIN: " + transactionIn.ToString());
-        _transactionService.AddTransaction(transactionIn.ToDomain());
+      
+        _transactionService.AddTransaction(transactionIn);
         return CreatedAtRoute("GetTransaction", new { id = transactionIn.Id.ToString() }, transactionIn);
     }
 
     // PUT: api/Transaction/5
     [HttpPut("{id}")]
-    public void Put(string id, TransactionData transactionIn)
+    public void Put(string id, Transaction transactionIn)
     {
-        var request = Request.Body;
-        System.Console.WriteLine(Request.Body.ToString());
-        TransactionModel transactionModel = new TransactionModel
-        {
-            Id = transactionIn.Id,
-            Deposit = transactionIn.Deposit,
-            Withdrawal = transactionIn.Withdrawal,
-            Reference = transactionIn.Reference,
-            Date = DateTime.Now
-        };
-
-        _transactionService.UpdateTransaction(id, transactionModel.ToDomain());
+        _transactionService.UpdateTransaction(id, transactionIn);
     }
 
-    // PUT: api/Transaction/
-    public void Put()
-    {
-        var body = Request.Body;
-        TransactionModel transactionIn = new TransactionModel();
-            
-        _transactionService.UpdateTransaction(transactionIn.Id, transactionIn.ToDomain());
-    }
     // DELETE: api/ApiWithActions/5
     [HttpDelete("{id}")]
     public void Delete(string id)
@@ -91,11 +63,11 @@ namespace backend_api.Controllers
       _transactionService.RemoveTransaction(id);
     }
 
-    // DELETE: api/transaction/5
+    // DELETE: api/transaction/
     [HttpDelete]
-    public void Delete(TransactionModel transaction)
+    public void Delete(Transaction transactionIn)
     {
-      _transactionService.RemoveTransaction(transaction.ToDomain());
+      _transactionService.RemoveTransaction(transactionIn);
     }
   }
 }
