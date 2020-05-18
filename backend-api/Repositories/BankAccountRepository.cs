@@ -9,7 +9,7 @@ namespace Repositories
 {
     public class BankAccountRepository
     {
-        /* private readonly IMongoClient _client;
+        private readonly IMongoClient _client;
         private readonly IMongoDatabase _database;
         private IMongoCollection<BankAccount> _accounts;
 
@@ -27,9 +27,14 @@ namespace Repositories
 
         public BankAccount GetAccount(Guid acccountID)
         {
-           return _accounts.Find<BankAccount>(account => account.AccountNo == acccountID).FirstOrDefault();
+           return _accounts.Find<BankAccount>(account => account.AccountNo == acccountID)
+                .FirstOrDefault();
         }
-
+        public BankAccount AddAccount(BankAccount newAccount)
+        {
+            _accounts.InsertOne(newAccount);
+            return newAccount;
+        }
         public BankAccount UpdateAccount(BankAccount accountIn)
         {
             BankAccount account = GetAccount(accountIn.AccountNo);
@@ -47,9 +52,9 @@ namespace Repositories
             _accounts.DeleteOne(acc => acc.AccountNo == account.AccountNo);
         }
 
-        public void DeleteAccount(Guid accNo)
+        public void DeleteAccount(Guid accountNo)
         {
-            _accounts.DeleteOne(account => account.AccountNo == accNo);
-        } */
+            _accounts.DeleteOne(account => account.AccountNo == accountNo);
+        }
     }
 }

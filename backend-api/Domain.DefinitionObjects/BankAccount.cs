@@ -1,34 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Domain.DefinitionObjects
 {
- /*  public class BankAccount
+  public class BankAccount
   {
     private decimal _balance;
     private Guid _accountNo;
     private string _customerRef;
-    private IList<Transaction> _transactions;
-    public BankAccount() : this(Guid.NewGuid(), 0,
-    new List<Transaction>(), "")
+    private List<Transaction> _transactions = new List<Transaction>();
+
+    public BankAccount(decimal balance, string customerRef)
     {
-      _transactions.Add( new Transaction { 
-          Deposit= 0m, 
-          Withdrawal = 0m, 
-          Reference = "account created", 
-          Date = DateTime.Now 
-        } 
-      );
+            AccountNo = new Guid();
+            _balance = balance;
+            Transaction transaction = new Transaction
+            {
+                AccountNo = this.AccountNo.ToString(),
+                Deposit = balance,
+                Withdrawal = 0,
+                Reference = "Account creation",
+                Date = DateTime.Now
+            };
+
+            _transactions.Add( transaction );
+            _customerRef = customerRef;
     }
-    public BankAccount(Guid Id, decimal balance,
-    IList<Transaction> transactions, string customerRef)
-    {
-      AccountNo = Id;
-      _balance = balance;
-      _transactions = transactions;
-      _customerRef = customerRef;
-    }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; }
     public Guid AccountNo
     {
       get { return _accountNo; }
@@ -53,7 +55,16 @@ namespace Domain.DefinitionObjects
       if (CanWithdraw(amount))
       {
         Balance -= amount;
-        _transactions.Add(new Transaction(0m, amount, reference, DateTime.Now));
+        _transactions.Add(
+          new Transaction 
+          { 
+            AccountNo = this.AccountNo.ToString(),
+            Deposit = 0m, 
+            Withdrawal = amount, 
+            Reference =reference,
+            Date = DateTime.Now 
+          }
+        );
       }
       else
       {
@@ -63,7 +74,16 @@ namespace Domain.DefinitionObjects
     public void Deposit(decimal amount, string reference)
     {
       Balance += amount;
-      _transactions.Add(new Transaction(amount, 0m, reference, DateTime.Now));
+      _transactions.Add(
+        new Transaction
+        {
+          AccountNo = this.AccountNo.ToString(),
+          Deposit = amount,
+          Withdrawal = 0m,
+          Reference = reference,
+          Date = DateTime.Now
+        }
+      );
     }
     public IEnumerable<Transaction> GetTransactions()
     {
@@ -71,8 +91,7 @@ namespace Domain.DefinitionObjects
     }
   }
 
-
   public class InsufficientFundsException : ApplicationException
   {
-  } */
+  } 
 }

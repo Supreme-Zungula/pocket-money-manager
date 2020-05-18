@@ -17,7 +17,6 @@ namespace Repositories
 
            //UsersCollection(db);
             TransactionsCollection(db);
-            BooksCollection(db);
         }
 
         public void UsersCollection(MongoDatabase db)
@@ -45,13 +44,6 @@ namespace Repositories
                 db.CreateCollection("BankAccounts");
             }
         }
-        
-        public void BooksCollection(MongoDatabase db)
-        {
-            if (db.CollectionExists("Books") == false)
-            {
-                db.CreateCollection("Books");
-            }
-        }
+     
     }
 }
