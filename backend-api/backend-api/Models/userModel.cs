@@ -34,7 +34,8 @@ namespace backend_api.Models
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Role = user.Role,
-                Phone = user.Phone
+                Phone = user.Phone,
+                Password = user.Password
             };
         }
 
@@ -47,7 +48,8 @@ namespace backend_api.Models
                 FirstName = this.FirstName,
                 LastName = this.LastName,
                 Role = this.Role,
-                Phone = this.Phone
+                Phone = this.Phone,
+                Password = this.Password
             };
         }
     }
