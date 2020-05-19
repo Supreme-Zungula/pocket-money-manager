@@ -23,7 +23,7 @@ namespace backend_api.Controllers
     [HttpGet]
     public ActionResult<List<Transaction>> Get()
     {
-        return _transactionService.GetTransactions();
+      return _transactionService.GetTransactions();
     }
 
     // GET: api/Transaction/5
@@ -42,32 +42,49 @@ namespace backend_api.Controllers
 
     // POST: api/Transaction
     [HttpPost]
-    public ActionResult<TransactionModel> Post (Transaction transactionIn)
+    public ActionResult<TransactionModel> Post(Transaction transactionIn)
     {
-      
-        _transactionService.AddTransaction(transactionIn);
-        return CreatedAtRoute("GetTransaction", new { id = transactionIn.Id.ToString() }, transactionIn);
+
+      _transactionService.AddTransaction(transactionIn);
+      return CreatedAtRoute("GetTransaction", new { id = transactionIn.Id.ToString() }, transactionIn);
     }
 
     // PUT: api/Transaction/5
     [HttpPut("{id}")]
-    public void Put(string id, Transaction transactionIn)
+    public IActionResult Put(string id, Transaction transactionIn)
     {
-        _transactionService.UpdateTransaction(id, transactionIn);
+      var updatedTransaction = _transactionService.UpdateTransaction(id, transactionIn);
+      if (updatedTransaction == null)
+      {
+        return NotFound();
+      }
+      return NoContent();
     }
 
     // DELETE: api/ApiWithActions/5
     [HttpDelete("{id}")]
-    public void Delete(string id)
+    public IActionResult Delete(string id)
     {
-      _transactionService.RemoveTransaction(id);
+      var deletedTransactionId = _transactionService.RemoveTransaction(id);
+      if (deletedTransactionId == null)
+      {
+        return NotFound();
+      }
+
+      return NoContent();
     }
 
     // DELETE: api/transaction/
     [HttpDelete]
-    public void Delete(Transaction transactionIn)
+    public IActionResult Delete(Transaction transactionIn)
     {
-      _transactionService.RemoveTransaction(transactionIn);
+      var deletedTrans = _transactionService.RemoveTransaction(transactionIn);
+      if (deletedTrans == null)
+      {
+        return NotFound();
+      }
+
+      return NoContent();
     }
   }
 }

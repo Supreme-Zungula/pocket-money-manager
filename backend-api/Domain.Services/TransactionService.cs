@@ -29,19 +29,19 @@ namespace Domain.Services
       return transaction;
     }
 
-    public void UpdateTransaction(string id, Transaction transactionIn)
+    public Transaction UpdateTransaction(string id, Transaction transactionIn)
     {
-      _repository.UpdateTransaction(id, transactionIn);
+      return _repository.UpdateTransaction(id, transactionIn);
     }
 
-    public void RemoveTransaction(Transaction transactionIn)
+    public Transaction RemoveTransaction(Transaction transactionIn)
     {
-      _repository.RemoveTransaction(transactionIn);
+      return _repository.RemoveTransaction(transactionIn);
     }
 
-    public void RemoveTransaction(string id)
+    public string RemoveTransaction(string id)
     {
-      _repository.RemoveTransaction(id);
+      return _repository.RemoveTransaction(id);
     }
 
   }

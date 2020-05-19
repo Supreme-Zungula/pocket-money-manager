@@ -13,11 +13,11 @@ namespace Repositories
 
     public TransactionRepository()
     {
-     
-        _client = new MongoClient(DatabaseSettings.ConnectionString);
-        _database = _client.GetDatabase(DatabaseSettings.DatabaseName);
-        _transactions = _database.GetCollection<Transaction>("Transactions");
-      
+
+      _client = new MongoClient(DatabaseSettings.ConnectionString);
+      _database = _client.GetDatabase(DatabaseSettings.DatabaseName);
+      _transactions = _database.GetCollection<Transaction>("Transactions");
+
     }
 
     public IMongoCollection<Transaction> GetTransactions()
@@ -32,50 +32,69 @@ namespace Repositories
 
     public Transaction AddTransaction(Transaction transaction)
     {
-        transaction.Date = DateTime.Now;
-        _transactions.InsertOne(transaction);
+      transaction.Date = DateTime.Now;
+      _transactions.InsertOne(transaction);
+      return transaction;
+    }
+
+    public Transaction UpdateTransaction(string id, Transaction transactionIn)
+    {
+      var result = _transactions.ReplaceOne((trans) => trans.Id == id, transactionIn);
+
+      if (result.IsAcknowledged)
+      {
+        return transactionIn;
+      }
+      return null;
+    }
+
+    public Transaction RemoveTransaction(Transaction transaction)
+    {
+      var result = _transactions.DeleteOne((trans) => trans.Id == transaction.Id);
+      if (result.DeletedCount == 1)
+      {
         return transaction;
+      }
+
+      return null;
     }
 
-    public void UpdateTransaction(string id, Transaction transactionIn)
+    public string RemoveTransaction(string id)
     {
-      _transactions.ReplaceOne((trans) => trans.Id == id, transactionIn);
-    }
+      var result = _transactions.DeleteOne(tran => tran.Id == id);
 
-    public void RemoveTransaction(Transaction transaction)
-    {
-      _transactions.DeleteOne((trans) => trans.Id == transaction.Id);
-    }
+      if (result.DeletedCount == 1)
+      {
+        return id;
+      }
 
-    public void RemoveTransaction(string id)
-    {
-      _transactions.DeleteOne(tran => tran.Id == id);
+      return null;
     }
 
     public static TransactionData FromDomain(Transaction transaction)
     {
-        return new TransactionData
-        {
-            Id = transaction.Id,
-            AccountNo = transaction.AccountNo,
-            Deposit = transaction.Deposit,
-            Withdrawal = transaction.Withdrawal,
-            Reference = transaction.Reference,
-            Date = transaction.Date
-        };
+      return new TransactionData
+      {
+        Id = transaction.Id,
+        AccountNo = transaction.AccountNo,
+        Deposit = transaction.Deposit,
+        Withdrawal = transaction.Withdrawal,
+        Reference = transaction.Reference,
+        Date = transaction.Date
+      };
     }
 
     public static Transaction ToDomain(TransactionData transaction)
     {
-        return new Transaction
-        {
-            Id = transaction.Id,
-            AccountNo = transaction.AccountNo,
-            Deposit = transaction.Deposit,
-            Withdrawal = transaction.Withdrawal,
-            Reference = transaction.Reference,
-            Date = transaction.Date
-        };
+      return new Transaction
+      {
+        Id = transaction.Id,
+        AccountNo = transaction.AccountNo,
+        Deposit = transaction.Deposit,
+        Withdrawal = transaction.Withdrawal,
+        Reference = transaction.Reference,
+        Date = transaction.Date
+      };
     }
   }
 }
