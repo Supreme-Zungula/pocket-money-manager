@@ -39,6 +39,9 @@ namespace Repositories
 
         public User ToDomain(UserData userData)
         {
+            if (userData == null)
+                return null;
+
             return new User
             {
                 Id = userData.Id,
@@ -53,6 +56,9 @@ namespace Repositories
 
         public UserData FromDomain(User userData)
         {
+            if (userData == null)
+                return null;
+
             return new UserData
             {
                 Id = userData.Id,

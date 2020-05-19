@@ -9,5 +9,6 @@ namespace Repositories
     {
         void UsersCollection(MongoDatabase db);
         void TransactionsCollection(MongoDatabase db);
+        void FamilyMembersCollection(MongoDatabase db);
     }
 }

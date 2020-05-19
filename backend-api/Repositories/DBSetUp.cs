@@ -1,5 +1,6 @@
 ﻿using System;
-using Domain.DefinitionObjects;
+using System.Collections.Generic;
+using Data;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -17,12 +18,33 @@ namespace Repositories
 
            //UsersCollection(db);
             TransactionsCollection(db);
+            UsersCollection(db);
+            FamilyMembersCollection(db);
+        }
+
+        public void FamilyMembersCollection(MongoDatabase db)
+        {
+            if (db.CollectionExists("FamilyMembers") == false)
+                db.CreateCollection("FamilyMembers");
         }
 
         public void UsersCollection(MongoDatabase db)
         {
             if (db.CollectionExists("Users") == false)
+            {
                 db.CreateCollection("Users");
+                MongoCollection<UserData> collection = db.GetCollection<UserData>("Users");
+                List<UserData> dummyUsers = new List<UserData>() 
+                {
+                    new UserData{FamilyId = ObjectId.GenerateNewId().Increment, FirstName = "Lionel", LastName = "Messi", Role = "Father", Password = "tobehashed", Phone = "0721121122"},
+                    new UserData{FamilyId = ObjectId.GenerateNewId().Increment, FirstName = "Tasha", LastName = "Cobbs", Role = "Mother", Password = "tobehashed", Phone = "0810022311"},
+                    new UserData{FamilyId = ObjectId.GenerateNewId().Increment, FirstName = "Dinelle", LastName = "Stille", Role = "Daughter", Password = "tobehashed", Phone = "0621172313"}
+                };
+                foreach(var user in dummyUsers)
+                {
+                    collection.Save(user);
+                }
+            }
         }
 
         public void TransactionsCollection(MongoDatabase db)

@@ -18,6 +18,7 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionUnitTests", "TransactionUnitTests\TransactionUnitTests.csproj", "{92B7FD8F-8666-4CAB-9D59-40BBF22F3D45}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccountUnitTests", "BankAccountUnitTests\BankAccountUnitTests.csproj", "{28CAC062-9E29-484C-892A-BD8FF9D1765C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyMemberUnitTest", "FamilyMemberUnitTest\FamilyMemberUnitTest.csproj", "{9D3A905E-D9E6-48F2-B0A4-10C7971A50BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +58,10 @@ Global
 		{28CAC062-9E29-484C-892A-BD8FF9D1765C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28CAC062-9E29-484C-892A-BD8FF9D1765C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28CAC062-9E29-484C-892A-BD8FF9D1765C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D3A905E-D9E6-48F2-B0A4-10C7971A50BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D3A905E-D9E6-48F2-B0A4-10C7971A50BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D3A905E-D9E6-48F2-B0A4-10C7971A50BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D3A905E-D9E6-48F2-B0A4-10C7971A50BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

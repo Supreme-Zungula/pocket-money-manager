@@ -24,9 +24,13 @@ namespace Repositories
         */
 
         //for family members
-        /*public IMongoCollection<FamilyMemberData> GetFamilyMembersCollection()
+        public IMongoCollection<FamilyMemberData> GetFamilyMembersCollection()
         {
+            MongoClient client = new MongoClient("mongodb://localhost:27017");
+            var db = client.GetDatabase("PocketMoneyDB");
+
+            return db.GetCollection<FamilyMemberData>("FamilyMembers");
         }
-        */
+
     }
 }

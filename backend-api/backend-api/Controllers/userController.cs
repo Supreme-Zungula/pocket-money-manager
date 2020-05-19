@@ -43,6 +43,9 @@ namespace backend_api.Controllers
             
             UserModel existingUser = UserModel.FromDomain(userService.GetUserByPhone(phone));
 
+            if (existingUser == null)
+                return NotFound("member not found!");
+
             return Ok(existingUser);
         }
 
@@ -77,7 +80,6 @@ namespace backend_api.Controllers
         public ActionResult Delete(string phone)
         {
             UserModel existingUser = UserModel.FromDomain(userService.GetUserByPhone(phone));
-            var id = existingUser.Id;
 
             if (existingUser == null)
             {
@@ -85,6 +87,7 @@ namespace backend_api.Controllers
             }
             else
             {
+                var id = existingUser.Id;
                 userService.DeleteUser(id);
                 return NoContent();
             }
