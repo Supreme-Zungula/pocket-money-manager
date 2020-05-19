@@ -27,6 +27,9 @@ namespace backend_api.Models
 
         public static UserModel FromDomain(User user)
         {
+            if (user == null)
+                return null;
+
             return new UserModel
             {
                 Id = user.Id,
