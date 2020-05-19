@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace backend_api.Models
 {
-    public class UserModel
+    public class FamilyMemberModel
     {
         [Key]
         public ObjectId Id { get; set; }
@@ -18,41 +18,37 @@ namespace backend_api.Models
         [Required]
         public string LastName { get; set; }
         [Required]
-        public string Role { get; set; }
+        public string Relationship { get; set; }
         [Required]
         [MinLength(10)]
         public string Phone { get; set; }
-        [Required]
-        public string Password { get; set; }
 
-        public static UserModel FromDomain(User user)
+        public static FamilyMemberModel FromDomain(FamilyMember user)
         {
             if (user == null)
                 return null;
 
-            return new UserModel
+            return new FamilyMemberModel
             {
                 Id = user.Id,
                 FamilyId = user.FamilyId,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Role = user.Role,
-                Phone = user.Phone,
-                Password = user.Password
+                Relationship = user.Relationship,
+                Phone = user.Phone
             };
         }
 
-        public User ToDomain()
+        public FamilyMember ToDomain()
         {
-            return new User
+            return new FamilyMember
             {
                 Id = this.Id,
                 FamilyId = this.FamilyId,
                 FirstName = this.FirstName,
                 LastName = this.LastName,
-                Role = this.Role,
-                Phone = this.Phone,
-                Password = this.Password
+                Relationship = this.Relationship,
+                Phone = this.Phone
             };
         }
     }
