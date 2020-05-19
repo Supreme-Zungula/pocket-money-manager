@@ -88,7 +88,7 @@ namespace TransactionUnitTests
             Assert.AreEqual(transaction.Reference, updateTrans.Reference);
         }
         
-        [Test, Order(5)]
+        [Test, Order(6)]
         public void updateTransactionInvalidTest()
         {
             Transaction transaction = new Transaction
@@ -111,8 +111,8 @@ namespace TransactionUnitTests
             Assert.IsNull(updateTrans);
         }
 
-        [Test, Order(6)]
-        public void deleteAccountByValidIdTest()
+        [Test, Order(7)]
+        public void deleteTransactionByValidIdTest()
         {
             Transaction transaction = new Transaction
             {
@@ -128,8 +128,8 @@ namespace TransactionUnitTests
 
             Assert.IsNull(deletedAccount);
         }
-        [Test, Order(7)]
-        public void deleteAccountByInvalidIdTest()
+        [Test, Order(8)]
+        public void deleteTransactionByInvalidIdTest()
         {
             Transaction transaction = new Transaction
             {

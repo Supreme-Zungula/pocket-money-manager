@@ -48,7 +48,7 @@ namespace Domain.DefinitionObjects
     public decimal Balance
     {
       get { return _balance; }
-      internal set { _balance = value; }
+      set { _balance = value; }
     }
     public string CustomerRef
     {
