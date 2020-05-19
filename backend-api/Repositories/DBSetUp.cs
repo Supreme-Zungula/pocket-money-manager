@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Data;
-using Domain.DefinitionObjects;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -18,6 +16,8 @@ namespace Repositories
             MongoServer server = client.GetServer();
             MongoDatabase db = server.GetDatabase("PocketMoneyDB");
 
+           //UsersCollection(db);
+            TransactionsCollection(db);
             UsersCollection(db);
             FamilyMembersCollection(db);
         }
@@ -46,5 +46,21 @@ namespace Repositories
                 }
             }
         }
+
+        public void TransactionsCollection(MongoDatabase db)
+        {
+            if (db.CollectionExists("Transactions") == false)
+                db.CreateCollection("Transactions");
+
+        }
+
+        public void BankAccountsCollection(MongoDatabase db)
+        {
+            if (db.CollectionExists("BankAccounts") == false)
+            {
+                db.CreateCollection("BankAccounts");
+            }
+        }
+     
     }
 }
