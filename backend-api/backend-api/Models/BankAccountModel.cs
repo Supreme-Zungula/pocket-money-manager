@@ -9,23 +9,25 @@ namespace backend_api.Models
   {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; }
     public string AccountNo { get; set; }
     public decimal Balance { get; set; }
-    public string UserReference { get; set; }
+    public string CustomerRef { get; set; }
 
     public static BankAccountModel FromDomain(BankAccount account)
     {
-            return new BankAccountModel
-            {
-                AccountNo = account.AccountNo.ToString(),
-                Balance = account.Balance,
-                UserReference = account.CustomerRef
-            };
+        return new BankAccountModel
+        {
+            Id = account.Id,
+            AccountNo = account.AccountNo.ToString(),
+            Balance = account.Balance,
+            CustomerRef = account.CustomerRef
+        };
     }
 
     public BankAccount ToDomain()
     {
-            return new BankAccount(this.Balance, this.UserReference);
+      return new BankAccount(this.Balance, this.CustomerRef);
     }
   }
 }

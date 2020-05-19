@@ -8,14 +8,23 @@ namespace Domain.DefinitionObjects
   public class BankAccount
   {
     private decimal _balance;
-    private Guid _accountNo;
+    private string _accountNo;
     private string _customerRef;
     private List<Transaction> _transactions = new List<Transaction>();
 
+    public BankAccount(string accountNo, decimal balance, string customerRef, Transaction transaction)
+    {
+            _accountNo = accountNo;
+            _balance = balance;
+            _customerRef = customerRef;
+            _transactions.Add(transaction);
+    }
     public BankAccount(decimal balance, string customerRef)
     {
-            AccountNo = new Guid();
+            _accountNo = Guid.NewGuid().ToString();
             _balance = balance;
+            _customerRef = customerRef;
+
             Transaction transaction = new Transaction
             {
                 AccountNo = this.AccountNo.ToString(),
@@ -26,16 +35,16 @@ namespace Domain.DefinitionObjects
             };
 
             _transactions.Add( transaction );
-            _customerRef = customerRef;
     }
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; }
-    public Guid AccountNo
+    public string AccountNo
     {
       get { return _accountNo; }
       internal set { _accountNo = value; }
     }
+    
     public decimal Balance
     {
       get { return _balance; }
@@ -74,16 +83,16 @@ namespace Domain.DefinitionObjects
     public void Deposit(decimal amount, string reference)
     {
       Balance += amount;
-      _transactions.Add(
-        new Transaction
+      Transaction transaction =  new Transaction
         {
           AccountNo = this.AccountNo.ToString(),
           Deposit = amount,
           Withdrawal = 0m,
           Reference = reference,
           Date = DateTime.Now
-        }
-      );
+        };
+
+      _transactions.Add(transaction);
     }
     public IEnumerable<Transaction> GetTransactions()
     {

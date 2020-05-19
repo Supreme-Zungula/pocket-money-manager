@@ -8,7 +8,6 @@ namespace Domain.Services
 {
   public class TransactionService
   {
-    private readonly IMongoCollection<Transaction> _transactions;
     private TransactionRepository _repository;
     public TransactionService()
     {

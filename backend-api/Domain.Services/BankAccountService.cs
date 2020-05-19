@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Data;
 using Repositories;
 using Domain.DefinitionObjects;
@@ -18,26 +16,14 @@ namespace Domain.Services
             _transactionService = new TransactionService();
         }
 
-        public IEnumerable<BankAccountData> GetAccounts()
+        public IEnumerable<BankAccount> GetAccounts()
         {
-            List<BankAccountData> bankAccounts = new List<BankAccountData>();
-
             var accounts = _repository.GetAccounts();
-            foreach (var account in accounts)
-            {
-                bankAccounts.Add(
-                    new BankAccountData
-                    {
-                        AccountNo = account.AccountNo.ToString(),
-                        Balance = account.Balance,
-                        UserReference = account.CustomerRef
-                    }
-                );
-            }
-            return bankAccounts;
+
+            return accounts;
         }
 
-        public BankAccount GetAccount(Guid accountNo)
+        public BankAccount GetAccount(string accountNo)
         {
             return _repository.GetAccount(accountNo);
         }
@@ -52,5 +38,16 @@ namespace Domain.Services
 
             return _repository.AddAccount(account);
         }
+
+        public BankAccount UpdateAccount(string id, BankAccount account)
+        {
+            return  _repository.UpdateAccount(id, account);
+        }
+
+        public BankAccount DeleteAccount(string accountNo)
+        {
+            return _repository.DeleteAccount(accountNo);
+        }
+
     }
 }
