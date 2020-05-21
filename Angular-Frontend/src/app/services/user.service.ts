@@ -15,7 +15,6 @@ export class UserService implements OnInit, OnDestroy{
   private _url : string = 'http://localhost:5000/api/user';
 
   constructor(private http: HttpClient) { 
-
   }
 
   ngOnInit() {
@@ -34,5 +33,11 @@ export class UserService implements OnInit, OnDestroy{
     }
 
     return this.http.get<User>(usersUrl, options);
+  }
+  
+  getUserByPhone(phone : string) : Observable<User> {
+    let userUrl = `${this._url}/getByPhone/${phone}`;
+    
+    return this.http.get<User>(userUrl);
   }
 }

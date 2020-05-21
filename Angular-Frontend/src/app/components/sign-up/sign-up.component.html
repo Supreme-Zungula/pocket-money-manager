@@ -1,5 +1,14 @@
 <mat-card>
   <p>sign-up works!</p>
-  <div class="users-container">
+  <div class="users-container" *ngIf="userData">
+    <label for="firstname">First name: </label> <span>{{ userData.FirstName }}</span> <br />
+    <label for="lastname">Last name: </label><span>{{ userData.LastName }}</span>
+    <label for=""></label>
+    <label for=""></label>
+  </div>
+  <div *ngFor="let user of usersList">
+    <ul>
+      <li>{{ user }}</li>
+    </ul>
   </div>
 </mat-card>

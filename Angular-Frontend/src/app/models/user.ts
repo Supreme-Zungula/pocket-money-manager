@@ -56,23 +56,17 @@ export class User {
     this._password = pwd;
   }
 
-  static mapResponseToUser(recordsSet: any, userId: string) {
+  static mapResponseToUser(record: any) {
     let user: User = new User();
 
-    if (recordsSet) {
-      recordsSet.forEach(record => {
-        record.forEach(item => {
-          if (item.Id === userId) {
-            user.Id = item.Id;
-            user.FamilyID = item.FamilyID;
-            user.FirstName = item.FirstName;
-            user.LastName = item.LastName;
-            user.Phone = item.Phone;
-            user.Role = item.Role;
-            user.Password = item.Password;
-          }
-        });
-      });
+    if (record) {
+      user.Id = record.id;
+      user.FamilyID = record.familyId;
+      user.FirstName = record.firstName;
+      user.LastName = record.lastName;
+      user.Role = record.role;
+      user.Phone = record.phone;
+      user.Password = record.password;
     }
     return user;
   }
@@ -82,13 +76,13 @@ export class User {
     if (recordsSet) {
       recordsSet.forEach(record => {
         let user: User = new User();
-        user.Id = record.Id;
-        user.FamilyID = record.FamilyID;
-        user.FirstName = record.FirstName;
-        user.LastName = record.LastName;
-        user.Role = record.Role;
+        user.Id = record.id;
+        user.FamilyID = record.familyId;
+        user.FirstName = record.firstName;
+        user.LastName = record.lastName;
+        user.Role = record.role;
         user.Phone = record.phone;
-        user.Password = record.Password;
+        user.Password = record.password;
         usersResponse.push(user);
 
       });
