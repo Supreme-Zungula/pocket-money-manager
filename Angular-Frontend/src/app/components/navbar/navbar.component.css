@@ -1,0 +1,15 @@
+.nav-container {
+  width: 100%;
+}
+.nav-bar {
+  background-color: rebeccapurple;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  background-color: violet;
+}
