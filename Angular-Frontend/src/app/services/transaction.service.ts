@@ -46,6 +46,15 @@ export class TransactionService {
 		);
 	}
 
+	addTransaction(transactionIn: Transaction): Observable<Transaction> {
+		return this._http.post<Transaction>(this._url, transactionIn).pipe(
+			tap(data => {
+				console.info(`Added new transaction with id = ${data.Id}`),
+					catchError(this.handleError('addTransaction', transactionIn))
+			})
+		);
+	}
+	
 	/**
 	 * Updates a transaction in the DB.
 	 * @param tranID - ID of the transction to update.
