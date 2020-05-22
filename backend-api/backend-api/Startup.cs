@@ -8,7 +8,7 @@ namespace backend_api
 {
     public class Startup
     {
-        private readonly string AllowedSpecificsOrigins = "_allowedSpecificOrigins";
+        private readonly string AllowedCorsSpecific = "_allowedCorsSpecifice";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -20,15 +20,10 @@ namespace backend_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options => {
-                options.AddPolicy(name: AllowedSpecificsOrigins,
-                    builder => {
-                        builder.WithOrigins("http://localhost:4200")
-                            .AllowAnyHeader()
-                            .AllowAnyMethod();
-                    }
-                );
+                options.AddPolicy(name: AllowedCorsSpecific, builder => {
+                    builder.WithOrigins("http://localhost:4200");
+                });
             });
-            
             services.AddControllers();
         }
 
@@ -44,7 +39,11 @@ namespace backend_api
 
             app.UseRouting();
 
+<<<<<<< HEAD
             app.UseCors(AllowedSpecificsOrigins);
+=======
+            app.UseCors(AllowedCorsSpecific);
+>>>>>>> 879ef83ca49385f7d85e7ffbf6d0a25e3ca3b1af
             
             app.UseAuthorization();
 
