@@ -21,6 +21,7 @@ namespace backend_api.Controllers
 
     // GET: api/Transaction
     [HttpGet]
+    [Route("all")]
     public ActionResult<List<Transaction>> Get()
     {
       return _transactionService.GetTransactions();
