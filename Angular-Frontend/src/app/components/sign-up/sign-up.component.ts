@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
-import { ThrowStmt } from '@angular/compiler';
-import { UrlSegment } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,16 +12,27 @@ import { UrlSegment } from '@angular/router';
 export class SignUpComponent implements OnInit {
   public usersList: User[] = [];
   public userData: User;
-
+  private newUser : User; 
+  
   constructor(private _userService: UserService) {
-    this.getAllUsers();
+    this.newUser = new User();
+    this.newUser.FirstName = "TestName1";
+    this.newUser.LastName = 'TestSurname1';
+    this.newUser.Password = 'Password';
+    this.newUser.Phone = '0123456789';
+    
   }
 
   ngOnInit(): void {
-    this._userService.getUserByPhone("0721121122")
+    this.getAllUsers();
+    this._userService.addNewUser(this.newUser).subscribe((user)=> {
+      this.userData = user;
+    });
+
+   /*  this._userService.getUserByPhone("0123456789")
       .subscribe((data: User) => {
         this.userData = User.mapResponseToUser(data);
-      });
+      }); */
   }
 
   getAllUsers() {

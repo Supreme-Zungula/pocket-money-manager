@@ -14,10 +14,10 @@ export class User {
     return this._id;
   }
 
-  get FamilyID(): number {
+  get FamilyId(): number {
     return this._familyId;
   }
-  set FamilyID(value: number) {
+  set FamilyId(value: number) {
     this._familyId = value;
   }
 
@@ -61,7 +61,7 @@ export class User {
 
     if (record) {
       user.Id = record.id;
-      user.FamilyID = record.familyId;
+      user.FamilyId = record.familyId;
       user.FirstName = record.firstName;
       user.LastName = record.lastName;
       user.Role = record.role;
@@ -77,7 +77,7 @@ export class User {
       recordsSet.forEach(record => {
         let user: User = new User();
         user.Id = record.id;
-        user.FamilyID = record.familyId;
+        user.FamilyId = record.familyId;
         user.FirstName = record.firstName;
         user.LastName = record.lastName;
         user.Role = record.role;
