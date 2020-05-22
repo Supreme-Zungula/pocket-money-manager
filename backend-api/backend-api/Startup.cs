@@ -39,11 +39,7 @@ namespace backend_api
 
             app.UseRouting();
 
-<<<<<<< HEAD
-            app.UseCors(AllowedSpecificsOrigins);
-=======
             app.UseCors(AllowedCorsSpecific);
->>>>>>> 879ef83ca49385f7d85e7ffbf6d0a25e3ca3b1af
             
             app.UseAuthorization();
 
