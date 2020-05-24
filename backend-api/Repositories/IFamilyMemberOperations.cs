@@ -9,9 +9,9 @@ namespace Repositories
     interface IFamilyMemberOperations
     {
         void AddMember(FamilyMember userDetails);
-        void UpdateMember(FamilyMember userDetails, ObjectId id);
-        void DeleteMember(ObjectId id);
-        FamilyMember GetMemberById(ObjectId id);
+        void UpdateMember(FamilyMember userDetails, string id);
+        void DeleteMember(string id);
+        FamilyMember GetMemberById(string id);
         FamilyMember GetMemberByPhone(string phone);
     }
 }

@@ -55,8 +55,6 @@ namespace backend_api.Controllers
         [HttpPut]
         public ActionResult Put(FamilyMemberModel userDetails)
         {
-            FamilyMemberModel ex = FamilyMemberModel.FromDomain(familyCrud.GetMemberByPhone("0732255321"));
-            userDetails.Id = ex.Id;
             FamilyMemberModel existingUser = FamilyMemberModel.FromDomain(familyCrud.GetMemberById(userDetails.Id));
 
             if (existingUser == null)
@@ -65,6 +63,8 @@ namespace backend_api.Controllers
             }
             else
             {
+                userDetails.FamilyId = existingUser.FamilyId;
+                userDetails.Id = existingUser.Id;
                 familyCrud.UpdateMember(userDetails.ToDomain(), userDetails.Id);
                 return Ok();
             }
