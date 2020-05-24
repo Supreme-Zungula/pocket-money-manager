@@ -36,9 +36,9 @@ namespace Repositories
                 MongoCollection<UserData> collection = db.GetCollection<UserData>("Users");
                 List<UserData> dummyUsers = new List<UserData>() 
                 {
-                    new UserData{FamilyId = ObjectId.GenerateNewId().Increment, FirstName = "Lionel", LastName = "Messi", Role = "Father", Password = "tobehashed", Phone = "0721121122"},
-                    new UserData{FamilyId = ObjectId.GenerateNewId().Increment, FirstName = "Tasha", LastName = "Cobbs", Role = "Mother", Password = "tobehashed", Phone = "0810022311"},
-                    new UserData{FamilyId = ObjectId.GenerateNewId().Increment, FirstName = "Dinelle", LastName = "Stille", Role = "Daughter", Password = "tobehashed", Phone = "0621172313"}
+                    new UserData{FamilyId = ObjectId.GenerateNewId().Increment, FirstName = "Lionel", LastName = "Messi", Role = "admin", Password = "tobehashed", Phone = "0721121122"},
+                    new UserData{FamilyId = ObjectId.GenerateNewId().Increment, FirstName = "Tasha", LastName = "Cobbs", Role = "admin", Password = "tobehashed", Phone = "0810022311"},
+                    new UserData{FamilyId = ObjectId.GenerateNewId().Increment, FirstName = "Dinelle", LastName = "Stille", Role = "admin", Password = "tobehashed", Phone = "0621172313"}
                 };
                 foreach(var user in dummyUsers)
                 {

@@ -22,7 +22,7 @@ namespace Domain.Services
             repositories.RegisterUser(userDetails);
         }
 
-        public User GetUserById(ObjectId id)
+        public User GetUserById(string id)
         {
             User result = repositories.GetUserById(id);
             return result;
@@ -34,12 +34,12 @@ namespace Domain.Services
             return result;
         }
 
-        public void UpdateUser(User updatedDetails, ObjectId id)
+        public void UpdateUser(User updatedDetails, string id)
         {
             repositories.UpdateUser(updatedDetails, id);
         }
 
-        public void DeleteUser(ObjectId id)
+        public void DeleteUser(string id)
         {
             repositories.DeleteUser(id);
         }

@@ -63,12 +63,12 @@ namespace Repositories
             FamilyMembers.InsertOne(FromDomain(userDetails));
         }
 
-        public void DeleteMember(ObjectId id)
+        public void DeleteMember(string id)
         {
             FamilyMembers.DeleteOne(member => member.Id == id);
         }
 
-        public FamilyMember GetMemberById(ObjectId id)
+        public FamilyMember GetMemberById(string id)
         {
             return ToDomain(FamilyMembers.Find<FamilyMemberData>(member => member.Id == id).FirstOrDefault());
         }
@@ -78,10 +78,9 @@ namespace Repositories
             return ToDomain(FamilyMembers.Find<FamilyMemberData>(member => member.Phone == phone).FirstOrDefault());
         }
 
-        public void UpdateMember(FamilyMember userDetails, ObjectId id)
+        public void UpdateMember(FamilyMember userDetails, string id)
         {
-            var filter = Builders<FamilyMemberData>.Filter.Eq("_id", id);
-            FamilyMembers.ReplaceOne(filter, FromDomain(userDetails));
+            FamilyMembers.ReplaceOne(member => member.Id == id, FromDomain(userDetails));
         }
     }
 }

@@ -11,9 +11,9 @@ namespace Repositories
     {
         void RegisterUser(User userDetails);
         void UserLogin(User userDetails);
-        void UpdateUser(User userDetails, ObjectId id);
-        void DeleteUser(ObjectId id);
-        User GetUserById(ObjectId id);
+        void UpdateUser(User userDetails, string id);
+        void DeleteUser(string id);
+        User GetUserById(string id);
         User GetUserByPhone(string phone);
     }
 }
