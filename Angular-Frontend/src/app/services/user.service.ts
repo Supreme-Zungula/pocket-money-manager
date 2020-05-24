@@ -69,6 +69,7 @@ export class UserService {
    */
   updateUser(userUpdates: User): Observable<User> {
     let requestData = {
+      "id": userUpdates.Id,
       "familyId": userUpdates.FamilyId,
       "firstName": userUpdates.FirstName,
       "lastName": userUpdates.LastName,
@@ -92,7 +93,7 @@ export class UserService {
    */
 
   deleteUser(phone: string): Observable<User> {
-    const deleteRoute = `${this._url}/phone/${phone}`;
+    const deleteRoute = `${this._url}/${phone}`;
 
     return this.http.delete<User>(deleteRoute, this.httpOptions).pipe(
       tap(data =>
