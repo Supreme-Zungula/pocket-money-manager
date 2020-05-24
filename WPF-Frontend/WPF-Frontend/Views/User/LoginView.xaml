@@ -1,0 +1,134 @@
+﻿<UserControl x:Class="WPF_Frontend.Views.User.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_Frontend.Views.User"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:pwbx="clr-namespace:WPF_Frontend.ViewModels.Helpers"
+             mc:Ignorable="d" 
+             d:DesignHeight="480" d:DesignWidth="380">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+
+            <Border CornerRadius="10" Grid.RowSpan="2">
+                <Border.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#7be9f6" Offset="0.0"/>
+                        <GradientStop Color="#f083da" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Login"
+                          FontWeight="Light"
+                          FontFamily="helvetica"
+                          FontSize="22"
+                          Foreground="White"
+                          HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" >
+                <StackPanel Orientation="Horizontal">
+                    <Grid>
+                        <TextBox FontFamily="Helvetica"
+                                FontWeight="Light"
+                                FontSize="20"
+                                 Text="{Binding User.Phone}"
+                                HorizontalAlignment="Center"
+                                Foreground="White"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Width="235"
+                                HorizontalContentAlignment="Left"
+                                Opacity="0.5"
+                                Height="25"
+                                Margin="63,10,0,0"
+                                x:Name="PhoneTextBox"/>
+
+                        <TextBlock IsHitTestVisible="False"
+                                   Text="Phone"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Margin="63,10,0,0"
+                                   Foreground="white"
+                                   Background="Transparent"
+                                   Opacity="0.5"
+                                   FontSize="20"
+                                   FontFamily="Helvetica"
+                                   FontWeight="Light">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=PhoneTextBox}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                    <iconPacks:PackIconMaterial Kind="Phone"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Foreground="White"/>
+                </StackPanel>
+                <Border Width="250"
+                       Height="2"
+                       Background="White"
+                       Opacity="0.5"/>
+
+                <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                    <PasswordBox FontFamily="Helvetica"
+                            FontWeight="Light"
+                            Password="Password"
+                            Name="Password"
+                            FontSize="20"
+                            pwbx:BoundPasswordBox.BoundPassword="{Binding User.Password, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,NotifyOnValidationError=True,ValidatesOnDataErrors=True}"
+                            HorizontalAlignment="Center"
+                            Foreground="White"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Width="235"
+                            HorizontalContentAlignment="Left"
+                            Opacity="0.5"
+                            Height="25"
+                            Margin="63,0,0,0"/>
+                    <iconPacks:PackIconMaterial Kind="FormTextboxPassword"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Foreground="White"/>
+                </StackPanel>
+                <Border Width="250"
+                       Height="2"
+                       Background="White"
+                       Opacity="0.5"/>
+
+                <StackPanel Orientation="Vertical" Margin="0,30,0,0">
+                    <Button Width="100" Height="40" Content="LOGIN" Margin="60,0,60,0"
+                            CommandParameter="{Binding ElementName=Password}"
+                            Command="{Binding LoginCommand}"
+                            />
+                    <Button
+                        BorderThickness="0"
+                        Background="Transparent"
+                        Foreground="White"
+                        Width="100"
+                        Height="40"
+                        Content="or REGISTER"/>
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

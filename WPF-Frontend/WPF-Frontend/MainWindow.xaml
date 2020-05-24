@@ -4,9 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Frontend"
+        xmlns:views="clr-namespace:WPF_Frontend.Views.User"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
 
-    </Grid>
+    <Border Background="Azure">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <views:LoginView x:Name = "LoginViewControl" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Grid>
+    </Border>
 </Window>
