@@ -70,6 +70,8 @@ namespace backend_api.Controllers
             }
             else
             {
+                userDetails.Id = existingUser.Id;
+                userDetails.FamilyId = existingUser.FamilyId;
                 userService.UpdateUser(userDetails.ToDomain(), userDetails.Id);
                 return Ok();
             }

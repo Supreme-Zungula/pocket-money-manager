@@ -71,22 +71,19 @@ namespace Repositories
             };
         }
 
-        public void DeleteUser(ObjectId id)
+        public void DeleteUser(string id)
         {
-            var filter = Builders<UserData>.Filter.Eq("_id", id);
-            Users.DeleteOne(filter);
+            Users.DeleteOne(user => user.Id == id);
         }
 
         public void RegisterUser(User userDetails)
         {
-            //add a method to check if a user doesn't already exist
             Users.InsertOne(FromDomain(userDetails));
         }
 
-        public void UpdateUser(User userDetails, ObjectId id)
+        public void UpdateUser(User userDetails, string id)
         {
-            var filter = Builders<UserData>.Filter.Eq("_id", id);
-            Users.ReplaceOne(filter, FromDomain(userDetails));
+            Users.ReplaceOne(user => user.Id == id, FromDomain(userDetails));
         }
 
         public void UserLogin(User userDetails)
@@ -94,26 +91,14 @@ namespace Repositories
             throw new NotImplementedException();
         }
 
-        public User GetUserById(ObjectId id)
+        public User GetUserById(string id)
         {
-            var filter = Builders<UserData>.Filter.Eq("_id", id);
-            User result = null;
-            foreach (UserData user in Users.Find(filter).ToListAsync().Result)
-            {
-                result = ToDomain(user);
-            }
-            return result;
+            return ToDomain(Users.Find<UserData>(user => user.Id == id).FirstOrDefault());
         }
 
         public User GetUserByPhone(string phone)
         {
-            var filter = Builders<UserData>.Filter.Eq("Phone", phone);
-            User result = null;
-            foreach (UserData user in Users.Find(filter).ToListAsync().Result)
-            {
-                result = ToDomain(user);
-            }
-            return result;
+            return ToDomain(Users.Find<UserData>(user => user.Phone == phone).FirstOrDefault());
         }
     }
 }

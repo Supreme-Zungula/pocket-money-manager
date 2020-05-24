@@ -21,7 +21,7 @@ namespace Domain.Services
             repositories.AddMember(userDetails);
         }
 
-        public FamilyMember GetMemberById(ObjectId id)
+        public FamilyMember GetMemberById(string id)
         {
             FamilyMember result = repositories.GetMemberById(id);
             return result;
@@ -33,12 +33,12 @@ namespace Domain.Services
             return result;
         }
 
-        public void UpdateMember(FamilyMember updatedDetails, ObjectId id)
+        public void UpdateMember(FamilyMember updatedDetails, string id)
         {
             repositories.UpdateMember(updatedDetails, id);
         }
 
-        public void DeleteMember(ObjectId id)
+        public void DeleteMember(string id)
         {
             repositories.DeleteMember(id);
         }
