@@ -37,9 +37,9 @@ export class BankAccountService {
   getAccountById(accountId: string): Observable<BankAccount> {
     const transactionRoute = `${this._url}/${accountId}`
 
-    return this._http.get<BankAccount>(transactionRoute).pipe(
+    return this._http.get<any>(transactionRoute).pipe(
       tap(data => {
-        console.info(`Retrieve transaction with id = ${data.Id}`),
+        console.info(`Retrieve transaction with id = ${data.id}`),
           catchError(this.handleError('getAccount'))
       })
     );
@@ -50,9 +50,14 @@ export class BankAccountService {
    * @param accontIn - new bank account to be added to the DB.
    */
   addBankAccount(accountIn: BankAccount): Observable<BankAccount> {
-    return this._http.post<BankAccount>(this._url, accountIn).pipe(
+    const accountData =  {
+      "balance": accountIn.Balance,
+      "customerRef": accountIn.CustomerRef
+    }
+
+    return this._http.post<any>(this._url, accountData).pipe(
       tap(data => {
-        console.info(`Added new bank account with id = ${data.Id}`),
+        console.info(`Added new bank account with id = ${data.id}`),
           catchError(this.handleError('addAccount', accountIn))
       })
     );
@@ -63,10 +68,17 @@ export class BankAccountService {
 	 * @param accontID - ID of the transction to update.
 	 * @param accountIn -  Transaction with new information
 	 */
-  updateTransaction(accountID: string, accountIn: BankAccount): Observable<BankAccount> {
+  updateAccount(accountID: string, accountIn: BankAccount): Observable<BankAccount> {
     const updateRoute = `${this._url}/${accountID}`;
 
-    return this._http.put<BankAccount>(updateRoute, accountIn, this.httpOptions).pipe(
+    const accountData =  {
+      "id": accountIn.Id,
+      "accountNo": accountIn.AccountNo,
+      "balance": accountIn.Balance,
+      "customerRef": accountIn.CustomerRef
+    }
+
+    return this._http.put<BankAccount>(updateRoute, accountData, this.httpOptions).pipe(
       tap(data => {
         console.info(`Updated bank account with id = ${accountID}`),
           catchError(this.handleError('updateAccount', accountIn))
@@ -78,7 +90,7 @@ export class BankAccountService {
 	 * Delete a bank account from DB.
 	 * @param accountId - ID of the bank account to be deleted.
 	 */
-  deleteTransaction(accountId: string): Observable<BankAccount> {
+  deleteAccount(accountId: string): Observable<BankAccount> {
     const deleteRoute = `${this._url}/${accountId}`;
 
     return this._http.delete<BankAccount>(deleteRoute, this.httpOptions).pipe(

@@ -6,7 +6,6 @@ import { Transaction } from 'src/app/models/transaction';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { BankAccount } from 'src/app/models/BankAccount';
 import { BankAccountService } from 'src/app/services/bank-account.service';
-
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -15,68 +14,34 @@ import { BankAccountService } from 'src/app/services/bank-account.service';
 
 export class SignUpComponent implements OnInit {
   // Private members
-  private _newUser: User;
+  private currentUser: User;
 
   // Public members
   public usersList: User[] = [];
   public userData: User;
-  public transactionsList: Transaction[];
-  public accountList: BankAccount[];
+  // public transactionsList: Transaction[];
+  // public accountsList: BankAccount[] = [];
+
   constructor(
     private _userService: UserService,
     private _transactionService: TransactionService,
     private _bankAccountService: BankAccountService,
-  ) {
-
-    this._newUser = new User();
-    this._newUser.FirstName = "TestName1";
-    this._newUser.LastName = 'TestSurname1';
-    this._newUser.Password = 'Password';
-    this._newUser.Phone = '0123456789';
-
-  }
+  ) { }
 
   async ngOnInit() {
 
+
+    let user: User = new User();
+    user.FirstName = "Tasha";
+    user.LastName = "Godspell";
+    user.Password = "Spaz-2";
+    user.Phone = "0121111111";
+    user.Role = "Son";
+
+
+    // this.addUser(user);
+    // this._userService.updateUser(user).subscribe();
     this.getAllUsers();
-
-    /* let newTransaction = new Transaction();
-    newTransaction.AccountNo = "1242";
-    newTransaction.Deposit = 1500;
-    newTransaction.Withdrawal = 0;
-    newTransaction.Date = new Date();
-    newTransaction.Reference = "Account creation";
-
-    console.info(`newTransaction = ${newTransaction}`);
-    await this._transactionService.addTransaction(newTransaction); */
-    await this._bankAccountService.getAllAccounts().subscribe((data) => {
-      this.accountList = BankAccount.mapResponseToBankAccountList(data)
-    });
-    
-    let newAccount = new BankAccount();
-    newAccount.Balance = 2340;
-    newAccount.CustomerRef = "created new account";
-    this._bankAccountService.addBankAccount(newAccount);
-
-    this._bankAccountService.getAccountById("5ec7decaf95c0d6a143ab88f")
-    .subscribe( (data : any) => {
-      let account = BankAccount.mapResponseToBankAccount(data)
-    });
-    
-
-    await this._transactionService.getAllTransactions().subscribe(data => {
-      this.transactionsList = Transaction.mapResponseToTransactionList(data)
-    });
-
-
-    // this._userService.addNewUser(this._newUser).subscribe((user) => {
-    //   this.userData = user;
-    // });
-
-    /*  this._userService.getUserByPhone("0123456789")
-       .subscribe((data: User) => {
-         this.userData = User.mapResponseToUser(data);
-       }); */
   }
 
   getAllUsers() {
@@ -85,4 +50,18 @@ export class SignUpComponent implements OnInit {
         this.usersList = User.mapResponseToUsers(data);
       });
   }
+
+  addUser(newUser: User) {
+    this._userService.addNewUser(newUser).subscribe((data) => {
+      console.log(data)
+    });
+  }
+
+  /* async getAllAccounts() {
+    await this._bankAccountService.getAllAccounts().subscribe((data) => {
+      this.accountsList = BankAccount.mapResponseToBankAccountList(data)
+    });
+  } */
+
+
 }
