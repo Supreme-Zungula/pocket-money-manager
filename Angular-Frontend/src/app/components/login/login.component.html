@@ -1,2 +1,21 @@
-<app-navbar></app-navbar>
-<p>login works!</p>
+
+<div class="container">
+    <app-navbar></app-navbar>
+    <mat-card class="mat-card-custom">
+        <mat-card-title>
+        <h2>Login</h2>
+        </mat-card-title>
+        <form class="login-form">
+            <mat-form-field class="form-field-full-width">
+              <mat-label>Phone:</mat-label>
+              <input matInput placeholder="Ex. 012 345 6789" >
+            </mat-form-field>
+                
+            <mat-form-field class="form-field-full-width">
+              <mat-label>password</mat-label>
+              <input matInput type="password">
+            </mat-form-field><br/>
+            <button mat-raised-button color="primary">Login</button>
+          </form>   
+    </mat-card>
+</div>

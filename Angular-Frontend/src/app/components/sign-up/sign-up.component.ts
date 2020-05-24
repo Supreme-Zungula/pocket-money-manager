@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup,  FormControl, Validators } from '@angular/forms';
 
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
@@ -18,29 +19,30 @@ export class SignUpComponent implements OnInit {
 
   // Public members
   public usersList: User[] = [];
-  public userData: User;
+  public newUser: User;
   // public transactionsList: Transaction[];
   // public accountsList: BankAccount[] = [];
+  public signupFormGroup: FormGroup;
 
   constructor(
     private _userService: UserService,
     private _transactionService: TransactionService,
     private _bankAccountService: BankAccountService,
-  ) { }
+  ) { 
+    this.newUser = new User();
+    this.newUser.FirstName = "TestName"
+  }
 
   async ngOnInit() {
+    this.signupFormGroup = new FormGroup({
+      'firstname': new FormControl(this.newUser.FirstName, [ Validators.required ]),
+      'lastname': new FormControl(this.newUser.LastName, [ Validators.required]),
+      'phoneNumber': new FormControl(this.newUser.Password, [ Validators.required,]),
+      'password': new FormControl(this.newUser.Password,  [ Validators.required, Validators.minLength(6)])
+            
+    });
 
 
-    let user: User = new User();
-    user.FirstName = "Tasha";
-    user.LastName = "Godspell";
-    user.Password = "Spaz-2";
-    user.Phone = "0121111111";
-    user.Role = "Son";
-
-
-    // this.addUser(user);
-    // this._userService.updateUser(user).subscribe();
     this.getAllUsers();
   }
 
