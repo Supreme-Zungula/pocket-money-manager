@@ -6,7 +6,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 html, body { height: 100%; }
 body { 
     margin: 0; 
-    padding: 5px;
     font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
 
@@ -15,7 +14,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .container{
     width:  95%;
-    margin: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
     padding: 5px;
 }
 
