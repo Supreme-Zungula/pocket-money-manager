@@ -15,11 +15,5 @@ namespace WPF_Frontend.ViewModels.Base
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        /*public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
-        public void OnPropertyChanged(string name)
-        {
-            PropertyChanged(this, new PropertyChangedEventArgs(name));
-        }*/
     }
 }
