@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -40,6 +41,7 @@ export class SignUpComponent implements OnInit {
     private _userService: UserService,
     private _formBuilder: FormBuilder,
     private _router: Router,
+    private _authService: AuthService,
   ) {
     this.newUser = new User();
     this.initFormControls();
@@ -65,9 +67,8 @@ export class SignUpComponent implements OnInit {
   validateUserInput() {
     if (this.validControls()) {
       this.newUser.Role = "admin";
-      this._userService.userLoggedIn = true;
-      this._userService.setLoggedInUser(this.newUser);
       this.addUser(this.newUser);
+      this._authService.setLoggedIn(true);
       this._router.navigate(['home', this.newUser.FirstName]);
     }
   }

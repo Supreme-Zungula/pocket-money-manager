@@ -11,30 +11,21 @@ import { User } from '../models/user';
 
 export class UserService {
   private _url: string = 'http://localhost:5000/api/user';
-  private _user: User;
+
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  /* Public members */
-  public userLoggedIn: boolean = false;
 
   constructor(private http: HttpClient, ) {
-  }
 
-  public getLoggedInUser() : User {
-    return this._user;
-  }
-
-  public setLoggedInUser(user: User) {
-    this._user = user;
   }
 
   /**
    * Retrieve all users from database.
    */
-  public getAllUsers() : Observable<User>{
+  public getAllUsers(): Observable<User> {
     let usersUrl: string = `${this._url}/allUsers`;
 
     return this.http.get<User>(usersUrl, this.httpOptions);
@@ -71,10 +62,6 @@ export class UserService {
       catchError(this.handleError('addUser', newUser)
       )
     );
-  }
-
-  public setUserLoginStatus(status: boolean) {
-    this.userLoggedIn = status;
   }
 
   /**

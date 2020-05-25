@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -14,10 +15,11 @@ export class HomeComponent implements OnInit {
   constructor(
     private _router: Router,
     private _userService: UserService,
+    private _authService: AuthService,
   ) { }
 
   ngOnInit(): void {
-    if (this._userService.userLoggedIn == false) {
+    if (!this._authService.isLoggedIn()) {
       this._router.navigate(['login']);
     }
   }
