@@ -7,3 +7,7 @@
 .form-field-full-width {
     margin-right: 15px;
 }
+
+.form-error-message {
+    color: red;
+}

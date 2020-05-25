@@ -11,20 +11,30 @@ import { User } from '../models/user';
 
 export class UserService {
   private _url: string = 'http://localhost:5000/api/user';
+  private _user: User;
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
+  /* Public members */
+  public userLoggedIn: boolean = false;
+
   constructor(private http: HttpClient, ) {
+  }
 
+  public getLoggedInUser() : User {
+    return this._user;
+  }
 
+  public setLoggedInUser(user: User) {
+    this._user = user;
   }
 
   /**
    * Retrieve all users from database.
    */
-  getAllUsers() {
+  public getAllUsers() : Observable<User>{
     let usersUrl: string = `${this._url}/allUsers`;
 
     return this.http.get<User>(usersUrl, this.httpOptions);
@@ -34,7 +44,7 @@ export class UserService {
    * Retrieving a user from DB using phone number.
    * @param phone - user's unique for number.
    */
-  getUserByPhone(phone: string): Observable<User> {
+  public getUserByPhone(phone: string): Observable<User> {
     let userUrl = `${this._url}/getByPhone/${phone}`;
 
     return this.http.get<User>(userUrl);
@@ -44,7 +54,7 @@ export class UserService {
   * Add new user the database with Http POST request method.
   * @param newUser - new user to add to the database
   */
-  addNewUser(newUser: User): Observable<User> {
+  public addNewUser(newUser: User): Observable<User> {
 
     let requestData = {
       "familyId": newUser.FamilyId,
@@ -63,11 +73,15 @@ export class UserService {
     );
   }
 
+  public setUserLoginStatus(status: boolean) {
+    this.userLoggedIn = status;
+  }
+
   /**
    * update an existing user from DB, uses http PUT method.
    * @param userUpdates - new user details to update with.
    */
-  updateUser(userUpdates: User): Observable<User> {
+  public updateUser(userUpdates: User): Observable<User> {
     let requestData = {
       "id": userUpdates.Id,
       "familyId": userUpdates.FamilyId,
@@ -92,7 +106,7 @@ export class UserService {
    * @param phone - phone number of the use to be deleted.
    */
 
-  deleteUser(phone: string): Observable<User> {
+  public deleteUser(phone: string): Observable<User> {
     const deleteRoute = `${this._url}/${phone}`;
 
     return this.http.delete<User>(deleteRoute, this.httpOptions).pipe(

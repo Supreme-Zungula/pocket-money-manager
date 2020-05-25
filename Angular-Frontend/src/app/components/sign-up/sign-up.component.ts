@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup,  FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
-import { Transaction } from 'src/app/models/transaction';
-import { TransactionService } from 'src/app/services/transaction.service';
-import { BankAccount } from 'src/app/models/BankAccount';
-import { BankAccountService } from 'src/app/services/bank-account.service';
+
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -20,29 +18,34 @@ export class SignUpComponent implements OnInit {
   // Public members
   public usersList: User[] = [];
   public newUser: User;
-  // public transactionsList: Transaction[];
-  // public accountsList: BankAccount[] = [];
-  public signupFormGroup: FormGroup;
+  public confirmPassword: string;
+
+  /* control for form input validation */
+  public firstnameControl: FormControl;
+  public lastnameControl: FormControl;
+  public phoneControl: FormControl;
+  public passwordControl: FormControl;
+  public confirmPasswordControl: FormControl;
+
+  /* form error message containers */
+  firstnameError: string;
+  lastnameError: string;
+  phoneError: string;
+  passwordError: string;
+  confirmPasswordError: string;
+  passwordMatchError: string;
+  numberExistError: string;
 
   constructor(
     private _userService: UserService,
-    private _transactionService: TransactionService,
-    private _bankAccountService: BankAccountService,
-  ) { 
+    private _formBuilder: FormBuilder,
+    private _router: Router,
+  ) {
     this.newUser = new User();
-    this.newUser.FirstName = "TestName"
+    this.initFormControls();
   }
 
   async ngOnInit() {
-    this.signupFormGroup = new FormGroup({
-      'firstname': new FormControl(this.newUser.FirstName, [ Validators.required ]),
-      'lastname': new FormControl(this.newUser.LastName, [ Validators.required]),
-      'phoneNumber': new FormControl(this.newUser.Password, [ Validators.required,]),
-      'password': new FormControl(this.newUser.Password,  [ Validators.required, Validators.minLength(6)])
-            
-    });
-
-
     this.getAllUsers();
   }
 
@@ -55,15 +58,68 @@ export class SignUpComponent implements OnInit {
 
   addUser(newUser: User) {
     this._userService.addNewUser(newUser).subscribe((data) => {
-      console.log(data)
+      console.log("new user added.")
     });
   }
 
-  /* async getAllAccounts() {
-    await this._bankAccountService.getAllAccounts().subscribe((data) => {
-      this.accountsList = BankAccount.mapResponseToBankAccountList(data)
+  validateUserInput() {
+    if (this.validControls()) {
+      this.newUser.Role = "admin";
+      this._userService.userLoggedIn = true;
+      this._userService.setLoggedInUser(this.newUser);
+      this.addUser(this.newUser);
+      this._router.navigate(['home', this.newUser.FirstName]);
+    }
+  }
+
+  private initFormControls() {
+    this.firstnameControl = this._formBuilder.control(this.newUser.FirstName, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]);
+    this.lastnameControl = this._formBuilder.control(this.newUser.LastName, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]);
+    this.phoneControl = this._formBuilder.control(this.newUser.Phone, [Validators.required, Validators.pattern('^[0-9]{10}$')]);
+    this.passwordControl = this._formBuilder.control(this.passwordControl, [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9/]+$')]);
+    this.confirmPasswordControl = this._formBuilder.control(this.confirmPassword, [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9/]+$')]);
+  }
+
+  private checkPhoneExists(phoneNumber: string): boolean {
+    let isFound: boolean = false;
+    this.usersList.forEach(user => {
+      if (user.Phone == phoneNumber) {
+        isFound = true;
+        return;
+      }
     });
-  } */
+    return isFound;
+  }
 
-
+  private validControls(): boolean {
+    if (this.firstnameControl.invalid && (this.firstnameControl.dirty || this.firstnameControl.touched)) {
+      this.firstnameError = "First name can only have letters.";
+      return false;
+    }
+    if (this.lastnameControl.invalid && (this.lastnameControl.dirty || this.lastnameControl.touched)) {
+      this.lastnameError = "First name can only have letters.";
+      return false;
+    }
+    if (this.phoneControl.invalid && (this.phoneControl.dirty || this.phoneControl.touched)) {
+      this.phoneError = "Phone number must be digits only.";
+      return false;
+    }
+    if (this.passwordControl.invalid && (this.passwordControl.dirty || this.passwordControl.touched)) {
+      this.passwordError = "Password must at least 6 characters long and have letters and digits.";
+      return false;
+    }
+    if (this.confirmPasswordControl.invalid && (this.confirmPasswordControl.dirty || this.confirmPasswordControl.touched)) {
+      this.confirmPasswordError = "Password must at least 6 characters long and have letters and digits.";
+      return false;
+    }
+    if (this.newUser.Password != this.confirmPassword) {
+      this.passwordMatchError = "Passwords do not match.";
+      return false;
+    }
+    if (this.checkPhoneExists(this.newUser.Phone) == true) {
+      this.numberExistError = "Phone number already used.";
+      return false;
+    }
+    return true;
+  }
 }

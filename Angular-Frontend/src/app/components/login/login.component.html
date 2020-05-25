@@ -1,21 +1,29 @@
-
 <div class="container">
-    <app-navbar></app-navbar>
+    <h1 class="site-header">PocketMoney Manager</h1>
     <mat-card class="mat-card-custom">
         <mat-card-title>
-        <h2>Login</h2>
+            <h2>Login</h2>
         </mat-card-title>
-        <form class="login-form">
+        <form class="login-form" *ngIf="networkError == false">
             <mat-form-field class="form-field-full-width">
-              <mat-label>Phone:</mat-label>
-              <input matInput placeholder="Ex. 012 345 6789" >
+                <mat-label>Phone:</mat-label>
+                <input matInput placeholder="Ex. 0123456789" pattern="^[0-9]{10}$" [(ngModel)]="phoneNumber"
+                    [formControl]="phoneControl" (input)="clearPhoneErrorMessage()">
             </mat-form-field>
-                
             <mat-form-field class="form-field-full-width">
-              <mat-label>password</mat-label>
-              <input matInput type="password">
-            </mat-form-field><br/>
-            <button mat-raised-button color="primary">Login</button>
-          </form>   
+                <mat-label>Password</mat-label>
+                <input matInput type="password" minlength="6" pattern="^[a-zA-Z0-9]+" [(ngModel)]="password"
+                [formControl]="passwordControl" (keyup)="clearPasswordErrorMessage()">
+            </mat-form-field>
+            <br />
+            <span class="form-error-message">{{ phoneError }}</span>
+            <span class="form-error-message">{{ passwordError }}</span>
+            <br/>
+            <button mat-raised-button color="primary" (click)="checkCanLogin()">Login</button>
+            <a class="site-link" routerLink='/sign-up'>Not registered? Sign up</a>
+        </form>
+        <div *ngIf="networkError">
+            <app-error></app-error>
+        </div>
     </mat-card>
 </div>

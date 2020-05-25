@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-login',
@@ -7,13 +11,65 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  private _currentUser: User;
+  private _canLogin: boolean = false;
+  private _usersList: User[] = [];
 
-  constructor( ) {}
+  /* public members */
+  public phoneNumber: string;
+  public password: string;
+  public networkError: boolean = false;
 
-  ngOnInit(): void {
+  /* controls for form input validation */
+  public phoneControl: FormControl;
+  public passwordControl: FormControl;
+
+  /* Error messages */
+  public phoneError: string;
+  public passwordError: string;
+
+  constructor(
+    private _userService: UserService,
+    private _router: Router,
+    private _formBuilder: FormBuilder,
+  ) {
+    this.initFormControls();
   }
-  
-  private checkCanSubmit() : void {
-   
+
+  async ngOnInit() {
+    await this.getUsers();
+  }
+
+  public async checkCanLogin() {
+    this._currentUser = this._usersList.find(user => user.Phone == this.phoneNumber);
+    if (this._currentUser == null) {
+      this.phoneError = "No user is registered with this number.";
+    }
+    else {
+      if (this._currentUser.Password == this.password) {
+        this._userService.setLoggedInUser(this._currentUser);
+        this._userService.userLoggedIn = true;
+        this._router.navigate(['home', this._currentUser.FirstName]);
+      }
+      this.phoneError = 'Invalid password';
+    }
+  }
+
+  clearPhoneErrorMessage() {
+    this.phoneError = '';
+  }
+  clearPasswordErrorMessage() {
+    this.passwordError = "";
+  }
+
+  private getUsers() {
+    this._userService.getAllUsers().subscribe(data => {
+      this._usersList = User.mapResponseToUsers(data);
+    });
+  }
+
+  private initFormControls(): void {
+    this.phoneControl = this._formBuilder.control(this.phoneNumber, [Validators.required, Validators.pattern('^[0-9]{10}$')]);
+    this.passwordControl = this._formBuilder.control(this.password, [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9]+$')])
   }
 }

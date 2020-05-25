@@ -19,3 +19,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     padding: 5px;
 }
 
+.site-header {
+    color : white;
+    background-color: rebeccapurple;
+    text-align: center;
+}
+
+.site-link {
+    font: sans;
+    font-size: 18px;
+    font-style: italic;
+    text-decoration: none;
+    margin: 10px;
+}

@@ -71,7 +71,7 @@ export class User {
     return user;
   }
 
-  static mapResponseToUsers(recordsSet: any[]): User[] {
+  static mapResponseToUsers(recordsSet: any): User[] {
     let usersResponse: User[] = [];
     if (recordsSet) {
       recordsSet.forEach(record => {
