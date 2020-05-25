@@ -74,7 +74,7 @@ namespace backend_api.Controllers
                 userCrud.UpdateUser(user.ToDomain(), user.Id);
             }
             else return BadRequest("The user is not found");
-            return Ok("The member wa screated");
+            return Ok("The member was deleted");
         }
 
         [HttpDelete]

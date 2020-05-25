@@ -10,6 +10,5 @@ namespace Data
     {
         [Key]
         public ObjectId Id { get; set; }
-        public int FamilyId { get; set; }
     }
 }
