@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using WPF_Frontend.Models.User;
+using WPF_Frontend.Models.Family;
 
 namespace WPF_Frontend.ApiHelper
 {
@@ -46,6 +46,17 @@ namespace WPF_Frontend.ApiHelper
             {
                 UserModel user = response.Content.ReadAsAsync<UserModel>().Result;
                 return user;
+            }
+            return null;
+        }
+
+        public IEnumerable<FamilyMemberModel> GetAllFamilyMembers(int familyId)
+        {
+            HttpResponseMessage response = ApiClient.GetAsync("api/user/allUsers").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                IEnumerable<FamilyMemberModel> members = response.Content.ReadAsAsync<IEnumerable<FamilyMemberModel>>().Result;
+                return members;
             }
             return null;
         }

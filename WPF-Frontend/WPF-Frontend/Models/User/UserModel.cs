@@ -7,23 +7,23 @@ using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace WPF_Frontend.Models.User
+namespace WPF_Frontend.Models.Family
 {
     public class UserModel : INotifyPropertyChanged
     {
         private string _id;
         private int _familyId;
         [Required]
-        public string _firstName;
+        private string _firstName;
         [Required]
-        public string _lastName;
+        private string _lastName;
         [Required]
-        public string _role;
+        private string _role;
         [Required]
         [MinLength(10)]
-        public string _phone;
+        private string _phone;
         [Required]
-        public string _password;
+        private string _password;
 
         public string Id 
         {

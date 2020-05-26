@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using WPF_Frontend.ApiHelper;
 using WPF_Frontend.Event_Helper;
-using WPF_Frontend.Models.User;
+using WPF_Frontend.Models.Family;
 using WPF_Frontend.ViewModels.Application;
 using WPF_Frontend.ViewModels.Helpers;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using WPF_Frontend.Models.User;
+using WPF_Frontend.Models.Family;
 using WPF_Frontend.ViewModels.User;
 
 namespace WPF_Frontend.ViewModels.Helpers

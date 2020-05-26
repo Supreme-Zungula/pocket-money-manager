@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using WPF_Frontend.Models.User;
+using WPF_Frontend.Models.Family;
 
 namespace WPF_Frontend.Event_Helper
 {

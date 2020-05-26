@@ -38,6 +38,7 @@
                     </Grid.ColumnDefinitions>
                 </Grid>
             </ScrollViewer>
+            <ContentControl Content="{Binding CurrentDashViewModel}"/>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -56,7 +57,7 @@
             </Grid.Effect>
 
             <Grid Background="#FFA46FE4">
-                <TextBlock Text="FAMILY NAME" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="WS Simple Gallifreyan" Foreground="#FFBC96EA" FontSize="16"/>
+                <TextBlock Text="{Binding Familyname, FallbackValue='TEST'}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="WS Simple Gallifreyan" Foreground="#fff" FontSize="16"/>
             </Grid>
 
             <StackPanel Grid.Row="1">
@@ -94,7 +95,6 @@
                         <TextBlock HorizontalAlignment="Center" Text="DELETE MEMBER" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
                 </Button>
-
             </StackPanel>
         </Grid>
 

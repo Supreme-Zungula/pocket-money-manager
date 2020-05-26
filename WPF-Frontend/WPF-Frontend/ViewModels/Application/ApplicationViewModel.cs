@@ -7,16 +7,21 @@ using System.Windows.Input;
 using WPF_Frontend.Event_Helper;
 using WPF_Frontend.ViewModels.Base;
 using WPF_Frontend.ViewModels.Dashboard;
+using WPF_Frontend.ViewModels.Family;
 using WPF_Frontend.ViewModels.Helpers;
+using WPF_Frontend.ViewModels.Transactions;
 using WPF_Frontend.ViewModels.User;
 
 namespace WPF_Frontend.ViewModels.Application
 {
     public class ApplicationViewModel : BindableBase
     {
+        #region Private members
         private IPageViewModel _currentPageViewModel;
-        private List<IPageViewModel> _pageViewModels;
+        private List<IPageViewModel> _pageViewModels; 
+        #endregion
 
+        #region Public properties
         public List<IPageViewModel> PageViewModels
         {
             get
@@ -48,8 +53,10 @@ namespace WPF_Frontend.ViewModels.Application
 
             CurrentPageViewModel = PageViewModels
                 .FirstOrDefault(vm => vm == viewModel);
-        }
+        } 
+        #endregion
 
+        #region Private change view methods
         private void LoginPage(object obj)
         {
             ChangeViewModel(PageViewModels[0]);
@@ -65,58 +72,40 @@ namespace WPF_Frontend.ViewModels.Application
             ChangeViewModel(PageViewModels[2]);
         }
 
+        private void AddMember(object obj)
+        {
+            ChangeViewModel(PageViewModels[3]);
+        }
+
+        private void AllMembers(object obj)
+        {
+            ChangeViewModel(PageViewModels[4]);
+        }
+
+        private void Transactions(object obj)
+        {
+            ChangeViewModel(PageViewModels[5]);
+        } 
+        #endregion
+
         public ApplicationViewModel()
         {
             // Add available pages and set page
             PageViewModels.Add(new LoginViewModel());
             PageViewModels.Add(new SignUpViewModel());
             PageViewModels.Add(new DashboardViewModel());
+            PageViewModels.Add(new AddMemberViewModel());
+            PageViewModels.Add(new AllMembersViewModel());
+            PageViewModels.Add(new TransactionsViewModel());
 
             CurrentPageViewModel = PageViewModels[0];
 
             Mediator.Subscribe(ApplicationPage.Login.ToString(), LoginPage);
             Mediator.Subscribe(ApplicationPage.Register.ToString(), SignUpPage);
             Mediator.Subscribe(ApplicationPage.Dashboard.ToString(), Dashboard);
+            Mediator.Subscribe(ApplicationPage.AddMember.ToString(), AddMember);
+            Mediator.Subscribe(ApplicationPage.AllMembers.ToString(), AllMembers);
+            Mediator.Subscribe(ApplicationPage.Transactions.ToString(), Transactions);
         }
-
-        /*private BindableBase _currentviewmodel;
-
-        public BindableBase CurrentViewModel
-        {
-            get 
-            {
-                if (_currentviewmodel == null)
-                    _currentviewmodel = new LoginViewModel();
-                return _currentviewmodel; 
-            }
-            set
-            {
-                _currentviewmodel = value;
-                RaisePropertyChanged(nameof(CurrentViewModel));
-            }
-        }
-
-        public ICommand UpdateViewCommand { get; set; }
-
-        public ApplicationViewModel()
-        {
-            UpdateViewCommand = new UpdateViewCommand(this);
-        }
-        /*public void GoToPage(ApplicationPage page, BaseViewModel viewModel = null)
-        {
-            _ = UpdateViewCommand;
-            //UpdateViewCommand = new UpdateViewCommand(this);
-            // Set the view model
-           // CurrentPageViewModel = viewModel;
-
-            // See if page has changed
-           *//* var different = CurrentPage != page;
-
-            // Set the current page
-            CurrentPage = page;
-
-            if (!different)
-                RaisePropertyChanged(nameof(CurrentPage));*//*
-        }*/
     }
 }
