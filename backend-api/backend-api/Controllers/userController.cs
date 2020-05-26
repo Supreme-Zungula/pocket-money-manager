@@ -52,7 +52,8 @@ namespace backend_api.Controllers
         [HttpPost]
         public ActionResult Post(UserModel userDetails)
         {
-            userDetails.FamilyId = ObjectId.GenerateNewId().Increment;
+            if (userDetails.FamilyId == 0)
+                userDetails.FamilyId = ObjectId.GenerateNewId().Increment;
             userService.Register(userDetails.ToDomain());
             var resourceUrl = Path.Combine(Request.Path.ToString(), Uri.EscapeUriString(userDetails.FirstName));
             return Created(resourceUrl, userDetails);
