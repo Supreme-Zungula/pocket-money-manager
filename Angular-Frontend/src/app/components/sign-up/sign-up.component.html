@@ -1,0 +1,49 @@
+<div class="container">
+  <h1 class="site-header">PocketMoney manager</h1>
+  <mat-card>
+
+    <form class="sign-up-form">
+      <mat-card-title>
+        <h2>Sign up</h2>
+      </mat-card-title>
+      <div class="signup-container">
+        <mat-form-field>
+          <mat-label>First name:</mat-label>
+          <input name="firstname" matInput required [(ngModel)]="newUser.FirstName" [formControl]="firstnameControl">
+        </mat-form-field>
+        <span class="form-error-message" >{{ firstnameError }}</span>
+        <br>
+        <mat-form-field>
+          <mat-label>Last name:</mat-label>
+          <input name="lastname" matInput required [(ngModel)]="newUser.LastName" [formControl]="lastnameControl">
+        </mat-form-field>
+        <span class="form-error-message">{{ lastnameError}}</span>
+        <br>
+        <mat-form-field>
+          <mat-label>Phone number:</mat-label>
+          <input name="phoneNumber" matInput required pattern="^[0-9]{10}$" [(ngModel)]="newUser.Phone" [formControl]="phoneControl">
+        </mat-form-field>
+        <span class="form-error-message">{{ phoneError }}</span>
+        <span class="form-error-message">{{ numberExistError }}</span>
+        <br>
+        <mat-form-field>
+          <mat-label>Password:</mat-label>
+          <input name="password" type="password" matInput minlength="6" required [(ngModel)]="newUser.Password" [formControl]="passwordControl">
+        </mat-form-field>
+        <span class="form-error-message">{{ passwordError }}</span>
+        <br>
+        <mat-form-field>
+          <mat-label>Confirm password:</mat-label>
+          <input name="confirmPassword" matInput type="password" minlength="6" required [(ngModel)]="confirmPassword" [formControl]="confirmPasswordControl">
+        </mat-form-field>
+        <span class="form-error-message">{{ confirmPasswordError }}</span>
+        <span class="form-error-message">{{ passwordMatchError }}</span>
+        <br>
+        <button type="submit" mat-raised-button color="primary" (click)="validateUserInput()">Sign up</button>
+        
+          <a class="site-link" routerLink="/login"> Already registered? login</a>
+    
+      </div>
+    </form>
+  </mat-card>
+</div>
