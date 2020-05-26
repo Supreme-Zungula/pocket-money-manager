@@ -2,8 +2,30 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:WPF_Frontend"
+             xmlns:userview="clr-namespace:WPF_Frontend.Views.User"
+             xmlns:userviewmodel="clr-namespace:WPF_Frontend.ViewModels.User"
+             xmlns:dashboardv="clr-namespace:WPF_Frontend.Views.Dashboard"
+             xmlns:dashboardvm="clr-namespace:WPF_Frontend.ViewModels.Dashboard"
+             xmlns:application="clr-namespace:WPF_Frontend.ViewModels.Application"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Indigo.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <application:ApplicationViewModel x:Key="ApplicationViewModel"/>
+            <DataTemplate DataType="{x:Type userviewmodel:LoginViewModel}">
+                <userview:LoginView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type userviewmodel:SignUpViewModel}">
+                <userview:SignUpView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type dashboardvm:DashboardViewModel}">
+                <dashboardv:DashboardView/>
+            </DataTemplate>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

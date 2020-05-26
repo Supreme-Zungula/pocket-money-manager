@@ -4,18 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Frontend"
-        xmlns:views="clr-namespace:WPF_Frontend.Views.User"
+        xmlns:views="clr-namespace:WPF_Frontend.Views.Dashboard"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
     <Border Background="Azure">
         <Grid>
-            <Grid.ColumnDefinitions>
+            <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions>-->
 
-            <views:LoginView x:Name = "LoginViewControl" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+            <ContentControl Content="{Binding CurrentPageViewModel}"/>
+            <!--<views:DashboardView x:Name = "DashboardViewControl" HorizontalAlignment="Stretch" Grid.ColumnSpan="2"/>-->
         </Grid>
     </Border>
 </Window>

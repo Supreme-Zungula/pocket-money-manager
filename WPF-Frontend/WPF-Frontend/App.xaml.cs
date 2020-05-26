@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using WPF_Frontend.ViewModels.Application;
 using WPF_Frontend.ViewModels.User;
 
 namespace WPF_Frontend
@@ -20,7 +21,7 @@ namespace WPF_Frontend
             base.OnStartup(e);
 
             MainWindow app = new MainWindow();
-            SignUpViewModel context = new SignUpViewModel();
+            ApplicationViewModel context = new ApplicationViewModel();
             app.DataContext = context;
             app.Show();
         }*/

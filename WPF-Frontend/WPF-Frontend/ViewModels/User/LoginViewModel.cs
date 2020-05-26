@@ -6,16 +6,35 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WPF_Frontend.ApiHelper;
+using WPF_Frontend.Event_Helper;
 using WPF_Frontend.Models.User;
+using WPF_Frontend.ViewModels.Application;
 using WPF_Frontend.ViewModels.Helpers;
 
 namespace WPF_Frontend.ViewModels.User
 {
-    public class LoginViewModel : BindableBase
+    public class LoginViewModel : BindableBase, IPageViewModel
     {
+        #region Private Memmbers
+
         private UserModel _user;
         private ICommand _logincommand;
+        private ICommand _registercommand;
         private APIHelper _api;
+
+        #endregion
+
+        public ICommand RegisterCommand
+        {
+            get
+            {
+                return _registercommand ?? (_registercommand = new RelayCommand(x =>
+                {
+                    Mediator.Notify(ApplicationPage.Register.ToString(), "");
+                }));
+            }
+        }
+
         public UserModel User
         {
             get
@@ -48,18 +67,29 @@ namespace WPF_Frontend.ViewModels.User
             User = new UserModel();
         }
 
-        public void Login()
+        private void Login()
         {
-            UserModel result = _api.LoginUser(User.Phone);
-            if(SecurePasswordHasherHelper.Verify(User.Password, result.Password))
+            try
             {
-                //go to dashboard
-                MessageBox.Show("Go to dashboard");
+                UserModel result = _api.LoginUser(User.Phone);
+                if (result == null)
+                    throw new Exception("User Not Found");
+                else if (User.Password == result.Password)//SecurePasswordHasherHelper.Verify(User.Password, result.Password))
+                {
+                    //set session data
+                    //go to dashboard
+                    _ = new CreateData(result);
+                    Mediator.Notify(ApplicationPage.Dashboard.ToString(), "");
+                }
+                else
+                {
+                    //login failed
+                    MessageBox.Show("login failed");
+                }
             }
-            else
+            catch (Exception)
             {
-                //login failed
-                MessageBox.Show("login failed");
+                MessageBox.Show("User Not Found");
             }
         }
     }

@@ -11,8 +11,8 @@ namespace WPF_Frontend.Models.User
 {
     public class UserModel : INotifyPropertyChanged
     {
-        private readonly ObjectId _id;
-        private readonly int _familyId;
+        private string _id;
+        private int _familyId;
         [Required]
         public string _firstName;
         [Required]
@@ -25,7 +25,24 @@ namespace WPF_Frontend.Models.User
         [Required]
         public string _password;
 
-
+        public string Id 
+        {
+            get => _id;
+            set
+            {
+                if (value == _id) return;
+                _id = value;
+            }
+        }
+        public int FamilyId
+        {
+            get => _familyId;
+            set
+            {
+                if (value == _familyId) return;
+                _familyId = value;
+            }
+        }
         public string FirstName
         {
             get => _firstName;

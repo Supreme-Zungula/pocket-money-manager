@@ -229,6 +229,8 @@
                             Command="{Binding SubmitCommand}"
                             />
                     <Button
+                        Command="{Binding LoginCommand}"
+                        CommandParameter="1"
                         BorderThickness="0"
                         Background="Transparent"
                         Foreground="White"

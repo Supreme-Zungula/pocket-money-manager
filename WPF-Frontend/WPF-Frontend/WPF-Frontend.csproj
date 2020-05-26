@@ -8,8 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dna.Framework" Version="1.0.7.19" />
     <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.1.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="3.2.0-ci1494" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="16.6.1" />

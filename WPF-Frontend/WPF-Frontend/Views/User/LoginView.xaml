@@ -116,10 +116,12 @@
 
                 <StackPanel Orientation="Vertical" Margin="0,30,0,0">
                     <Button Width="100" Height="40" Content="LOGIN" Margin="60,0,60,0"
-                            CommandParameter="{Binding ElementName=Password}"
                             Command="{Binding LoginCommand}"
                             />
+                        <!--Command="{Binding Source={StaticResource ApplicationViewModel}, Path=UpdateViewCommand}"-->
                     <Button
+                        Command="{Binding RegisterCommand}"
+                        CommandParameter="2"
                         BorderThickness="0"
                         Background="Transparent"
                         Foreground="White"
