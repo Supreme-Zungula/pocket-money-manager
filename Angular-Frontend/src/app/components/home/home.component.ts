@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user';
 import { BankAccountService } from 'src/app/services/bank-account.service';
 import { BankAccount } from 'src/app/models/BankAccount';
+import { FamilyService } from 'src/app/services/family.service';
+import { FamilyMember } from 'src/app/models/FamilyMember';
 
 
 @Component({
@@ -21,12 +23,14 @@ export class HomeComponent implements OnInit {
   phoneNumber: string;
   panelOpenState: boolean = true;
   accountDetailsPanel: boolean = true;
+  familyMembers: FamilyMember[] = [];
 
   constructor(
     private _router: Router,
     private _userService: UserService,
     private _authService: AuthService,
     private _bankAccountService: BankAccountService,
+    private _familyService: FamilyService,
   ) { }
 
   async ngOnInit() {
@@ -59,6 +63,9 @@ export class HomeComponent implements OnInit {
 
     this._userService.getUserByPhone$(this.phoneNumber).subscribe(data => {
       this.currentUser = User.mapResponseToUser(data);
+      this._familyService.getAllFamilyMember$(this.currentUser.FamilyId).subscribe(data => {
+        this.familyMembers = FamilyMember.mapResponseToFamilyMembersList(data);
+      })
     });
   }
 

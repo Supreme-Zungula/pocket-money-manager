@@ -5,3 +5,16 @@
 .mat-accordion-custom {
   margin: 5px
 }
+
+.fullname-label {
+  font-weight: 500;
+  width: 70%;
+  margin-right: 5px
+}
+
+.relation-label {
+  font-style: italic;
+  float: right;
+  text-align: left;
+  width: 15%;
+}

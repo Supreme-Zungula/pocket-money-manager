@@ -18,6 +18,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -61,7 +62,7 @@ import { FamilyComponent } from './components/family/family.component';
     MatRadioModule,
     MatDividerModule,
     MatExpansionModule,
-
+    MatChipsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

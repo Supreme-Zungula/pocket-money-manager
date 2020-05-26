@@ -8,6 +8,7 @@ import { User } from 'src/app/models/user';
 import { FamilyService } from 'src/app/services/family.service';
 import { BankAccount } from 'src/app/models/BankAccount';
 import { BankAccountService } from 'src/app/services/bank-account.service';
+import { FamilyMember } from 'src/app/models/FamilyMember';
 
 @Component({
   selector: 'app-family',
@@ -19,11 +20,12 @@ export class FamilyComponent implements OnInit {
 
   currentUser: User;
   usersList: User[] = [];
-  familyMembers: User[] = [];
+  newFamilyMember: FamilyMember = new FamilyMember();
+  familyMembers: FamilyMember[] = [];
   bankDetails: BankAccount;
   panelOpenState: boolean = false;
   showForm: boolean = false;
-  newUser: User = new User();
+  // newFamilyMember: User = new User();
   confirmPassword: string;
   hide: boolean = true;
   canAddUser: boolean = false;
@@ -69,18 +71,23 @@ export class FamilyComponent implements OnInit {
       if (this.currentUser.Role === "admin") {
         this.canAddUser = true;
       }
-      this.familyMembers = this._familyService.getFamilyMembers(this.currentUser.FamilyId);
+
+      this._familyService.getAllFamilyMember$(this.currentUser.FamilyId).subscribe(data => {
+        this.familyMembers = FamilyMember.mapResponseToFamilyMembersList(data)
+      });
     });
 
     this.initFormControls();
   }
-  
+
   validateUserInput() {
     if (this.validControls()) {
-      this.newUser.Role = "user";
-      this.newUser.FamilyId = this.currentUser.FamilyId;
-      this.createNewUserAccount();
-      this.familyMembers = this._familyService.getFamilyMembers(this.currentUser.FamilyId);
+      this.newFamilyMember.FamilyId = this.currentUser.FamilyId;
+      this.createnewFamilyMemberAccount();
+      
+      this._familyService.getAllFamilyMember$(this.currentUser.FamilyId).subscribe(data => {
+        this.familyMembers = FamilyMember.mapResponseToFamilyMembersList(data)
+      })
       this.showForm = false;
     }
   }
@@ -94,8 +101,8 @@ export class FamilyComponent implements OnInit {
     this.showForm = true;
   }
 
-  private createNewUserAccount() {
-    this._userService.addNewUser$(this.newUser).subscribe({
+  private createnewFamilyMemberAccount() {
+    this._familyService.addFamilyMember$(this.newFamilyMember).subscribe({
       next(data) {
         console.log('New user succesfully added.')
       },
@@ -115,9 +122,9 @@ export class FamilyComponent implements OnInit {
   }
 
   private initFormControls() {
-    this.firstnameControl = this._formBuilder.control(this.newUser.FirstName, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]);
-    this.lastnameControl = this._formBuilder.control(this.newUser.LastName, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]);
-    this.phoneControl = this._formBuilder.control(this.newUser.Phone, [Validators.required, Validators.pattern('^[0-9]{10}$')]);
+    this.firstnameControl = this._formBuilder.control(this.newFamilyMember.FirstName, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]);
+    this.lastnameControl = this._formBuilder.control(this.newFamilyMember.LastName, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]);
+    this.phoneControl = this._formBuilder.control(this.newFamilyMember.Phone, [Validators.required, Validators.pattern('^[0-9]{10}$')]);
     this.passwordControl = this._formBuilder.control(this.passwordControl, [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9/]+$')]);
     this.confirmPasswordControl = this._formBuilder.control(this.confirmPassword, [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9/]+$')]);
   }
@@ -154,11 +161,8 @@ export class FamilyComponent implements OnInit {
       this.confirmPasswordError = "Password must at least 6 characters long and have letters and digits.";
       return false;
     }
-    if (this.newUser.Password != this.confirmPassword) {
-      this.passwordMatchError = "Passwords do not match.";
-      return false;
-    }
-    if (this.checkPhoneExists(this.newUser.Phone) == true) {
+   
+    if (this.checkPhoneExists(this.newFamilyMember.Phone) == true) {
       this.numberExistError = "Phone number already used.";
       return false;
     }
