@@ -1,6 +1,40 @@
-
 <div class="container">
     <app-navbar></app-navbar>
-   <p>home works!</p>
-   <mat-icon>group</mat-icon>
+
+    <mat-accordion>
+
+        <mat-expansion-panel (opened)="panelOpenState">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h2>Account details:</h2>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <label for="name">Name: </label><span>{{currentUser.FirstName}}</span> 
+            <br/>
+            <label for="surname">Surname: </label><span>{{ currentUser.LastName }}</span>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <mat-divider></mat-divider>
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header (opened)="accountDetailsPanel">
+                <mat-panel-title>
+                   <h2> Family members:</h2>
+                </mat-panel-title>
+                <mat-panel-description>
+                    Type your name and age
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <mat-form-field>
+                <mat-label>First name</mat-label>
+                <input matInput>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Age</mat-label>
+                <input matInput type="number" min="1">
+            </mat-form-field>
+        </mat-expansion-panel>
+    </mat-accordion>
 </div>

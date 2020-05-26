@@ -69,7 +69,7 @@ export class SignUpComponent implements OnInit {
       this.newUser.Role = "admin";
       this.addUser(this.newUser);
       this._authService.setLoggedIn(true);
-      this._router.navigate(['home', this.newUser.FirstName]);
+      this._router.navigate(['home', this.newUser.Phone]);
     }
   }
 

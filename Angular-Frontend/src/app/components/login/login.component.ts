@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
     else {
       if (this._currentUser.Password == this.password) {
         this._authService.setLoggedIn(true);
-        this._router.navigate(['home', this._currentUser.FirstName]);
+        this._router.navigate(['home', this.phoneNumber]);
       }
       this.phoneError = 'Invalid password';
     }
