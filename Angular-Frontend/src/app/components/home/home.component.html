@@ -6,20 +6,31 @@
         <mat-expansion-panel (opened)="panelOpenState">
             <mat-expansion-panel-header>
                 <mat-panel-title>
+                    <mat-icon class="ng-mat-icon">account_circle</mat-icon>
                     <h2>Account details:</h2>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <label for="name">Name: </label><span>{{currentUser.FirstName}}</span> 
-            <br/>
-            <label for="surname">Surname: </label><span>{{ currentUser.LastName }}</span>
+            <label>Name: </label><span>{{currentUser.FirstName}}</span>
+            <br />
+            <label>Surname: </label><span>{{ currentUser.LastName }}</span>
+            <br />
+            <label>Account number: </label><span>{{ bankAccount.AccountNo }}</span>
+            <br />
+            <label>Account balance: </label><span>R {{ bankAccount.Balance }}</span>
+            <br />
+            <button mat-raised-button color="primary">
+                Transactions
+            </button>
         </mat-expansion-panel>
+
     </mat-accordion>
     <mat-divider></mat-divider>
     <mat-accordion>
         <mat-expansion-panel>
             <mat-expansion-panel-header (opened)="accountDetailsPanel">
                 <mat-panel-title>
-                   <h2> Family members:</h2>
+                    <mat-icon class="ng-mat-icon">group</mat-icon>
+                    <h2> Family members:</h2>
                 </mat-panel-title>
                 <mat-panel-description>
                     Type your name and age

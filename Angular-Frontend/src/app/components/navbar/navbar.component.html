@@ -2,13 +2,16 @@
   <nav class="nav-bar">
     <ul>
       <li>
-        <a href="http://" routerLink="/home">Home</a>
+        <a href="http://" routerLink="/home" (click)="navigateHome()">Home</a>
       </li>
       <li>
-        <a href="http://" routerLink="/home">Family</a>
+        <a href="http://" routerLink="/family" (click)="navigateFamily()">Family</a>
       </li>
       <li>
-        <a href="http://" >Logout</a>
+        <a href="http://" routerLink="/" (click)="navigateFamily()">Transactions</a>
+      </li>
+      <li>
+        <a href="http://" (click)="logout()">Logout</a>
       </li>
     </ul>
   </nav>

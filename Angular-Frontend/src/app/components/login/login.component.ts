@@ -48,8 +48,8 @@ export class LoginComponent implements OnInit {
     }
     else {
       if (this._currentUser.Password == this.password) {
-        this._authService.setLoggedIn(true);
-        this._router.navigate(['home', this.phoneNumber]);
+        this._authService.setLoggedIn(true, this._currentUser.Phone);
+        this._router.navigate(['home']);
       }
       this.phoneError = 'Invalid password';
     }
@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
   }
 
   private getUsers() {
-    this._userService.getAllUsers().subscribe(data => {
+    this._userService.getAllUsers$().subscribe(data => {
       this._usersList = User.mapResponseToUsers(data);
     });
   }

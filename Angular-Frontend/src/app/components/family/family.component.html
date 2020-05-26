@@ -1,0 +1,38 @@
+<div class="container">
+    <app-navbar></app-navbar>
+    <mat-card>
+        <mat-card-title><h2>Family members</h2></mat-card-title>
+        <mat-accordion class="family-member-panel">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header (opened)="panelOpenState">
+                    <mat-panel-title>
+                        <mat-icon class="ng-mat-icon">person</mat-icon>
+                        <h3> Family member:</h3>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Role
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+    
+                <button mat-raised-button color="accent">Delete</button>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion class="family-member-panel">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header (opened)="panelOpenState">
+                    <mat-panel-title>
+                        <mat-icon class="ng-mat-icon">person</mat-icon>
+                        <h3> Family member</h3>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Role
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+    
+                <button mat-raised-button color="accent">Delete</button>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <button mat-raised-button color="primary" class="raised-btn">Add member</button>
+    </mat-card>
+</div>

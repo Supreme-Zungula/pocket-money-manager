@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { BankAccount } from 'src/app/models/BankAccount';
+import { BankAccountService } from 'src/app/services/bank-account.service';
+import { retry } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sign-up',
@@ -42,6 +45,7 @@ export class SignUpComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _router: Router,
     private _authService: AuthService,
+    private _bankAccountService: BankAccountService,
   ) {
     this.newUser = new User();
     this.initFormControls();
@@ -52,25 +56,44 @@ export class SignUpComponent implements OnInit {
   }
 
   getAllUsers() {
-    this._userService.getAllUsers()
+    this._userService.getAllUsers$()
       .subscribe((data: any) => {
         this.usersList = User.mapResponseToUsers(data);
       });
   }
 
-  addUser(newUser: User) {
-    this._userService.addNewUser(newUser).subscribe((data) => {
-      console.log("new user added.")
-    });
-  }
+
 
   validateUserInput() {
     if (this.validControls()) {
       this.newUser.Role = "admin";
-      this.addUser(this.newUser);
-      this._authService.setLoggedIn(true);
-      this._router.navigate(['home', this.newUser.Phone]);
+      this.createNewUserAccount();
+      this._authService.setLoggedIn(true, this.newUser.Phone);
+      this._router.navigate(['home']);
     }
+  }
+
+  private createNewUserAccount() {
+    this._userService.addNewUser$(this.newUser).subscribe({
+      next(data) {
+        console.log('New user succesfully added.')
+      },
+      error(err) { console.error("ERROR: new user could not be added.") },
+      complete() { }
+    });
+
+    this._userService.getUserByPhone$(this.newUser.Phone).subscribe(data => {
+      this.currentUser = User.mapResponseToUser(data)
+      let newAccount: BankAccount = new BankAccount();
+
+      newAccount.CustomerRef = this.currentUser.Id;
+      newAccount.Balance = 0;
+      this._bankAccountService.addBankAccount$(newAccount).subscribe({
+        next(data) { console.log("new bank account succefully added.") },
+        error(err) { console.error("ERROR: failed to add new bank account.") },
+        complete() { }
+      });
+    });
   }
 
   private initFormControls() {

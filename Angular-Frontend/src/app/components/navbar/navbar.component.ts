@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  private phoneNumber: string;
 
-  ngOnInit(): void {
+  constructor(
+    private _router: Router,
+  ) {
+
   }
 
+  async ngOnInit() {
+    this.phoneNumber = await localStorage.getItem('userNumber');
+  }
+
+  navigateHome() {
+    this._router.navigate(['/home', this.phoneNumber]);
+  }
+
+  navigateFamily() {
+
+  }
+
+  logout() {
+
+  }
 }

@@ -25,7 +25,7 @@ export class UserService {
   /**
    * Retrieve all users from database.
    */
-  public getAllUsers(): Observable<User> {
+  public getAllUsers$(): Observable<User> {
     let usersUrl: string = `${this._url}/allUsers`;
 
     return this.http.get<User>(usersUrl, this.httpOptions);
@@ -35,17 +35,17 @@ export class UserService {
    * Retrieving a user from DB using phone number.
    * @param phone - user's unique for number.
    */
-  public getUserByPhone(phone: string): Observable<User> {
+  public getUserByPhone$(phone: string): Observable<User> {
     let userUrl = `${this._url}/getByPhone/${phone}`;
 
-    return this.http.get<User>(userUrl);
+    return this.http.get<any>(userUrl);
   }
 
   /**
   * Add new user the database with Http POST request method.
   * @param newUser - new user to add to the database
   */
-  public addNewUser(newUser: User): Observable<User> {
+  public addNewUser$(newUser: User): Observable<User> {
 
     let requestData = {
       "familyId": newUser.FamilyId,
@@ -68,7 +68,7 @@ export class UserService {
    * update an existing user from DB, uses http PUT method.
    * @param userUpdates - new user details to update with.
    */
-  public updateUser(userUpdates: User): Observable<User> {
+  public updateUser$(userUpdates: User): Observable<User> {
     let requestData = {
       "id": userUpdates.Id,
       "familyId": userUpdates.FamilyId,
@@ -82,7 +82,7 @@ export class UserService {
     return this.http.put<User>(this._url, requestData, this.httpOptions).pipe(
       tap(data =>
         console.info(`Updated user with w/ phone = ${userUpdates.Phone}`),
-        catchError(this.handleError('updateUser', this.updateUser))
+        catchError(this.handleError('updateUser', userUpdates))
       )
     );
   }
@@ -93,7 +93,7 @@ export class UserService {
    * @param phone - phone number of the use to be deleted.
    */
 
-  public deleteUser(phone: string): Observable<User> {
+  public deleteUser$(phone: string): Observable<User> {
     const deleteRoute = `${this._url}/${phone}`;
 
     return this.http.delete<User>(deleteRoute, this.httpOptions).pipe(

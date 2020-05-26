@@ -8,21 +8,26 @@ import { UserService } from './user.service';
 export class AuthService {
 
   private _loggedInStatus: boolean = JSON.parse(localStorage.getItem('loggedIn') || 'false');
-  
+
   constructor(
     private _userService: UserService,
   ) { }
 
-  setLoggedIn( value : boolean) {
+  setLoggedIn(value: boolean, phone: string) {
     this._loggedInStatus = value;
     localStorage.setItem('loggedIn', 'true');
+    localStorage.setItem('_userToken', phone);
   }
 
-  isLoggedIn() : boolean {
+  isLoggedIn(): boolean {
     return JSON.parse(localStorage.getItem('loggedIn') || this._loggedInStatus.toString());
   }
 
-  getUserDetails(phone: string) {
-    return this._userService.getUserByPhone(phone);
+  getUserToken(): string {
+    return localStorage.getItem('_userToken');
+  }
+  clearSession() {
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('userToken');
   }
 }

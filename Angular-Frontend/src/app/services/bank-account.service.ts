@@ -19,7 +19,7 @@ export class BankAccountService {
   /**
 	 * Retrieves all bankAccounts from DB.
 	 */
-  getAllAccounts(): Observable<BankAccount[]> {
+  getAllAccounts$(): Observable<BankAccount[]> {
     const accountsUrl = `${this._url}`;
 
     return this._http.get<BankAccount[]>(accountsUrl).pipe(
@@ -34,7 +34,7 @@ export class BankAccountService {
 	 * Retrieves a bank account from DB using it ID.
 	 * @param accountId - ID of the account to retrieve
 	 */
-  getAccountById(accountId: string): Observable<BankAccount> {
+  getAccountById$(accountId: string): Observable<BankAccount> {
     const transactionRoute = `${this._url}/${accountId}`
 
     return this._http.get<any>(transactionRoute).pipe(
@@ -49,7 +49,7 @@ export class BankAccountService {
    * Adds a new bank account to the database.
    * @param accontIn - new bank account to be added to the DB.
    */
-  addBankAccount(accountIn: BankAccount): Observable<BankAccount> {
+  addBankAccount$(accountIn: BankAccount): Observable<BankAccount> {
     const accountData =  {
       "balance": accountIn.Balance,
       "customerRef": accountIn.CustomerRef
@@ -68,7 +68,7 @@ export class BankAccountService {
 	 * @param accontID - ID of the transction to update.
 	 * @param accountIn -  Transaction with new information
 	 */
-  updateAccount(accountID: string, accountIn: BankAccount): Observable<BankAccount> {
+  updateAccount$(accountID: string, accountIn: BankAccount): Observable<BankAccount> {
     const updateRoute = `${this._url}/${accountID}`;
 
     const accountData =  {
