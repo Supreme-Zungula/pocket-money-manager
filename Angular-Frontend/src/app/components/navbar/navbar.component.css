@@ -1,0 +1,28 @@
+.nav-container {
+  width: 100%;
+  height: 12%;
+}
+.nav-bar {
+  background-color: rebeccapurple;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  flex: initial;
+  
+}
+li{
+  display: inline;
+  margin: 1em;
+}
+
+li a {
+  color: white;
+  padding : 14px 16px;
+  text-decoration: none;
+}
+
+a:hover {
+  background-color: rgb(175, 97, 175);
+}
