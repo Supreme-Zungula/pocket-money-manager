@@ -1,7 +1,7 @@
 <div class="container">
     <app-navbar></app-navbar>
 
-    <mat-accordion>
+    <mat-accordion class="mat-accordion-custom">
 
         <mat-expansion-panel (opened)="panelOpenState">
             <mat-expansion-panel-header>
@@ -25,16 +25,13 @@
 
     </mat-accordion>
     <mat-divider></mat-divider>
-    <mat-accordion>
+    <mat-accordion class="mat-accordion-custom">
         <mat-expansion-panel>
             <mat-expansion-panel-header (opened)="accountDetailsPanel">
                 <mat-panel-title>
                     <mat-icon class="ng-mat-icon">group</mat-icon>
                     <h2> Family members:</h2>
                 </mat-panel-title>
-                <mat-panel-description>
-                    Type your name and age
-                </mat-panel-description>
             </mat-expansion-panel-header>
 
             <mat-form-field>

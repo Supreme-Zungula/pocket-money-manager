@@ -4,24 +4,45 @@
 .nav-bar {
   background-color: rebeccapurple;
 }
-ul {
+/* ul {
   list-style-type: none;
   height: 30px;
   padding-top: 5px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  
 }
 li {
   display: inline;
-  margin: 1em;
+  
 }
 
 li a {
-  font-style: 20px;
-  color: white;
+  
+  
   padding: 14px 16px;
+  
+} */
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  float: left;
+  margin-bottom: 5px;
+}
+
+li a {
+  font-size: 100%;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  display: block;
+  padding: 8px;
+  color: white;
+  background-color: rebeccapurple;
   text-decoration: none;
 }
 
-a:hover {
+li a:hover {
   background-color: rgb(175, 97, 175);
 }

@@ -1,38 +1,110 @@
 <div class="container">
     <app-navbar></app-navbar>
-    <mat-card>
-        <mat-card-title><h2>Family members</h2></mat-card-title>
-        <mat-accordion class="family-member-panel">
-            <mat-expansion-panel>
-                <mat-expansion-panel-header (opened)="panelOpenState">
-                    <mat-panel-title>
-                        <mat-icon class="ng-mat-icon">person</mat-icon>
-                        <h3> Family member:</h3>
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        Role
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-    
-                <button mat-raised-button color="accent">Delete</button>
-            </mat-expansion-panel>
-        </mat-accordion>
+    <mat-card *ngIf="!showForm">
+        <mat-card-title>
+            <h2>Family members</h2>
+        </mat-card-title>
+        <div *ngFor="let member of familyMembers">
+            <mat-accordion class="family-member-panel">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header (opened)="panelOpenState" (click)="openPanel(member)">
+                        <mat-panel-title>
+                            <mat-icon class="ng-mat-icon">person</mat-icon>
+                            <h3>{{member.FirstName}} {{member.LastName}}</h3>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{member.Role}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div *ngIf="bankDetails">
+                        <label>Account number: </label><span>{{ bankDetails.AccountNo }}</span>
+                        <br />
+                        <label>Account balance: </label><span>R {{ bankDetails.Balance }}</span>
+                        <br />
+                        <label>Customer reference: </label><span> {{ bankDetails.CustomerRef }}</span>
+                        <br />
+                        <mat-divider></mat-divider>
+                    </div>
+                    <button mat-raised-button class="raised-btn" color="accent">
+                        <mat-icon>delete</mat-icon>Delete
+                    </button>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+        <mat-card-footer *ngIf="canAddUser">
+            <button mat-raised-button color="primary" class="raised-btn" (click)="addNewMember()">
+                Add member
+                <mat-icon>add</mat-icon>
+            </button>
+        </mat-card-footer>
+    </mat-card>
 
-        <mat-accordion class="family-member-panel">
-            <mat-expansion-panel>
-                <mat-expansion-panel-header (opened)="panelOpenState">
-                    <mat-panel-title>
-                        <mat-icon class="ng-mat-icon">person</mat-icon>
-                        <h3> Family member</h3>
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        Role
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-    
-                <button mat-raised-button color="accent">Delete</button>
-            </mat-expansion-panel>
-        </mat-accordion>
-        <button mat-raised-button color="primary" class="raised-btn">Add member</button>
+    <mat-card *ngIf="showForm">
+        <mat-card-title>
+            <h2>
+                <mat-icon class="ng-mat-icon">person_add</mat-icon>
+                Add new member
+            </h2>
+        </mat-card-title>
+        <div class="form-container">
+            <form>
+                <mat-form-field appearance="fill">
+                    <mat-label>Member first name</mat-label>
+                    <input matInput type="text" name="firstname" [(ngModel)]="newUser.FirstName"
+                        [formControl]="firstnameControl">
+                    <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+                <span class="form-error-message">{{ firstnameError }}</span>
+                <br />
+                <mat-form-field appearance="fill">
+                    <mat-label>Member last name</mat-label>
+                    <input matInput type="text" name="lastname" [(ngModel)]="newUser.LastName"
+                        [formControl]="lastnameControl">
+                    <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+                <span class="form-error-message">{{ lastnameError}}</span>
+                <br />
+                <mat-form-field appearance="fill">
+                    <mat-label>Member phone number</mat-label>
+                    <input matInput type="text" name="phone" [(ngModel)]="newUser.Phone" [formControl]="phoneControl">
+                    <mat-icon matSuffix>phone</mat-icon>
+                </mat-form-field>
+                <span class="form-error-message">{{ phoneError }}</span>
+                <span class="form-error-message">{{ numberExistError }}</span>
+                <br />
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" name="password" [(ngModel)]="newUser.Password"
+                        [formControl]="firstnameControl">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <span class="form-error-message">{{ passwordError }}</span>
+                <br />
+                <mat-form-field appearance="fill">
+                    <mat-label>Confirm password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" name="confirmPassword"
+                        [(ngModel)]="confirmPassword" [formControl]="confirmPasswordControl">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <span class="form-error-message">{{ confirmPasswordError }}</span>
+                <span class="form-error-message">{{ passwordMatchError }}</span>
+                <br />
+                <button mat-raised-button class="raised-btn footer-btn" color="accent" (click)="cancelForm()">
+                    Cancel
+                    <mat-icon>cancel</mat-icon>
+                </button>
+                <button mat-raised-button class="raised-btn footer-btn" color="primary" (click)="validateUserInput()">
+                    Add
+                    <mat-icon>add</mat-icon>
+                </button>
+            </form>
+
+        </div>
     </mat-card>
 </div>
