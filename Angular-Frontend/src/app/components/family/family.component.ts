@@ -21,6 +21,7 @@ export class FamilyComponent implements OnInit {
   currentUser: User;
   newUser: User = new User();
   usersList: User[] = [];
+  accountsList: BankAccount[] = [];
   newFamilyMember: FamilyMember;
   familyMembers: FamilyMember[] = [];
   bankDetails: BankAccount;
@@ -30,7 +31,7 @@ export class FamilyComponent implements OnInit {
   userRelation: string;
   hide: boolean = true;
   canAddUser: boolean = false;
-  editMember: boolean = false;
+  canDeleteUser: boolean = false;
 
   /* control for form input validation */
   public firstnameControl: FormControl;
@@ -72,11 +73,13 @@ export class FamilyComponent implements OnInit {
       this.currentUser = User.mapResponseToUser(data);
       if (this.currentUser.Role === "admin") {
         this.canAddUser = true;
+        this.canDeleteUser = true;
       }
       this.getFamilyMembers();
     });
 
     this.initFormControls();
+    this.getBankAcccounts();
   }
 
   validateUserInput() {
@@ -86,6 +89,7 @@ export class FamilyComponent implements OnInit {
       this.createNewUserAccount();
       this.createFamilyMember();
       this.getFamilyMembers();
+      this.getBankAcccounts();
       this.showForm = false;
     }
   }
@@ -109,7 +113,9 @@ export class FamilyComponent implements OnInit {
   }
 
   openPanel(familyMember: User) {
-    this.bankDetails = this._familyService.getFamilyMemberBankDetails(familyMember);
+    this.bankDetails = this.accountsList.find(account => {
+      return account.CustomerRef = familyMember.Id;
+    })
   }
   cancelForm() {
     this.showForm = false;
@@ -119,6 +125,11 @@ export class FamilyComponent implements OnInit {
     this.showForm = true;
   }
 
+  private getBankAcccounts() {
+    this._bankAccountService.getAllAccounts$().subscribe(data => {
+      this.accountsList = BankAccount.mapResponseToBankAccountList(data);
+    })
+  }
   private async getFamilyMembers() {
     this._familyService.getAllFamilyMember$(this.currentUser.FamilyId).subscribe(data => {
       this.familyMembers = FamilyMember.mapResponseToFamilyMembersList(data)

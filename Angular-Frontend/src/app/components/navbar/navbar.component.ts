@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-navbar',
@@ -7,28 +9,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
-  private phoneNumber: string;
+  private _userToken: string;
+  currentUser: User = new User();
 
   constructor(
-    private _router: Router,
+    private _authService: AuthService,
+    private _userService: UserService,
   ) {
 
   }
 
   async ngOnInit() {
-    this.phoneNumber = await localStorage.getItem('userNumber');
-  }
-
-  navigateHome() {
-    this._router.navigate(['/home', this.phoneNumber]);
-  }
-
-  navigateFamily() {
-
-  }
-
-  logout() {
-
+    this._userToken = this._authService.getUserToken();
+    this._userService.getUserByPhone$(this._userToken).subscribe(data => {
+      this.currentUser = User.mapResponseToUser(data);
+    })
   }
 }

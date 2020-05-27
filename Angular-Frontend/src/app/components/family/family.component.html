@@ -12,16 +12,23 @@
                             <mat-icon class="ng-mat-icon">person</mat-icon>
                             <h3 class="fullname-label">{{ member.FirstName }} {{ member.LastName }}</h3>
                         </mat-panel-title>
-
                     </mat-expansion-panel-header>
+                    <mat-divider></mat-divider>
                     <div>
-                        <label>Relation: </label><span>{{ member.Relationship }}</span>
-                        <br />
-                        <label>Phone: </label><span> {{ member.Phone }}</span>
-                        <br />
-                        <mat-divider></mat-divider>
+                        <ul>
+                            <li>
+                                <label class="details-label">Relation: </label>
+                                <span class="info-value">:{{ member.Relationship }}</span>
+                            </li>
+                            <li>
+                                <label class="details-label">Phone: </label>
+                                <span class="info-value">:{{ member.Phone }}</span>
+                            </li>
+                        </ul>
                     </div>
-                    <button mat-raised-button class="raised-btn" color="accent" (click)="deleteFamilyMember(member)">
+                    <mat-divider></mat-divider>
+                    <button *ngIf="canDeleteUser" mat-raised-button class="raised-btn" color="accent"
+                        (click)="deleteFamilyMember(member)">
                         <mat-icon>delete</mat-icon>Delete
                     </button>
                 </mat-expansion-panel>

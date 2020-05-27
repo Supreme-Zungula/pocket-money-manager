@@ -10,14 +10,30 @@
                     <h2>Account details:</h2>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <label class="details-label">Name: </label><span>{{currentUser.FirstName}}</span>
-            <br />
-            <label class="details-label">Surname: </label><span>{{ currentUser.LastName }}</span>
-            <br />
-            <label class="details-label">Account number: </label><span>{{ bankAccount.AccountNo }}</span>
-            <br />
-            <label class="details-label">Account balance: </label><span>R {{ bankAccount.Balance }}</span>
-            <br />
+            <div>
+                <ul>
+                    <li>
+                        <label class="details-label">Name</label>
+                        <span class="info-value">:{{currentUser.FirstName}}</span>
+                    </li>
+                    <mat-divider></mat-divider>
+                    <li>
+                        <label class="details-label">Surname</label>
+                        <span>:{{ currentUser.LastName }}</span>
+                    </li>
+                    <mat-divider></mat-divider>
+                    <li>
+                        <label class="details-label">Account number</label>
+                        <span class="info-value">:{{ bankAccount.AccountNo }}</span>
+                    </li>
+                    <mat-divider></mat-divider>
+                    <li>
+                        <label class="details-label">Account balance</label>
+                        <span class="info-value">:R {{ bankAccount.Balance }}</span>
+                    </li>
+                    <mat-divider></mat-divider>
+                </ul>
+            </div>
             <button mat-raised-button color="primary">
                 Transactions
             </button>
@@ -33,13 +49,16 @@
                     <h2> Family members:</h2>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <ul *ngFor="let member of familyMembers">
-                <li>
-                    <label class="fullname-label">{{ member.FirstName }} {{ member.LastName }}</label>
-                    <span class="relation-label">{{ member.Role }}</span>
-                </li>
-                <mat-divider></mat-divider>
-            </ul>
+            <div>
+                <ul *ngFor="let member of familyMembers">
+                    <li>
+                        <label class="info-label">{{ member.FirstName }} {{ member.LastName }}</label>
+                        <span class="value-label">{{ member.Relationship }}</span>
+                    </li>
+                    <mat-divider></mat-divider>
+                </ul>
+            </div>
+
         </mat-expansion-panel>
     </mat-accordion>
 </div>

@@ -2,16 +2,20 @@
   <nav class="nav-bar">
     <ul>
       <li>
-        <a href="http://" routerLink="/home" (click)="navigateHome()">Home</a>
+        <a routerLink="/home">Home</a>
       </li>
       <li>
-        <a href="http://" routerLink="/family" (click)="navigateFamily()">Family</a>
+        <a routerLink="/family">Family</a>
       </li>
       <li>
-        <a href="http://" routerLink="/" (click)="navigateFamily()">Transactions</a>
+        <a routerLink="/">Transactions</a>
       </li>
       <li>
-        <a href="http://" routerLink="/logout" (click)="logout()">Logout</a>
+        <a routerLink="/logout">Logout</a>
+      </li>
+      <li class="username-holder">
+        <mat-icon class="user-icon">account_circle</mat-icon>
+        <p style="float: right;">{{ currentUser.FirstName }}</p>
       </li>
     </ul>
   </nav>
