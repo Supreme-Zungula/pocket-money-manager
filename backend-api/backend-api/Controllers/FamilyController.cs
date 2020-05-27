@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using backend_api.Models;
+﻿using backend_api.Models;
 using Domain.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
+using System.Linq;
 
 namespace backend_api.Controllers
 {
@@ -70,8 +66,7 @@ namespace backend_api.Controllers
 
             if (user != null)
             {
-                user.FamilyId = -1;
-                userCrud.UpdateUser(user.ToDomain(), user.Id);
+                familyCrud.removeMember(user.Id);
             }
             else return BadRequest("The user is not found");
             return Ok("The member was deleted");

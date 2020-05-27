@@ -1,9 +1,6 @@
 ﻿using Data;
-using Domain.DefinitionObjects;
 using Repositories;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Domain.Services
 {
@@ -20,6 +17,11 @@ namespace Domain.Services
         {
             var result = repositories.GetMembersById(id);
             return result;
+        }
+
+        public void removeMember(string id)
+        {
+            repositories.removeMember(id);
         }
     }
 }
