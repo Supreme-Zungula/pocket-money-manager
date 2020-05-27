@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using WPF_Frontend.ApiHelper;
 using WPF_Frontend.Event_Helper;
+using WPF_Frontend.Models.BankAccount;
 using WPF_Frontend.Models.Family;
 using WPF_Frontend.ViewModels.Application;
 using WPF_Frontend.ViewModels.Helpers;
@@ -106,9 +107,23 @@ namespace WPF_Frontend.ViewModels.User
                 /*string hashed_password = SecurePasswordHasherHelper.Hash(User.Password);
                 User.Password = hashed_password;*/
                 await API.RegisterUser(User);
+                UserModel user = API.GetUserByPhone(User.Phone);
+                if (user != null)
+                    await SetBankAccount(user);
+                Mediator.Notify(ApplicationPage.Login.ToString(), "");
             }
             else
                 MessageBox.Show("Phone Number already taken");
+        }
+
+        private async Task SetBankAccount(UserModel user)
+        {
+            BankAccountModel details = new BankAccountModel()
+            {
+                Balance = 0.0M,
+                CustomerRef = user.Id
+            };
+            await API.SetBankAccount(details);
         }
     }
 }
