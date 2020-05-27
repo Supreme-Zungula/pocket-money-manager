@@ -8,6 +8,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { BankAccount } from 'src/app/models/BankAccount';
 import { BankAccountService } from 'src/app/services/bank-account.service';
 import { retry } from 'rxjs/operators';
+import { FamilyMember } from 'src/app/models/FamilyMember';
+import { FamilyService } from 'src/app/services/family.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -46,6 +48,7 @@ export class SignUpComponent implements OnInit {
     private _router: Router,
     private _authService: AuthService,
     private _bankAccountService: BankAccountService,
+    private _familyService: FamilyService,
   ) {
     this.newUser = new User();
     this.initFormControls();
@@ -93,9 +96,25 @@ export class SignUpComponent implements OnInit {
         error(err) { console.error("ERROR: failed to add new bank account.") },
         complete() { }
       });
+      this.addToFamilyMembers();
     });
   }
 
+  private addToFamilyMembers() {
+    let newMember: FamilyMember = new FamilyMember();
+    newMember.FamilyId = this.currentUser.FamilyId;
+    newMember.FirstName = this.currentUser.FirstName;
+    newMember.LastName = this.currentUser.LastName;
+    newMember.Phone = this.currentUser.Phone;
+    newMember.Relationship = this.currentUser.Role;
+
+    this._familyService.addFamilyMember$(newMember).subscribe({
+      next(data) { console.log("new member added.") },
+      error(err) { console.error(`ERROR: ${err}`) },
+      complete() { }
+    });
+
+  }
   private initFormControls() {
     this.firstnameControl = this._formBuilder.control(this.newUser.FirstName, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]);
     this.lastnameControl = this._formBuilder.control(this.newUser.LastName, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]);

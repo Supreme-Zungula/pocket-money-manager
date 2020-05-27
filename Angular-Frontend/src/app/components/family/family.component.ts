@@ -133,6 +133,9 @@ export class FamilyComponent implements OnInit {
   private async getFamilyMembers() {
     this._familyService.getAllFamilyMember$(this.currentUser.FamilyId).subscribe(data => {
       this.familyMembers = FamilyMember.mapResponseToFamilyMembersList(data)
+      this.familyMembers = this.familyMembers.filter(member => {
+        return member.Phone != this.currentUser.Phone;
+      })
     });
   }
 

@@ -65,6 +65,9 @@ export class HomeComponent implements OnInit {
       this.currentUser = User.mapResponseToUser(data);
       this._familyService.getAllFamilyMember$(this.currentUser.FamilyId).subscribe(data => {
         this.familyMembers = FamilyMember.mapResponseToFamilyMembersList(data);
+        this.familyMembers = this.familyMembers.filter(member => {
+          return member.Phone != this.currentUser.Phone;
+        })
       })
     });
   }
