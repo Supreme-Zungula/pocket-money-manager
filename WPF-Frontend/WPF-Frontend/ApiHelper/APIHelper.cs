@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Windows;
+using WPF_Frontend.Models.BankAccount;
 using WPF_Frontend.Models.Family;
 
 namespace WPF_Frontend.ApiHelper
@@ -48,6 +49,17 @@ namespace WPF_Frontend.ApiHelper
             return null;
         }
 
+        public UserModel GetUserByPhone(string phone)
+        {
+            HttpResponseMessage response = ApiClient.GetAsync($"api/user/getbyphone/{phone}").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                UserModel user = response.Content.ReadAsAsync<UserModel>().Result;
+                return user;
+            }
+            return null;
+        }
+
         public IEnumerable<FamilyMemberModel> GetAllFamilyMembers(int familyId)
         {
             HttpResponseMessage response = ApiClient.GetAsync($"api/familymember/getmembers/{familyId}").Result;
@@ -68,6 +80,17 @@ namespace WPF_Frontend.ApiHelper
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Registered Successfully");
+            }
+            else
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+        }
+
+        public async Task SetBankAccount(BankAccountModel userDetails)
+        {
+            using HttpResponseMessage response = await ApiClient.PostAsJsonAsync("api/bankaccounts", userDetails);
+            if (response.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Bank Account Created");
             }
             else
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
