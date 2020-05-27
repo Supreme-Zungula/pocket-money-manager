@@ -30,6 +30,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ErrorComponent } from './components/error/error.component';
 import { FamilyComponent } from './components/family/family.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { TransactionsComponent } from './components/transactions/transactions.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { LogoutComponent } from './components/logout/logout.component';
     ErrorComponent,
     FamilyComponent,
     LogoutComponent,
+    TransactionsComponent,
   ],
   imports: [
     BrowserModule,
