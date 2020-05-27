@@ -14,12 +14,7 @@ namespace Repositories
         public FamilyRepositories()
         {
             family = database.GetUserCollection();
-            var filter = Builders<UserData>.Filter.Empty;
-
-            foreach (UserData user in family.Find(filter).ToListAsync().Result)
-            {
-
-            }
+        
         }
 
         public Family ToDomain(FamilyData familyData)
