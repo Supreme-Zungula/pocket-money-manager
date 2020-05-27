@@ -2,8 +2,61 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:WPF_Frontend"
+             xmlns:userview="clr-namespace:WPF_Frontend.Views.User"
+             xmlns:userviewmodel="clr-namespace:WPF_Frontend.ViewModels.User"
+             xmlns:dashboardv="clr-namespace:WPF_Frontend.Views.Dashboard"
+             xmlns:dashboardvm="clr-namespace:WPF_Frontend.ViewModels.Dashboard"
+             xmlns:familyv="clr-namespace:WPF_Frontend.Views.Family"
+             xmlns:familyvm="clr-namespace:WPF_Frontend.ViewModels.Family"
+             xmlns:transactionsv="clr-namespace:WPF_Frontend.Views.Transactions"
+             xmlns:transactionsvm="clr-namespace:WPF_Frontend.ViewModels.Transactions"
+             xmlns:application="clr-namespace:WPF_Frontend.ViewModels.Application"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <!--#region Material designs -->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Indigo.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <!--#endregion-->
+
+            <!--#region Application viewmodel -->
+            <application:ApplicationViewModel x:Key="ApplicationViewModel"/>
+            <!--#endregion-->
+
+            <!--#region User resources -->
+            <DataTemplate DataType="{x:Type userviewmodel:LoginViewModel}">
+                <userview:LoginView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type userviewmodel:SignUpViewModel}">
+                <userview:SignUpView/>
+            </DataTemplate>
+            <!--#endregion-->
+
+            <!--#region Dashboard resources -->
+            <DataTemplate DataType="{x:Type dashboardvm:DashboardViewModel}">
+                <dashboardv:DashboardView/>
+            </DataTemplate>
+            <!--#endregion-->
+
+            <!--#region Family resources -->
+            <DataTemplate DataType="{x:Type familyvm:AddMemberViewModel}">
+                <familyv:AddMemberView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type familyvm:AllMembersViewModel}">
+                <familyv:AllMembersView/>
+            </DataTemplate>
+            <!--#endregion-->
+
+            <!--#region Transactions resources -->
+            <DataTemplate DataType="{x:Type transactionsvm:TransactionsViewModel}">
+                <transactionsv:TransactionsView/>
+            </DataTemplate>
+            <!--#endregion-->
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
