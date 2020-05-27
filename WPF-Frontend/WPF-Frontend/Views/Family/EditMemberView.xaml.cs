@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,20 +10,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WPF_Frontend.ViewModels.Application;
-using WPF_Frontend.ViewModels.User;
 
-namespace WPF_Frontend
+namespace WPF_Frontend.Views.Family
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for EditMemberView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class EditMemberView : UserControl
     {
-        public MainWindow()
+        public EditMemberView()
         {
             InitializeComponent();
-            DataContext = new ApplicationViewModel();
         }
     }
 }
