@@ -19,6 +19,7 @@ export class FamilyComponent implements OnInit {
   private _userToken: string;
 
   currentUser: User;
+  newUser: User = new User();
   usersList: User[] = [];
   newFamilyMember: FamilyMember = new FamilyMember();
   familyMembers: FamilyMember[] = [];
@@ -84,7 +85,7 @@ export class FamilyComponent implements OnInit {
     if (this.validControls()) {
       this.newFamilyMember.FamilyId = this.currentUser.FamilyId;
       this.createnewFamilyMemberAccount();
-      
+
       this._familyService.getAllFamilyMember$(this.currentUser.FamilyId).subscribe(data => {
         this.familyMembers = FamilyMember.mapResponseToFamilyMembersList(data)
       })
@@ -161,7 +162,7 @@ export class FamilyComponent implements OnInit {
       this.confirmPasswordError = "Password must at least 6 characters long and have letters and digits.";
       return false;
     }
-   
+
     if (this.checkPhoneExists(this.newFamilyMember.Phone) == true) {
       this.numberExistError = "Phone number already used.";
       return false;
