@@ -12,7 +12,7 @@
         <TextBlock Text="MY FAMILY" Margin="10" FontSize="22" FontWeight="Medium"/>
         <TextBlock Margin="5 0" Text="{Binding Test}" FontSize="15"/>
         <StackPanel Margin="20 0">
-            <ItemsControl x:Name="ListViewProducts" ItemsSource="{Binding FamilyMembersList}">
+            <ItemsControl ItemsSource="{Binding FamilyMembersList}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Margin="10" Width="110" Height="160">
@@ -21,12 +21,9 @@
                                     <Border.Effect>
                                         <DropShadowEffect ShadowDepth="1"/>
                                     </Border.Effect>
-                                    <!--<Border.Background>
-                                        <ImageBrush ImageSource="{Binding Image}"/>
-                                    </Border.Background>-->
                                 </Border>
-                                <TextBlock Margin="5" Text="{Binding Value, StringFormat={}{0:C}}" FontSize="17" FontFamily="Franklin Gothic Medium"/>
-                                <TextBlock Margin="5 0" Text="{Binding Test}" FontSize="15"/>
+                                <TextBlock Margin="5" Text="{Binding FirstName}" FontSize="17" FontFamily="Franklin Gothic Medium"/>
+                                <TextBlock Margin="5 0" Text="{Binding LastName}" FontSize="15"/>
                             </StackPanel>
                         </Border>
                     </DataTemplate>

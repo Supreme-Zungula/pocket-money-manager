@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WPF_Frontend.Models.Family;
@@ -52,7 +50,7 @@ namespace WPF_Frontend.ApiHelper
 
         public IEnumerable<FamilyMemberModel> GetAllFamilyMembers(int familyId)
         {
-            HttpResponseMessage response = ApiClient.GetAsync("api/user/allUsers").Result;
+            HttpResponseMessage response = ApiClient.GetAsync($"api/familymember/getmembers/{familyId}").Result;
             if (response.IsSuccessStatusCode)
             {
                 IEnumerable<FamilyMemberModel> members = response.Content.ReadAsAsync<IEnumerable<FamilyMemberModel>>().Result;

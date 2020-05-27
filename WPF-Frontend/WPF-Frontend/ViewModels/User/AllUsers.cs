@@ -1,7 +1,5 @@
 ﻿using Prism.Mvvm;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using WPF_Frontend.ApiHelper;
 using WPF_Frontend.Models.Family;
 

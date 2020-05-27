@@ -1,6 +1,7 @@
 ﻿using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using WPF_Frontend.ApiHelper;
 using WPF_Frontend.Event_Helper;
@@ -29,7 +30,8 @@ namespace WPF_Frontend.ViewModels.Family
         {
             Test = "We are testing";
             _api = new APIHelper();
-            FamilyMembersList = _api.GetAllFamilyMembers(DataStore.FamilyId);
+            FamilyMembersList = _api.GetAllFamilyMembers(0);
+            FamilyMembersList.Append(new FamilyMemberModel { FirstName = "Tafadzwa", LastName = "Test", Phone = "0987654322", Relationship = "Son" });
         }
     }
 }
