@@ -7,7 +7,51 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\Dashboard\DashboardView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Family\AddMemberView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Family\AllMembersView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Family\EditMemberView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Transactions\TransactionsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\User\LoginView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\User\SignUpView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dashboard\DashboardView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Family\AddMemberView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Family\AllMembersView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Family\EditMemberView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Transactions\TransactionsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\User\LoginView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\User\SignUpView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
