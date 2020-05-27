@@ -29,6 +29,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { HomeComponent } from './components/home/home.component';
 import { ErrorComponent } from './components/error/error.component';
 import { FamilyComponent } from './components/family/family.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { FamilyComponent } from './components/family/family.component';
     HomeComponent,
     ErrorComponent,
     FamilyComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,

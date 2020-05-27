@@ -10,22 +10,18 @@
                     <mat-expansion-panel-header (opened)="panelOpenState" (click)="openPanel(member)">
                         <mat-panel-title>
                             <mat-icon class="ng-mat-icon">person</mat-icon>
-                            <h3>{{member.FirstName}} {{member.LastName}}</h3>
+                            <h3 class="fullname-label">{{ member.FirstName }} {{ member.LastName }}</h3>
                         </mat-panel-title>
-                        <mat-panel-description>
-                            {{member.Role}}
-                        </mat-panel-description>
+
                     </mat-expansion-panel-header>
-                    <div *ngIf="bankDetails">
-                        <label>Account number: </label><span>{{ bankDetails.AccountNo }}</span>
+                    <div>
+                        <label>Relation: </label><span>{{ member.Relationship }}</span>
                         <br />
-                        <label>Account balance: </label><span>R {{ bankDetails.Balance }}</span>
-                        <br />
-                        <label>Customer reference: </label><span> {{ bankDetails.CustomerRef }}</span>
+                        <label>Phone: </label><span> {{ member.Phone }}</span>
                         <br />
                         <mat-divider></mat-divider>
                     </div>
-                    <button mat-raised-button class="raised-btn" color="accent">
+                    <button mat-raised-button class="raised-btn" color="accent" (click)="deleteFamilyMember(member)">
                         <mat-icon>delete</mat-icon>Delete
                     </button>
                 </mat-expansion-panel>
@@ -66,7 +62,7 @@
                 <br />
                 <mat-form-field appearance="fill">
                     <mat-label>Relationship</mat-label>
-                    <input matInput type="text" name="relationship" [(ngModel)]="newUser.Relationship"
+                    <input matInput type="text" name="relationship" [(ngModel)]="userRelation"
                         [formControl]="lastnameControl">
                     <mat-icon matSuffix>person</mat-icon>
                 </mat-form-field>
@@ -74,8 +70,7 @@
                 <br />
                 <mat-form-field appearance="fill">
                     <mat-label>Member phone number</mat-label>
-                    <input matInput type="text" name="phone" [(ngModel)]="newUser.Phone"
-                        [formControl]="phoneControl">
+                    <input matInput type="text" name="phone" [(ngModel)]="newUser.Phone" [formControl]="phoneControl">
                     <mat-icon matSuffix>phone</mat-icon>
                 </mat-form-field>
                 <span class="form-error-message">{{ phoneError }}</span>
@@ -83,8 +78,8 @@
                 <br />
                 <mat-form-field appearance="fill">
                     <mat-label>Enter password</mat-label>
-                    <input matInput [type]="hide ? 'password' : 'text'" name="password"
-                        [(ngModel)]="newUser.Password" [formControl]="firstnameControl">
+                    <input matInput [type]="hide ? 'password' : 'text'" name="password" [(ngModel)]="newUser.Password"
+                        [formControl]="firstnameControl">
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                         [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>

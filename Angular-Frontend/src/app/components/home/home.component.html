@@ -10,13 +10,13 @@
                     <h2>Account details:</h2>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <label>Name: </label><span>{{currentUser.FirstName}}</span>
+            <label class="details-label">Name: </label><span>{{currentUser.FirstName}}</span>
             <br />
-            <label>Surname: </label><span>{{ currentUser.LastName }}</span>
+            <label class="details-label">Surname: </label><span>{{ currentUser.LastName }}</span>
             <br />
-            <label>Account number: </label><span>{{ bankAccount.AccountNo }}</span>
+            <label class="details-label">Account number: </label><span>{{ bankAccount.AccountNo }}</span>
             <br />
-            <label>Account balance: </label><span>R {{ bankAccount.Balance }}</span>
+            <label class="details-label">Account balance: </label><span>R {{ bankAccount.Balance }}</span>
             <br />
             <button mat-raised-button color="primary">
                 Transactions

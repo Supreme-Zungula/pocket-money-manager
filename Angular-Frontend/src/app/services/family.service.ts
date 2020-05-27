@@ -36,27 +36,12 @@ export class FamilyService {
   }
 
 
-  /* getFamilyMembers(familyId: number): User[] {
-    this._familyMembers = this._usersList.filter(user => {
-      if (user.FamilyId === familyId) {
-        return true;
-      }
-    })
-
-    return this._familyMembers;
-  }
-
-  addFamilyMember(newMember: User) {
-    this._familyMembers.push(newMember);
-  }
-*/
 
   getFamilyMemberBankDetails(member: User): BankAccount {
     return this._bankAccounts.find(account => {
       return account.CustomerRef === member.Id;
     });
   } 
-
 
   getAllFamilyMember$(familyId: number): Observable<FamilyMember[]> {
     const membersUrl = `${this._url}/getmembers/${familyId}`;
@@ -116,10 +101,10 @@ export class FamilyService {
     );
   }
 
-  deleteFamilyMember$(phone: string): Observable<BankAccount> {
+  deleteFamilyMember$(phone: string): Observable<FamilyMember> {
     const deleteRoute = `${this._url}/${phone}`;
 
-    return this._http.delete<BankAccount>(deleteRoute, this.httpOptions).pipe(
+    return this._http.delete<FamilyMember>(deleteRoute, this.httpOptions).pipe(
       tap(data => {
         console.info(`Deleted bank account`),
           catchError(this.handleError('deleteMember'))

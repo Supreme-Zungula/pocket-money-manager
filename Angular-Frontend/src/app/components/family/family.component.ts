@@ -21,15 +21,16 @@ export class FamilyComponent implements OnInit {
   currentUser: User;
   newUser: User = new User();
   usersList: User[] = [];
-  newFamilyMember: FamilyMember = new FamilyMember();
+  newFamilyMember: FamilyMember;
   familyMembers: FamilyMember[] = [];
   bankDetails: BankAccount;
   panelOpenState: boolean = false;
   showForm: boolean = false;
-  // newFamilyMember: User = new User();
   confirmPassword: string;
+  userRelation: string;
   hide: boolean = true;
   canAddUser: boolean = false;
+  editMember: boolean = false;
 
   /* control for form input validation */
   public firstnameControl: FormControl;
@@ -72,10 +73,7 @@ export class FamilyComponent implements OnInit {
       if (this.currentUser.Role === "admin") {
         this.canAddUser = true;
       }
-
-      this._familyService.getAllFamilyMember$(this.currentUser.FamilyId).subscribe(data => {
-        this.familyMembers = FamilyMember.mapResponseToFamilyMembersList(data)
-      });
+      this.getFamilyMembers();
     });
 
     this.initFormControls();
@@ -83,27 +81,52 @@ export class FamilyComponent implements OnInit {
 
   validateUserInput() {
     if (this.validControls()) {
-      this.newFamilyMember.FamilyId = this.currentUser.FamilyId;
-      this.createnewFamilyMemberAccount();
-
-      this._familyService.getAllFamilyMember$(this.currentUser.FamilyId).subscribe(data => {
-        this.familyMembers = FamilyMember.mapResponseToFamilyMembersList(data)
-      })
+      this.newUser.FamilyId = this.currentUser.FamilyId;
+      this.newUser.Role = "ordinary";
+      this.createNewUserAccount();
+      this.createFamilyMember();
+      this.getFamilyMembers();
       this.showForm = false;
     }
   }
+
+  deleteFamilyMember(member: FamilyMember) {
+    this._familyService.deleteFamilyMember$(member.Phone).subscribe({
+      next(data) { console.log("Family deleted") },
+      error(err) {
+        console.error(`ERROR: ${err}`);
+      },
+      complete() { }
+    });
+    this.getFamilyMembers();
+    this._userService.deleteUser$(member.Phone).subscribe({
+      next(data) { console.log("User deleted.") },
+      error(err) { console.log(`ERROR: ${err}`) },
+      complete() { }
+    });
+
+    window.location.reload();
+  }
+
   openPanel(familyMember: User) {
     this.bankDetails = this._familyService.getFamilyMemberBankDetails(familyMember);
   }
   cancelForm() {
     this.showForm = false;
   }
+
   addNewMember() {
     this.showForm = true;
   }
 
-  private createnewFamilyMemberAccount() {
-    this._familyService.addFamilyMember$(this.newFamilyMember).subscribe({
+  private async getFamilyMembers() {
+    this._familyService.getAllFamilyMember$(this.currentUser.FamilyId).subscribe(data => {
+      this.familyMembers = FamilyMember.mapResponseToFamilyMembersList(data)
+    });
+  }
+
+  private createNewUserAccount() {
+    this._userService.addNewUser$(this.newUser).subscribe({
       next(data) {
         console.log('New user succesfully added.')
       },
@@ -111,21 +134,41 @@ export class FamilyComponent implements OnInit {
       complete() { }
     });
 
-    let newAccount: BankAccount = new BankAccount();
+    this._userService.getUserByPhone$(this.newUser.Phone).subscribe(data => {
+      let userData: User = User.mapResponseToUser(data)
+      let newAccount: BankAccount = new BankAccount();
 
-    newAccount.CustomerRef = this.currentUser.Id;
-    newAccount.Balance = 0;
-    this._bankAccountService.addBankAccount$(newAccount).subscribe({
-      next(data) { console.log("new bank account succefully added.") },
-      error(err) { console.error("ERROR: failed to add new bank account.") },
+      newAccount.CustomerRef = userData.Id;
+      newAccount.Balance = 0;
+      this._bankAccountService.addBankAccount$(newAccount).subscribe({
+        next(data) { console.log("new bank account succefully added.") },
+        error(err) { console.error("ERROR: failed to add new bank account.") },
+        complete() { }
+      });
+    });
+  }
+
+  private createFamilyMember() {
+    this.newFamilyMember = new FamilyMember();
+    this.newFamilyMember.FamilyId = this.newUser.FamilyId;
+    this.newFamilyMember.FirstName = this.newUser.FirstName;
+    this.newFamilyMember.LastName = this.newUser.LastName;
+    this.newFamilyMember.Phone = this.newUser.Phone;
+    this.newFamilyMember.Relationship = this.userRelation;
+
+    this._familyService.addFamilyMember$(this.newFamilyMember).subscribe({
+      next(data) {
+        console.log("Added new family member.");
+      },
+      error(err) { console.error("ERROR: could not add new family member.") },
       complete() { }
     });
   }
 
   private initFormControls() {
-    this.firstnameControl = this._formBuilder.control(this.newFamilyMember.FirstName, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]);
-    this.lastnameControl = this._formBuilder.control(this.newFamilyMember.LastName, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]);
-    this.phoneControl = this._formBuilder.control(this.newFamilyMember.Phone, [Validators.required, Validators.pattern('^[0-9]{10}$')]);
+    this.firstnameControl = this._formBuilder.control(this.newUser.FirstName, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]);
+    this.lastnameControl = this._formBuilder.control(this.newUser.LastName, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]);
+    this.phoneControl = this._formBuilder.control(this.newUser.Phone, [Validators.required, Validators.pattern('^[0-9]{10}$')]);
     this.passwordControl = this._formBuilder.control(this.passwordControl, [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9/]+$')]);
     this.confirmPasswordControl = this._formBuilder.control(this.confirmPassword, [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9/]+$')]);
   }
@@ -162,12 +205,14 @@ export class FamilyComponent implements OnInit {
       this.confirmPasswordError = "Password must at least 6 characters long and have letters and digits.";
       return false;
     }
-
-    if (this.checkPhoneExists(this.newFamilyMember.Phone) == true) {
+    if (this.newUser.Password != this.confirmPassword) {
+      this.passwordMatchError = "Passwords do not match.";
+      return false;
+    }
+    if (this.checkPhoneExists(this.newUser.Phone) == true) {
       this.numberExistError = "Phone number already used.";
       return false;
     }
     return true;
   }
-
 }
