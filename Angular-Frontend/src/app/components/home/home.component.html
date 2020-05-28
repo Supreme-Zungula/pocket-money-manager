@@ -1,5 +1,64 @@
-
 <div class="container">
     <app-navbar></app-navbar>
-   <p>home works!</p> 
+
+    <mat-accordion class="mat-accordion-custom">
+
+        <mat-expansion-panel (opened)="panelOpenState">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon class="ng-mat-icon">account_circle</mat-icon>
+                    <h2>Account details:</h2>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+                <ul>
+                    <li>
+                        <label class="details-label">Name</label>
+                        <span class="info-value">:{{currentUser.FirstName}}</span>
+                    </li>
+                    <mat-divider></mat-divider>
+                    <li>
+                        <label class="details-label">Surname</label>
+                        <span>:{{ currentUser.LastName }}</span>
+                    </li>
+                    <mat-divider></mat-divider>
+                    <li>
+                        <label class="details-label">Account number</label>
+                        <span class="info-value">:{{ bankAccount.AccountNo }}</span>
+                    </li>
+                    <mat-divider></mat-divider>
+                    <li>
+                        <label class="details-label">Account balance</label>
+                        <span class="info-value">:R {{ bankAccount.Balance }}</span>
+                    </li>
+                    <mat-divider></mat-divider>
+                </ul>
+            </div>
+            <button mat-raised-button color="primary">
+                Transactions
+            </button>
+        </mat-expansion-panel>
+
+    </mat-accordion>
+    <mat-divider></mat-divider>
+    <mat-accordion class="mat-accordion-custom">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header (opened)="accountDetailsPanel">
+                <mat-panel-title>
+                    <mat-icon class="ng-mat-icon">group</mat-icon>
+                    <h2> Family members:</h2>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+                <ul *ngFor="let member of familyMembers">
+                    <li>
+                        <label class="info-label">{{ member.FirstName }} {{ member.LastName }}</label>
+                        <span class="value-label">{{ member.Relationship }}</span>
+                    </li>
+                    <mat-divider></mat-divider>
+                </ul>
+            </div>
+
+        </mat-expansion-panel>
+    </mat-accordion>
 </div>

@@ -57,9 +57,10 @@ export class User {
   }
 
   static mapResponseToUser(record: any) {
-    let user: User = new User();
+    let user: User; 
 
     if (record) {
+      user = new User();
       user.Id = record.id;
       user.FamilyId = record.familyId;
       user.FirstName = record.firstName;

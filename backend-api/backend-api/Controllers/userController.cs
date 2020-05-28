@@ -40,7 +40,7 @@ namespace backend_api.Controllers
         [Route("getbyphone/{Phone}")]
         public ActionResult<List<UserModel>> GetUserByPhone(string phone)
         {
-            
+
             UserModel existingUser = UserModel.FromDomain(userService.GetUserByPhone(phone));
 
             if (existingUser == null)
@@ -55,8 +55,9 @@ namespace backend_api.Controllers
             if (userDetails.FamilyId == 0)
                 userDetails.FamilyId = ObjectId.GenerateNewId().Increment;
             userService.Register(userDetails.ToDomain());
+            var userFromDB = UserModel.FromDomain(userService.GetUserByPhone(userDetails.Phone));
             var resourceUrl = Path.Combine(Request.Path.ToString(), Uri.EscapeUriString(userDetails.FirstName));
-            return Created(resourceUrl, userDetails);
+            return Created(resourceUrl, userFromDB);
         }
 
         [HttpPut]
@@ -77,7 +78,7 @@ namespace backend_api.Controllers
                 return Ok();
             }
         }
-        
+
         [HttpDelete]
         [Route("{Phone}")]
         public ActionResult Delete(string phone)

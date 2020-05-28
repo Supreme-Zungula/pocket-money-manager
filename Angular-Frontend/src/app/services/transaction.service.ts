@@ -20,7 +20,7 @@ export class TransactionService {
 	/**
 	 * Retrieves all transactions from DB.
 	 */
-	getAllTransactions(): Observable<Transaction[]> {
+	getAllTransactions$(): Observable<Transaction[]> {
 		const transactionsUrl = `${this._url}/all`;
 
 		return this._http.get<Transaction[]>(transactionsUrl).pipe(
@@ -35,7 +35,7 @@ export class TransactionService {
 	 * Retrieves a transaction from DB using it ID.
 	 * @param tranID - ID of the transactiont to retrieve
 	 */
-	getTransactionById(tranID: string): Observable<Transaction> {
+	getTransactionById$(tranID: string): Observable<Transaction> {
 		const transactionRoute = `${this._url}/${tranID}`
 
 		return this._http.get<Transaction>(transactionRoute).pipe(
@@ -46,7 +46,7 @@ export class TransactionService {
 		);
 	}
 
-	addTransaction(transactionIn: Transaction): Observable<Transaction> {
+	addTransaction$(transactionIn: Transaction): Observable<Transaction> {
 		return this._http.post<Transaction>(this._url, transactionIn).pipe(
 			tap(data => {
 				console.info(`Added new transaction with id = ${data.Id}`),
@@ -60,7 +60,7 @@ export class TransactionService {
 	 * @param tranID - ID of the transction to update.
 	 * @param transaction -  Transaction with new information
 	 */
-	updateTransaction(tranID: string, transaction: Transaction): Observable<Transaction> {
+	updateTransaction$(tranID: string, transaction: Transaction): Observable<Transaction> {
 		const updateRoute = `${this._url}/${tranID}`;
 
 		return this._http.put<Transaction>(updateRoute, transaction, this.httpOptions).pipe(
@@ -75,7 +75,7 @@ export class TransactionService {
 	 * Delete a transaction from DB.
 	 * @param transID - ID of the transactiont to be deleted.
 	 */
-	deleteTransaction(transID: string): Observable<Transaction> {
+	deleteTransaction$(transID: string): Observable<Transaction> {
 		const deleteRoute = `${this._url}/${transID}`;
 
 		return this._http.delete<Transaction>(deleteRoute, this.httpOptions).pipe(

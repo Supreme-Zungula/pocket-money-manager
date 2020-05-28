@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,6 @@ import { User } from 'src/app/models/user';
 })
 export class LoginComponent implements OnInit {
   private _currentUser: User;
-  private _canLogin: boolean = false;
   private _usersList: User[] = [];
 
   /* public members */
@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
     private _userService: UserService,
     private _router: Router,
     private _formBuilder: FormBuilder,
+    private _authService: AuthService,
   ) {
     this.initFormControls();
   }
@@ -47,9 +48,8 @@ export class LoginComponent implements OnInit {
     }
     else {
       if (this._currentUser.Password == this.password) {
-        this._userService.setLoggedInUser(this._currentUser);
-        this._userService.userLoggedIn = true;
-        this._router.navigate(['home', this._currentUser.FirstName]);
+        this._authService.setLoggedIn(true, this._currentUser.Phone);
+        this._router.navigate(['home']);
       }
       this.phoneError = 'Invalid password';
     }
@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
   }
 
   private getUsers() {
-    this._userService.getAllUsers().subscribe(data => {
+    this._userService.getAllUsers$().subscribe(data => {
       this._usersList = User.mapResponseToUsers(data);
     });
   }

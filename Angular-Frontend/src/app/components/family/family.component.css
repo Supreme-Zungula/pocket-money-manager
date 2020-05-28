@@ -1,0 +1,25 @@
+.family-member-panel {
+    margin: 5px;
+}
+
+.raised-btn {
+    margin: 10px;
+}
+
+.form-container {
+    padding: 5px;
+}
+
+.fullname-label {
+    padding-top: 5px;
+}
+
+.details-label {
+    font-weight: 600;
+    width: 40%;
+    justify-content: center;
+    float: left;
+}
+.info-value {
+    font-style: italic;
+}

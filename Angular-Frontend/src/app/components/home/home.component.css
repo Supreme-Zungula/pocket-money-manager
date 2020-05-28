@@ -1,0 +1,31 @@
+.mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
+
+.mat-accordion-custom {
+  margin: 5px;
+}
+
+.details-label {
+  font-weight: 600;
+  width: 40%;
+  justify-content: center;
+  float: left;
+}
+.info-value {
+  font-style: italic;
+  
+}
+
+.info-label {
+  font-weight: 600;
+  width: 70%;
+  margin-right: 5px;
+}
+
+.value-label {
+  font-style: italic;
+  float: right;
+  text-align: left;
+  width: 15%;
+}
