@@ -37,6 +37,7 @@ namespace WPF_Frontend.ApiHelper
             }
             return null;
         }
+
         public UserModel LoginUser(string phone)
         {
             HttpResponseMessage response = ApiClient.GetAsync($"api/user/getbyphone/{phone}").Result;
@@ -73,7 +74,28 @@ namespace WPF_Frontend.ApiHelper
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
         }
 
+        public async Task AddMember(FamilyMemberModel member)
+        {
+            using HttpResponseMessage response = await ApiClient.PostAsJsonAsync("api/familymember", member);
+            if (!response.IsSuccessStatusCode)
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+        }
+
         #endregion
-        
+
+        public async Task UpdateMember(FamilyMemberModel member)
+        {
+            using HttpResponseMessage response = await ApiClient.PutAsJsonAsync("api/familymember", member);
+            if (!response.IsSuccessStatusCode)
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+        }
+
+        public async Task UpdateMember(UserModel member)
+        {
+            using HttpResponseMessage response = await ApiClient.PutAsJsonAsync("api/user", member);
+            if (!response.IsSuccessStatusCode)
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+        }
+        //response = client.PutAsJsonAsync("api/person", person).Result;
     }
 }

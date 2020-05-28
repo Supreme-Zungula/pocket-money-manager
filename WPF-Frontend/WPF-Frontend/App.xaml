@@ -49,6 +49,9 @@
             <DataTemplate DataType="{x:Type familyvm:AllMembersViewModel}">
                 <familyv:AllMembersView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type familyvm:EditMemberViewModel}">
+                <familyv:EditMemberView/>
+            </DataTemplate>
             <!--#endregion-->
 
             <!--#region Transactions resources -->

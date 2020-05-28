@@ -12,7 +12,7 @@
         <TextBlock Text="MY FAMILY" Margin="10" FontSize="22" FontWeight="Medium"/>
         <TextBlock Margin="5 0" Text="{Binding Test}" FontSize="15"/>
         <StackPanel Margin="20 0">
-            <ItemsControl ItemsSource="{Binding FamilyMembersList}">
+            <ItemsControl ItemsSource="{Binding FamilyMembersList, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,NotifyOnValidationError=True,ValidatesOnDataErrors=True}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Margin="10" Width="110" Height="160">

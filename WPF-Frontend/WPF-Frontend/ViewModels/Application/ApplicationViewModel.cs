@@ -85,7 +85,12 @@ namespace WPF_Frontend.ViewModels.Application
         private void Transactions(object obj)
         {
             ChangeViewModel(PageViewModels[5]);
-        } 
+        }
+
+        private void EditMember(object obj)
+        {
+            ChangeViewModel(PageViewModels[6]);
+        }
         #endregion
 
         public ApplicationViewModel()
@@ -97,6 +102,7 @@ namespace WPF_Frontend.ViewModels.Application
             PageViewModels.Add(new AddMemberViewModel());
             PageViewModels.Add(new AllMembersViewModel());
             PageViewModels.Add(new TransactionsViewModel());
+            PageViewModels.Add(new AddMemberViewModel());
 
             CurrentPageViewModel = PageViewModels[0];
 
@@ -106,6 +112,7 @@ namespace WPF_Frontend.ViewModels.Application
             Mediator.Subscribe(ApplicationPage.AddMember.ToString(), AddMember);
             Mediator.Subscribe(ApplicationPage.AllMembers.ToString(), AllMembers);
             Mediator.Subscribe(ApplicationPage.Transactions.ToString(), Transactions);
+            Mediator.Subscribe(ApplicationPage.EditMember.ToString(), EditMember);
         }
     }
 }

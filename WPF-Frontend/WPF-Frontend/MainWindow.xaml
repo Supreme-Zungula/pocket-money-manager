@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPF_Frontend"
         xmlns:views="clr-namespace:WPF_Frontend.Views.Dashboard"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="900">
 
     <Border Background="Azure">
         <Grid>

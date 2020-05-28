@@ -75,14 +75,14 @@
                     </Grid>
                 </Button>
 
-                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD">
+                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD" Command="{Binding AddMember}">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="Add" VerticalAlignment="Center"/>
-                        <TextBlock HorizontalAlignment="Center" Text="ADD MEMBER" FontFamily="Champagne &amp; Limousines"/>
+                        <TextBlock Text="ADD MEMBER" FontFamily="Champagne &amp; Limousines" Margin="29,0,0,0" HorizontalAlignment="Left" Width="91"/>
                     </Grid>
                 </Button>
 
-                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD">
+                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD" Command="{Binding EditMember}">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="Edit" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="EDIT MEMBER" FontFamily="Champagne &amp; Limousines"/>
@@ -98,7 +98,7 @@
             </StackPanel>
         </Grid>
 
-        <Grid x:Name="topbar" Grid.ColumnSpan="2" Background="#FF8522BD">
+        <Grid Grid.ColumnSpan="2" Background="#FF8522BD">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,0">
                 <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
                     <materialDesign:PackIcon Kind="Bell"/>
@@ -106,7 +106,7 @@
                 <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
                     <materialDesign:PackIcon Kind="Account"/>
                 </Button>
-                <Button x:Name="ButtonFechar" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
                     <materialDesign:PackIcon Kind="Power"/>
                 </Button>
             </StackPanel>
