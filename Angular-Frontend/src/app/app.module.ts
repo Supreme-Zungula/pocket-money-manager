@@ -13,19 +13,23 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatInputModule} from '@angular/material/input';
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
 import { HomeComponent } from './components/home/home.component';
 import { ErrorComponent } from './components/error/error.component';
+import { FamilyComponent } from './components/family/family.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +39,8 @@ import { ErrorComponent } from './components/error/error.component';
     NavbarComponent,
     HomeComponent,
     ErrorComponent,
+    FamilyComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +62,9 @@ import { ErrorComponent } from './components/error/error.component';
     MatCheckboxModule,
     MatInputModule,
     MatRadioModule,
-    
+    MatDividerModule,
+    MatExpansionModule,
+    MatChipsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -32,3 +32,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     text-decoration: none;
     margin: 10px;
 }
+.raised-btn {
+    margin: 5px;
+}
+.ng-mat-icon {
+    padding: 5px;
+    margin-right: 5px;
+}

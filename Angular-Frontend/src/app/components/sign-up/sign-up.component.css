@@ -12,3 +12,12 @@
     margin-left: 5px;
     color: red;
 }
+
+.details-label {
+    font-weight: 500;
+    width: 20%;
+}
+
+.details-label span {
+    font-style: italic;
+}

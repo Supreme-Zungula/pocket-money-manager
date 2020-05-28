@@ -83,19 +83,5 @@ namespace WPF_Frontend.ApiHelper
 
         #endregion
 
-        public async Task UpdateMember(FamilyMemberModel member)
-        {
-            using HttpResponseMessage response = await ApiClient.PutAsJsonAsync("api/familymember", member);
-            if (!response.IsSuccessStatusCode)
-                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
-        }
-
-        public async Task UpdateMember(UserModel member)
-        {
-            using HttpResponseMessage response = await ApiClient.PutAsJsonAsync("api/user", member);
-            if (!response.IsSuccessStatusCode)
-                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
-        }
-        //response = client.PutAsJsonAsync("api/person", person).Result;
     }
 }

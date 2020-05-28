@@ -2,29 +2,36 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
-import { AuthService } from 'src/app/services/auth.service';
+import { FamilyService } from 'src/app/services/family.service';
 import { BankAccount } from 'src/app/models/BankAccount';
 import { BankAccountService } from 'src/app/services/bank-account.service';
-import { retry } from 'rxjs/operators';
 import { FamilyMember } from 'src/app/models/FamilyMember';
-import { FamilyService } from 'src/app/services/family.service';
 
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  selector: 'app-family',
+  templateUrl: './family.component.html',
+  styleUrls: ['./family.component.css']
 })
+export class FamilyComponent implements OnInit {
+  private _userToken: string;
 
-export class SignUpComponent implements OnInit {
-  // Private members
-  private currentUser: User;
-
-  // Public members
-  public usersList: User[] = [];
-  public newUser: User;
-  public confirmPassword: string;
+  currentUser: User;
+  newUser: User = new User();
+  usersList: User[] = [];
+  accountsList: BankAccount[] = [];
+  newFamilyMember: FamilyMember;
+  familyMembers: FamilyMember[] = [];
+  bankDetails: BankAccount;
+  panelOpenState: boolean = false;
+  showForm: boolean = false;
+  confirmPassword: string;
+  userRelation: string;
+  hide: boolean = true;
+  canAddUser: boolean = false;
+  canDeleteUser: boolean = false;
 
   /* control for form input validation */
   public firstnameControl: FormControl;
@@ -42,38 +49,94 @@ export class SignUpComponent implements OnInit {
   passwordMatchError: string;
   numberExistError: string;
 
+
   constructor(
-    private _userService: UserService,
-    private _formBuilder: FormBuilder,
     private _router: Router,
     private _authService: AuthService,
-    private _bankAccountService: BankAccountService,
+    private _userService: UserService,
     private _familyService: FamilyService,
+    private _formBuilder: FormBuilder,
+    private _bankAccountService: BankAccountService,
   ) {
-    this.newUser = new User();
+
+  }
+
+  ngOnInit(): void {
+    this._userToken = this._authService.getUserToken();
+    let isLoggedIn = this._authService.isLoggedIn();
+
+    if (isLoggedIn == false) {
+      this._router.navigate(['login']);
+    }
+
+    this._userService.getUserByPhone$(this._userToken).subscribe(data => {
+      this.currentUser = User.mapResponseToUser(data);
+      if (this.currentUser.Role === "admin") {
+        this.canAddUser = true;
+        this.canDeleteUser = true;
+      }
+      this.getFamilyMembers();
+    });
+
     this.initFormControls();
+    this.getBankAcccounts();
   }
-
-  async ngOnInit() {
-    this.getAllUsers();
-  }
-
-  getAllUsers() {
-    this._userService.getAllUsers$()
-      .subscribe((data: any) => {
-        this.usersList = User.mapResponseToUsers(data);
-      });
-  }
-
-
 
   validateUserInput() {
     if (this.validControls()) {
-      this.newUser.Role = "admin";
+      this.newUser.FamilyId = this.currentUser.FamilyId;
+      this.newUser.Role = "ordinary";
       this.createNewUserAccount();
-      this._authService.setLoggedIn(true, this.newUser.Phone);
-      this._router.navigate(['home']);
+      this.createFamilyMember();
+      this.getFamilyMembers();
+      this.getBankAcccounts();
+      this.showForm = false;
     }
+  }
+
+  deleteFamilyMember(member: FamilyMember) {
+    this._familyService.deleteFamilyMember$(member.Phone).subscribe({
+      next(data) { console.log("Family deleted") },
+      error(err) {
+        console.error(`ERROR: ${err}`);
+      },
+      complete() { }
+    });
+    this.getFamilyMembers();
+    this._userService.deleteUser$(member.Phone).subscribe({
+      next(data) { console.log("User deleted.") },
+      error(err) { console.log(`ERROR: ${err}`) },
+      complete() { }
+    });
+
+    window.location.reload();
+  }
+
+  openPanel(familyMember: User) {
+    this.bankDetails = this.accountsList.find(account => {
+      return account.CustomerRef = familyMember.Id;
+    })
+  }
+  cancelForm() {
+    this.showForm = false;
+  }
+
+  addNewMember() {
+    this.showForm = true;
+  }
+
+  private getBankAcccounts() {
+    this._bankAccountService.getAllAccounts$().subscribe(data => {
+      this.accountsList = BankAccount.mapResponseToBankAccountList(data);
+    })
+  }
+  private async getFamilyMembers() {
+    this._familyService.getAllFamilyMember$(this.currentUser.FamilyId).subscribe(data => {
+      this.familyMembers = FamilyMember.mapResponseToFamilyMembersList(data)
+      this.familyMembers = this.familyMembers.filter(member => {
+        return member.Phone != this.currentUser.Phone;
+      })
+    });
   }
 
   private createNewUserAccount() {
@@ -86,35 +149,36 @@ export class SignUpComponent implements OnInit {
     });
 
     this._userService.getUserByPhone$(this.newUser.Phone).subscribe(data => {
-      this.currentUser = User.mapResponseToUser(data)
+      let userData: User = User.mapResponseToUser(data)
       let newAccount: BankAccount = new BankAccount();
 
-      newAccount.CustomerRef = this.currentUser.Id;
+      newAccount.CustomerRef = userData.Id;
       newAccount.Balance = 0;
       this._bankAccountService.addBankAccount$(newAccount).subscribe({
         next(data) { console.log("new bank account succefully added.") },
         error(err) { console.error("ERROR: failed to add new bank account.") },
         complete() { }
       });
-      this.addToFamilyMembers();
     });
   }
 
-  private addToFamilyMembers() {
-    let newMember: FamilyMember = new FamilyMember();
-    newMember.FamilyId = this.currentUser.FamilyId;
-    newMember.FirstName = this.currentUser.FirstName;
-    newMember.LastName = this.currentUser.LastName;
-    newMember.Phone = this.currentUser.Phone;
-    newMember.Relationship = this.currentUser.Role;
+  private createFamilyMember() {
+    this.newFamilyMember = new FamilyMember();
+    this.newFamilyMember.FamilyId = this.newUser.FamilyId;
+    this.newFamilyMember.FirstName = this.newUser.FirstName;
+    this.newFamilyMember.LastName = this.newUser.LastName;
+    this.newFamilyMember.Phone = this.newUser.Phone;
+    this.newFamilyMember.Relationship = this.userRelation;
 
-    this._familyService.addFamilyMember$(newMember).subscribe({
-      next(data) { console.log("new member added.") },
-      error(err) { console.error(`ERROR: ${err}`) },
+    this._familyService.addFamilyMember$(this.newFamilyMember).subscribe({
+      next(data) {
+        console.log("Added new family member.");
+      },
+      error(err) { console.error("ERROR: could not add new family member.") },
       complete() { }
     });
-
   }
+
   private initFormControls() {
     this.firstnameControl = this._formBuilder.control(this.newUser.FirstName, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]);
     this.lastnameControl = this._formBuilder.control(this.newUser.LastName, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]);
