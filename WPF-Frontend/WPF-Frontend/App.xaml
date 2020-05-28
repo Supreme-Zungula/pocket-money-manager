@@ -34,6 +34,9 @@
             <DataTemplate DataType="{x:Type userviewmodel:SignUpViewModel}">
                 <userview:SignUpView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type userviewmodel:ProfileViewModel}">
+                <userview:ProfileView/>
+            </DataTemplate>
             <!--#endregion-->
 
             <!--#region Dashboard resources -->
@@ -48,6 +51,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type familyvm:AllMembersViewModel}">
                 <familyv:AllMembersView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type familyvm:EditMemberViewModel}">
+                <familyv:EditMemberView/>
             </DataTemplate>
             <!--#endregion-->
 

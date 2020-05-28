@@ -1,8 +1,5 @@
 ﻿using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace WPF_Frontend.Models.Family
 {
@@ -52,6 +49,27 @@ namespace WPF_Frontend.Models.Family
             }
         }
 
+        public int FamilyId
+        {
+            get => _familyId;
+            set
+            {
+                _familyId = value;
+                RaisePropertyChanged("FamilyId");
+            }
+        }
+
+        public string Id
+        {
+            get => _id;
+            set
+            {
+                if (value == _id) return;
+                _id = value;
+                RaisePropertyChanged("Id");
+            }
+        }
+
         public string Phone
         {
             get => _phone;
@@ -60,6 +78,44 @@ namespace WPF_Frontend.Models.Family
                 _phone = value;
                 RaisePropertyChanged("Phone");
             }
+        }
+
+        public FamilyMemberModel ToFamilyMember(UserModel user, string relationship)
+        {
+            return new FamilyMemberModel
+            {
+                Id = user.Id,
+                FamilyId = user.FamilyId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Phone = user.Phone,
+                Relationship = relationship
+            };
+        }
+
+        public FamilyMemberModel ToFamilyMember(FamilyMemberModel user)
+        {
+            return new FamilyMemberModel
+            {
+                Id = user.Id,
+                FamilyId = user.FamilyId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Phone = user.Phone,
+                Relationship = user.Relationship
+            };
+        }
+
+        public UserModel FromFamily(FamilyMemberModel member)
+        {
+            return new UserModel
+            {
+                Id = this.Id,
+                FamilyId = this.FamilyId,
+                FirstName = this.FirstName,
+                LastName = this.LastName,
+                Phone = this.Phone
+            };
         }
     }
 }

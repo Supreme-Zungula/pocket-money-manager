@@ -8,10 +8,11 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:pwbx="clr-namespace:WPF_Frontend.ViewModels.Helpers"
-             mc:Ignorable="d" 
-             d:DesignHeight="480" d:DesignWidth="380">
+             mc:Ignorable="d"
+             Background="LightCyan"
+             d:DesignHeight="480" d:DesignWidth="800">
     <Grid>
-        <Grid>
+        <Grid Width="380" Height="480">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="2*"/>
@@ -21,8 +22,8 @@
             <Border CornerRadius="10" Grid.RowSpan="2">
                 <Border.Background>
                     <LinearGradientBrush>
-                        <GradientStop Color="#7be9f6" Offset="0.0"/>
-                        <GradientStop Color="#f083da" Offset="1"/>
+                        <GradientStop Color="LightGray" Offset="0.1"/>
+                        <GradientStop Color="#FF8522BD" Offset="1"/>
                     </LinearGradientBrush>
                 </Border.Background>
             </Border>

@@ -9,6 +9,7 @@ namespace WPF_Frontend.ViewModels.Application
         AddMember,
         AllMembers,
         EditMember,
-        Transactions
+        Transactions,
+        Profile
     }
 }

@@ -96,7 +96,49 @@ namespace WPF_Frontend.ApiHelper
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
         }
 
+        public async Task AddMember(FamilyMemberModel member)
+        {
+            UserModel setId = GetUserByPhone(member.Phone);
+            member.Id = setId.Id;
+            using HttpResponseMessage response = await ApiClient.PostAsJsonAsync("api/familymember", member);
+            if (!response.IsSuccessStatusCode)
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+        }
         #endregion
-        
+
+        #region Put Methods
+        public async Task UpdateMember(FamilyMemberModel member)
+        {
+            using HttpResponseMessage response = await ApiClient.PutAsJsonAsync("api/familymember", member);
+            if (!response.IsSuccessStatusCode)
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+        }
+
+        public async Task UpdateMember(UserModel member)
+        {
+            UserModel setPass = GetUserByPhone(member.Phone);
+            member.Password = setPass.Password;
+            member.Role = setPass.Role;
+            using HttpResponseMessage response = await ApiClient.PutAsJsonAsync("api/user", member);
+            if (!response.IsSuccessStatusCode)
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+        }
+        #endregion
+
+        #region Delete Methods
+        public async Task DeleteMember(FamilyMemberModel member)
+        {
+            using HttpResponseMessage response = await ApiClient.DeleteAsync($"api/familymember/{member.Phone}");
+            if (!response.IsSuccessStatusCode)
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+        }
+
+        public async Task DeleteMember(UserModel member)
+        {
+            using HttpResponseMessage response = await ApiClient.DeleteAsync($"api/user/{member.Phone}");
+            if (!response.IsSuccessStatusCode)
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+        } 
+        #endregion
     }
 }
