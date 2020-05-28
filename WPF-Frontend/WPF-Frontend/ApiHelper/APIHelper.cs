@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using WPF_Frontend.Models.BankAccount;
 using WPF_Frontend.Models.Family;
+using WPF_Frontend.Models.Transactions;
 
 namespace WPF_Frontend.ApiHelper
 {
@@ -38,6 +39,29 @@ namespace WPF_Frontend.ApiHelper
             }
             return null;
         }
+
+        public IEnumerable<BankAccountModel> GetAllAccounts()
+        {
+            HttpResponseMessage response = ApiClient.GetAsync("api/BankAccounts").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                IEnumerable<BankAccountModel> people = response.Content.ReadAsAsync<IEnumerable<BankAccountModel>>().Result;
+                return people;
+            }
+            return null;
+        }
+
+        public IEnumerable<TransactionsModel> GetAllTransactions()
+        {
+            HttpResponseMessage response = ApiClient.GetAsync("api/Transaction/all").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                IEnumerable<TransactionsModel> people = response.Content.ReadAsAsync<IEnumerable<TransactionsModel>>().Result;
+                return people;
+            }
+            return null;
+        }
+
         public UserModel LoginUser(string phone)
         {
             HttpResponseMessage response = ApiClient.GetAsync($"api/user/getbyphone/{phone}").Result;
@@ -66,6 +90,17 @@ namespace WPF_Frontend.ApiHelper
             if (response.IsSuccessStatusCode)
             {
                 IEnumerable<FamilyMemberModel> members = response.Content.ReadAsAsync<IEnumerable<FamilyMemberModel>>().Result;
+                return members;
+            }
+            return null;
+        }
+
+        public IEnumerable<TransactionsModel> GetTransactionsById(string UserId)
+        {
+            HttpResponseMessage response = ApiClient.GetAsync($"api/familymember/getmembers/{UserId}").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                IEnumerable<TransactionsModel> members = response.Content.ReadAsAsync<IEnumerable<TransactionsModel>>().Result;
                 return members;
             }
             return null;
