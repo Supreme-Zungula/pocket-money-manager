@@ -52,28 +52,34 @@ export class TransactionsComponent implements OnInit {
     }
 
     this._userNumber = this._authService.getUserToken();
-    this._bankAccountService.getAllAccounts$().subscribe(data => {
-      this._bankAccountsList = BankAccount.mapResponseToBankAccountList(data);
-    }).unsubscribe();
 
     this._userService.getUserByPhone$(this._userNumber).subscribe(data => {
       this.currentUser = User.mapResponseToUser(data);
     });
 
+    this._bankAccountService.getAllAccounts$().subscribe(data => {
+      this._bankAccountsList = BankAccount.mapResponseToBankAccountList(data);
+
+      this._bankAccount = this._bankAccountsList.find(account => {
+        return account.CustomerRef === this.currentUser.Id;
+      })
+    });
   }
+
 
   depositCash() {
     if (this.depositFormControl.invalid && (this.depositFormControl.dirty || this.depositFormControl.touched)) {
       this.errorMessage = "Please enter a valid deposit amount. No spaces or letters allowed."
     }
+    else {
+      this._bankAccount.Balance += parseFloat(this.depositAmount);
+      this._bankAccountService.updateAccount$(this._bankAccount.Id, this._bankAccount).subscribe({
+        next(data) { console.log('Accounts successfully updated.') },
+        error(err) { console.error(`ERROR: ${err}`) },
+        complete() { }
+      });
+    }
 
-    this._bankAccount = this.getBankAccount();
-    this._bankAccount.Balance += Number(this.depositAmount);
-  }
-
-  private getBankAccount(): BankAccount {
-    return this._bankAccountsList.find(account => {
-      return account.CustomerRef === this.currentUser.Id;
-    })
   }
 }
+
