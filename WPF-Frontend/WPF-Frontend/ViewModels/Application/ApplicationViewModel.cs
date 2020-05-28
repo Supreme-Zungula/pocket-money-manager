@@ -91,6 +91,11 @@ namespace WPF_Frontend.ViewModels.Application
         {
             ChangeViewModel(PageViewModels[6]);
         }
+
+        private void Profile(object obj)
+        {
+            ChangeViewModel(PageViewModels[7]);
+        }
         #endregion
 
         public ApplicationViewModel()
@@ -103,6 +108,7 @@ namespace WPF_Frontend.ViewModels.Application
             PageViewModels.Add(new AllMembersViewModel());
             PageViewModels.Add(new TransactionsViewModel());
             PageViewModels.Add(new AddMemberViewModel());
+            PageViewModels.Add(new ProfileViewModel());
 
             CurrentPageViewModel = PageViewModels[0];
 
@@ -113,6 +119,8 @@ namespace WPF_Frontend.ViewModels.Application
             Mediator.Subscribe(ApplicationPage.AllMembers.ToString(), AllMembers);
             Mediator.Subscribe(ApplicationPage.Transactions.ToString(), Transactions);
             Mediator.Subscribe(ApplicationPage.EditMember.ToString(), EditMember);
+            Mediator.Subscribe(ApplicationPage.Profile.ToString(), Profile);
+
         }
     }
 }

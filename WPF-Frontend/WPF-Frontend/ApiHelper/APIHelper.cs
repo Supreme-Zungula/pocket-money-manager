@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Windows;
+using WPF_Frontend.Models.BankAccount;
 using WPF_Frontend.Models.Family;
 
 namespace WPF_Frontend.ApiHelper
@@ -37,8 +38,18 @@ namespace WPF_Frontend.ApiHelper
             }
             return null;
         }
-
         public UserModel LoginUser(string phone)
+        {
+            HttpResponseMessage response = ApiClient.GetAsync($"api/user/getbyphone/{phone}").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                UserModel user = response.Content.ReadAsAsync<UserModel>().Result;
+                return user;
+            }
+            return null;
+        }
+
+        public UserModel GetUserByPhone(string phone)
         {
             HttpResponseMessage response = ApiClient.GetAsync($"api/user/getbyphone/{phone}").Result;
             if (response.IsSuccessStatusCode)
@@ -74,14 +85,60 @@ namespace WPF_Frontend.ApiHelper
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
         }
 
+        public async Task SetBankAccount(BankAccountModel userDetails)
+        {
+            using HttpResponseMessage response = await ApiClient.PostAsJsonAsync("api/bankaccounts", userDetails);
+            if (response.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Bank Account Created");
+            }
+            else
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+        }
+
         public async Task AddMember(FamilyMemberModel member)
         {
+            UserModel setId = GetUserByPhone(member.Phone);
+            member.Id = setId.Id;
             using HttpResponseMessage response = await ApiClient.PostAsJsonAsync("api/familymember", member);
             if (!response.IsSuccessStatusCode)
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
         }
-
         #endregion
 
+        #region Put Methods
+        public async Task UpdateMember(FamilyMemberModel member)
+        {
+            using HttpResponseMessage response = await ApiClient.PutAsJsonAsync("api/familymember", member);
+            if (!response.IsSuccessStatusCode)
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+        }
+
+        public async Task UpdateMember(UserModel member)
+        {
+            UserModel setPass = GetUserByPhone(member.Phone);
+            member.Password = setPass.Password;
+            member.Role = setPass.Role;
+            using HttpResponseMessage response = await ApiClient.PutAsJsonAsync("api/user", member);
+            if (!response.IsSuccessStatusCode)
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+        }
+        #endregion
+
+        #region Delete Methods
+        public async Task DeleteMember(FamilyMemberModel member)
+        {
+            using HttpResponseMessage response = await ApiClient.DeleteAsync($"api/familymember/{member.Phone}");
+            if (!response.IsSuccessStatusCode)
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+        }
+
+        public async Task DeleteMember(UserModel member)
+        {
+            using HttpResponseMessage response = await ApiClient.DeleteAsync($"api/user/{member.Phone}");
+            if (!response.IsSuccessStatusCode)
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+        } 
+        #endregion
     }
 }

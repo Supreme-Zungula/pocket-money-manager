@@ -1,8 +1,5 @@
 ﻿using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace WPF_Frontend.Models.Family
 {
@@ -62,6 +59,17 @@ namespace WPF_Frontend.Models.Family
             }
         }
 
+        public string Id
+        {
+            get => _id;
+            set
+            {
+                if (value == _id) return;
+                _id = value;
+                RaisePropertyChanged("Id");
+            }
+        }
+
         public string Phone
         {
             get => _phone;
@@ -76,6 +84,7 @@ namespace WPF_Frontend.Models.Family
         {
             return new FamilyMemberModel
             {
+                Id = user.Id,
                 FamilyId = user.FamilyId,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -88,6 +97,7 @@ namespace WPF_Frontend.Models.Family
         {
             return new FamilyMemberModel
             {
+                Id = user.Id,
                 FamilyId = user.FamilyId,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -100,7 +110,11 @@ namespace WPF_Frontend.Models.Family
         {
             return new UserModel
             {
-                FirstName = this.FirstName
+                Id = this.Id,
+                FamilyId = this.FamilyId,
+                FirstName = this.FirstName,
+                LastName = this.LastName,
+                Phone = this.Phone
             };
         }
     }

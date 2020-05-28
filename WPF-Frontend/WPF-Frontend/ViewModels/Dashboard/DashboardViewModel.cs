@@ -17,6 +17,7 @@ using WPF_Frontend.Views.Family;
 using Prism.Commands;
 using System.Windows.Data;
 using MaterialDesignThemes.Wpf;
+using WPF_Frontend.ViewModels.User;
 
 namespace WPF_Frontend.ViewModels.Dashboard
 {
@@ -27,7 +28,10 @@ namespace WPF_Frontend.ViewModels.Dashboard
         private string _familyname;
         private ICommand _addmember;
         private ICommand _editmember;
-        //private ICommand _addmember;
+        private ICommand _familycommand;
+        private ICommand _profilecommand;
+        private ICommand _transactioncommand;
+        private ICommand _logoutcommand;
 
 
         public static AddMemberView addwindow = new AddMemberView();
@@ -55,6 +59,58 @@ namespace WPF_Frontend.ViewModels.Dashboard
                         null);
                 }
                 return _editmember;
+            }
+        }
+
+        public ICommand FamilyCommand
+        {
+            get
+            {
+                if (_familycommand == null)
+                {
+                    _familycommand = new RelayCommand(param => this.Family(),
+                        null);
+                }
+                return _familycommand;
+            }
+        }
+
+        public ICommand ProfileCommand
+        {
+            get
+            {
+                if (_profilecommand == null)
+                {
+                    _profilecommand = new RelayCommand(param => this.Profile(),
+                        null);
+                }
+                return _profilecommand;
+            }
+        }
+
+        public ICommand LogOutCommand
+        {
+            get
+            {
+                if (_logoutcommand == null)
+                {
+                    _logoutcommand = new RelayCommand(param => this.LogOut(),
+                        null);
+                }
+                return _logoutcommand;
+            }
+        }
+
+        public ICommand TransactionsCommand
+        {
+            get
+            {
+                if (_transactioncommand == null)
+                {
+                    _transactioncommand = new RelayCommand(param => this.Transactions(),
+                        null);
+                }
+                return _transactioncommand;
             }
         }
 
@@ -94,6 +150,7 @@ namespace WPF_Frontend.ViewModels.Dashboard
             PageViewModels.Add(new EditMemberViewModel());
             PageViewModels.Add(new AllMembersViewModel());
             PageViewModels.Add(new TransactionsViewModel());
+            PageViewModels.Add(new ProfileViewModel());
 
             CurrentDashViewModel = PageViewModels[1];
         }
@@ -108,6 +165,27 @@ namespace WPF_Frontend.ViewModels.Dashboard
         private void Edit()
         {
             CurrentDashViewModel = PageViewModels[0];
+        }
+
+        private void Family()
+        {
+            CurrentDashViewModel = PageViewModels[1];
+        }
+
+        private void Profile()
+        {
+            CurrentDashViewModel = PageViewModels[3];
+        }
+
+        private void Transactions()
+        {
+            CurrentDashViewModel = PageViewModels[2];
+        }
+
+        private void LogOut()
+        {
+            _ = new ClearData();
+            Mediator.Notify(ApplicationPage.Login.ToString(), "");
         }
     }
 }

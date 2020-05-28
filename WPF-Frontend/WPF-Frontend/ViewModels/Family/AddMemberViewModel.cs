@@ -12,15 +12,17 @@ namespace WPF_Frontend.ViewModels.Family
 {
     public class AddMemberViewModel : BindableBase, IPageViewModel
     {
+        #region Priavte Members
         private FamilyMemberModel _member;
         private UserModel _user;
         private APIHelper _api;
         private bool _ischecked;
         private ICommand _addCommand;
-        private ICommand _cancelCommand;
+        private ICommand _cancelCommand; 
+        #endregion
 
 
-        #region Private Members
+        #region Public Properties
         public CheckDuplicate checkDuplicate { get; }
         public ICommand AddCommand
         {
@@ -105,6 +107,7 @@ namespace WPF_Frontend.ViewModels.Family
             API = new APIHelper();
         }
 
+        #region Private Methods
         private async Task SignUp()
         {
             if (IsChecked)
@@ -128,6 +131,7 @@ namespace WPF_Frontend.ViewModels.Family
         {
             DashboardViewModel.addwindow.Close();
             DashboardViewModel.addwindow = null;
-        }
+        } 
+        #endregion
     }
 }

@@ -34,6 +34,9 @@
             <DataTemplate DataType="{x:Type userviewmodel:SignUpViewModel}">
                 <userview:SignUpView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type userviewmodel:ProfileViewModel}">
+                <userview:ProfileView/>
+            </DataTemplate>
             <!--#endregion-->
 
             <!--#region Dashboard resources -->

@@ -1,7 +1,5 @@
 ﻿using Prism.Mvvm;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WPF_Frontend.ApiHelper;
@@ -13,15 +11,19 @@ namespace WPF_Frontend.ViewModels.Family
 {
     class EditMemberViewModel : BindableBase, IPageViewModel
     {
+        #region Private Members
         private APIHelper _api;
         private IEnumerable<FamilyMemberModel> _membersList;
         private bool _popupOpen;
         private ICommand _editClicked;
         private ICommand _update;
         private ICommand _cancel;
+        private ICommand _deleteClicked;
 
         private FamilyMemberModel _member;
+        #endregion
 
+        #region Public Properties
         public FamilyMemberModel Member
         {
             get => _member;
@@ -55,6 +57,19 @@ namespace WPF_Frontend.ViewModels.Family
             }
         }
 
+        public ICommand DeleteClicked
+        {
+            get
+            {
+                if (_deleteClicked == null)
+                {
+                    _deleteClicked = new RelayCommand(async param => await this.Delete(param),
+                        null);
+                }
+                return _deleteClicked;
+            }
+        }
+
         public ICommand UpdateCommand
         {
             get
@@ -83,18 +98,19 @@ namespace WPF_Frontend.ViewModels.Family
 
         public IEnumerable<FamilyMemberModel> MembersList
         {
-            get 
+            get
             {
-                if(_membersList == null)
+                if (_membersList == null)
                     _membersList = _api.GetAllFamilyMembers(DataStore.FamilyId);
-               return _membersList;
+                return _membersList;
             }
             set
             {
                 _membersList = value;
                 RaisePropertyChanged("MembersList");
             }
-        }
+        } 
+        #endregion
 
         public EditMemberViewModel()
         {
@@ -103,22 +119,33 @@ namespace WPF_Frontend.ViewModels.Family
             MembersList = _api.GetAllFamilyMembers(DataStore.FamilyId);
         }
 
+        #region Private Methods
         private void PopUp(object param)
         {
             Member = Member.ToFamilyMember(param as FamilyMemberModel);
             PopupOpen = true;
         }
 
+        private async Task Delete(object param)
+        {
+            Member = Member.ToFamilyMember(param as FamilyMemberModel);
+            await _api.DeleteMember(Member);
+            await _api.DeleteMember(Member.FromFamily(Member));
+            MembersList = _api.GetAllFamilyMembers(DataStore.FamilyId);
+        }
+
         private async Task Update()
         {
-            Console.WriteLine(Member);
             await _api.UpdateMember(Member);
-
+            await _api.UpdateMember(Member.FromFamily(Member));
+            MembersList = _api.GetAllFamilyMembers(DataStore.FamilyId);
+            PopupOpen = false;
         }
 
         private void Cancel()
         {
             PopupOpen = false;
-        }
+        } 
+        #endregion
     }
 }
