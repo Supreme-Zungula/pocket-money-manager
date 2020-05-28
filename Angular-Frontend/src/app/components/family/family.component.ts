@@ -204,7 +204,7 @@ export class FamilyComponent implements OnInit {
       return false;
     }
     if (this.lastnameControl.invalid && (this.lastnameControl.dirty || this.lastnameControl.touched)) {
-      this.lastnameError = "First name can only have letters.";
+      this.lastnameError = "Last name can only have letters.";
       return false;
     }
     if (this.phoneControl.invalid && (this.phoneControl.dirty || this.phoneControl.touched)) {

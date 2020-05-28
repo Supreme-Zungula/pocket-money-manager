@@ -1,4 +1,47 @@
 <div class="container">
     <app-navbar></app-navbar>
-    <p>transactions works!</p>
+    <div class="side-bar">
+        <ul>
+            <li>
+                <mat-icon class="side-bar-icon">attach_money</mat-icon>
+                <button mat-stroked-button color="accent">Deposit</button>
+            </li>
+            <li>
+                <mat-icon class="side-bar-icon">person</mat-icon>
+                <button mat-stroked-button color="accent">Withdraw</button>
+            </li>
+            <li>
+                <mat-icon class="side-bar-icon">person</mat-icon>
+                <button mat-stroked-button color="accent">Transfer</button>
+            </li>
+            <li>
+                <mat-icon class="side-bar-icon">person</mat-icon>
+                <button mat-stroked-button color="accent">Transactions</button>
+            </li>
+        </ul>
+    </div>
+    <!-- <mat-divider></mat-divider> -->
+    <div class="main-content">
+
+        <app-account-details></app-account-details>
+        <div class="deposit-container">
+            <mat-card>
+                <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Deposit amount.</mat-label>
+                        <input matInput [formControl]="depositFormControl" [errorStateMatcher]="matcher"
+                            placeholder="Ex. 250" [(ngModel)]="depositAmount">
+                        <mat-error *ngIf="depositFormControl.hasError('required')">
+                            Deposit amount is <strong>required</strong> {{errorMessage}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-error>{{errorMessage}}</mat-error>
+                </form>
+                <div class="form-actions">
+                    <button mat-raised-button color="accent">Cancel</button>
+                    <button mat-raised-button disabled="false" color="primary" (click)="depositCash()">Deposit</button>
+                </div>
+            </mat-card>
+        </div>
+    </div>
 </div>

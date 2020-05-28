@@ -42,3 +42,10 @@ li a {
 li a:hover {
   background-color: rgb(175, 97, 175);
 }
+
+@media only screen and (max-width: 600px) {
+  .username-holder {
+    display: none;
+  }
+
+}

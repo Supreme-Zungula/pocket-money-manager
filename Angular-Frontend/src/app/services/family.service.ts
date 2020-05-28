@@ -16,7 +16,7 @@ export class FamilyService {
   private _usersList: User[] = [];
   private _familyMembers: FamilyMember[] = [];
   private _bankAccounts: BankAccount[] = [];
-  private _url: string = ' http://localhost:5000/api/familyMember';
+  private _url: string = 'http://localhost:5000/api/familyMember';
   private httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
   constructor(

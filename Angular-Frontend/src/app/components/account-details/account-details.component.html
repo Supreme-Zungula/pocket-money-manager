@@ -1,0 +1,36 @@
+<mat-card class="example-card">
+    <mat-card-header>
+        <div mat-card-avatar>
+            <mat-icon class="ng-mat-icon">account_circle</mat-icon>
+        </div>
+        <mat-card-title>
+            <h2>Account details:</h2>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-accordion>
+    <mat-card-content>
+            <ul>
+                <li>
+                    <label class="details-label">Name</label>
+                    <span class="info-value">:{{currentUser.FirstName}}</span>
+                </li>
+                <mat-divider></mat-divider>
+                <li>
+                    <label class="details-label">Surname</label>
+                    <span>:{{ currentUser.LastName }}</span>
+                </li>
+                <mat-divider></mat-divider>
+                <li>
+                    <label class="details-label">Account number</label>
+                    <span class="info-value">:{{ bankAccount.AccountNo }}</span>
+                </li>
+                <mat-divider></mat-divider>
+                <li>
+                    <label class="details-label">Account balance</label>
+                    <span class="info-value">:R {{ bankAccount.Balance }}</span>
+                </li>
+                <mat-divider></mat-divider>
+            </ul>
+        </mat-card-content>
+    </mat-accordion>
+</mat-card>
