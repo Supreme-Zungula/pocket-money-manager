@@ -8,16 +8,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPF_Frontend.Views.Family
+namespace WPF_Frontend.Views.User
 {
     /// <summary>
-    /// Interaction logic for AddMemberView.xaml
+    /// Interaction logic for ProfileView.xaml
     /// </summary>
-    public partial class AddMemberView : Window
+    public partial class ProfileView : UserControl
     {
-        public AddMemberView()
+        public ProfileView()
         {
             InitializeComponent();
         }

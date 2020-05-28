@@ -61,52 +61,52 @@
             </Grid>
 
             <StackPanel Grid.Row="1">
-                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD">
+                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD"  Command="{Binding FamilyCommand}">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="GroupAdd"  VerticalAlignment="Center"/>
-                        <TextBlock HorizontalAlignment="Center" Text="CREATE FAMILY" FontFamily="Champagne &amp; Limousines"/>
+                        <TextBlock HorizontalAlignment="Center" Text="FAMILY" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
                 </Button>
 
-                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD">
+                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD" Command="{Binding ProfileCommand}">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="ADMIN" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
                 </Button>
 
-                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD">
+                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD" Command="{Binding AddMember}">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="Add" VerticalAlignment="Center"/>
-                        <TextBlock HorizontalAlignment="Center" Text="ADD MEMBER" FontFamily="Champagne &amp; Limousines"/>
+                        <TextBlock Text="ADD MEMBER" FontFamily="Champagne &amp; Limousines" Margin="29,0,0,0" HorizontalAlignment="Left" Width="91"/>
                     </Grid>
                 </Button>
 
-                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD">
+                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD" Command="{Binding EditMember}">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="Edit" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="EDIT MEMBER" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
                 </Button>
 
-                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD">
+                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD" Command="{Binding TransactionsCommand}">
                     <Grid Width="150">
-                        <materialDesign:PackIcon Kind="Delete" VerticalAlignment="Center"/>
-                        <TextBlock HorizontalAlignment="Center" Text="DELETE MEMBER" FontFamily="Champagne &amp; Limousines"/>
+                        <materialDesign:PackIcon Kind="BankTransfer" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Text="TRANSACTIONS" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
                 </Button>
             </StackPanel>
         </Grid>
 
-        <Grid x:Name="topbar" Grid.ColumnSpan="2" Background="#FF8522BD">
+        <Grid Grid.ColumnSpan="2" Background="#FF8522BD">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,0">
                 <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
                     <materialDesign:PackIcon Kind="Bell"/>
                 </Button>
-                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+                <Button Command="{Binding ProfileCommand}" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
                     <materialDesign:PackIcon Kind="Account"/>
                 </Button>
-                <Button x:Name="ButtonFechar" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+                <Button Command="{Binding LogOutCommand}" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
                     <materialDesign:PackIcon Kind="Power"/>
                 </Button>
             </StackPanel>

@@ -7,8 +7,56 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:local="clr-namespace:WPF_Frontend.Views.Family"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="EditM"
+             >
+    <Grid Background="#bccdd1">
+        <ListView ItemsSource="{Binding MembersList}" Width="650" Margin="0, 70, 0, 0" Foreground="Black">
+            <ListView.Resources>
+                <ContextMenu x:Key="ItemContextMenu" HorizontalAlignment="Right">
+                    <MenuItem Header="Edit" Command="{Binding Path=DataContext.EditClicked, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Background="WhiteSmoke"
+                              CommandParameter="{Binding}"
+                              />
+                    <MenuItem Header="Delete"  Command="{Binding Path=DataContext.DeleteClicked, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Background="WhiteSmoke"
+                              CommandParameter="{Binding}"
+                              />
+                </ContextMenu>
+            </ListView.Resources>
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}" >
+                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding FirstName}" Header="Name" Width="200" />
+                    <GridViewColumn DisplayMemberBinding="{Binding LastName}" Header="Surname" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Phone}" Header="Phone" Width="200"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Popup Name="member_edit"
+               Placement="Center"
+               PopupAnimation="Scroll"
+               HorizontalOffset="-80"
+               IsOpen="{Binding PopupOpen, Mode=TwoWay}"
+               VerticalOffset="-80"
+               AllowsTransparency="True">
+            <Grid Opacity="0.96" Background="Aquamarine" Margin="28,23,192,225.6"  Height="320" Width="464">
+                <TextBox Text="{Binding Member.FirstName}" Margin="127,20,139,269"/>
+                <TextBox Text="{Binding Member.LastName}" Margin="127,70,139,219"/>
+                <TextBox Text="{Binding Member.Phone}" Margin="127,122,139,167"/>
+                <Button Content="Update" Margin="127,278,250,10" Background="LimeGreen" Foreground="White" Command="{Binding UpdateCommand}"/>
+                <Button Content="Cancel" Margin="238,278,139,10" Background="GreenYellow" Foreground="red" Command="{Binding CancelCommand}"/>
+            </Grid>
+
+        </Popup>
     </Grid>
 </UserControl>
+
+<!--<ContextMenu HorizontalAlignment="Right">
+    <MenuItem Click="editPerson" x:Name="AdPresetButton" Header="Edit"/>
+    <MenuItem Click="deletePerson" Header="Delete"/>
+</ContextMenu>-->
