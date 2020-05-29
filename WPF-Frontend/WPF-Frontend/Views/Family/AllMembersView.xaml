@@ -14,15 +14,19 @@
             <ItemsControl ItemsSource="{Binding FamilyMembersList, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,NotifyOnValidationError=True,ValidatesOnDataErrors=True}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Margin="10" Width="110" Height="160">
+                        <Border Margin="10" Width="110" Height="160" Background="AliceBlue" CornerRadius="5">
                             <StackPanel>
                                 <Border Width="100" Height="100" CornerRadius="5" Margin="5">
                                     <Border.Effect>
                                         <DropShadowEffect ShadowDepth="1"/>
                                     </Border.Effect>
+                                    <StackPanel>
+                                        <TextBlock Margin="5" Text="{Binding FirstName}" FontSize="17" FontFamily="Franklin Gothic Medium"/>
+                                        <TextBlock Margin="5 0" Text="{Binding LastName}" FontSize="15"/>
+                                    </StackPanel>
                                 </Border>
-                                <TextBlock Margin="5" Text="{Binding FirstName}" FontSize="17" FontFamily="Franklin Gothic Medium"/>
-                                <TextBlock Margin="5 0" Text="{Binding LastName}" FontSize="15"/>
+                                <Button Background="#a03cf0" Width="90" Height="30" Content="Top Up" Command="{Binding Path=DataContext.TopUpCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                                        CommandParameter="{Binding}"/>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
@@ -34,5 +38,32 @@
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
         </StackPanel>
+        <Popup Name="member_edit"
+               Placement="Center"
+               PopupAnimation="Scroll"
+               HorizontalOffset="-80"
+               IsOpen="{Binding PopupOpen, Mode=TwoWay}"
+               VerticalOffset="-80"
+               AllowsTransparency="True">
+            <Border Height="320" Width="220" Opacity="0.96">
+                <Border.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="LightGray" Offset="0.1"/>
+                        <GradientStop Color="#FF8522BD" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackPanel HorizontalAlignment="Center">
+                    <Label Content="INSERT AMOUNT" FontWeight="ExtraBold" HorizontalAlignment="Center" FontSize="15"/>
+                    <TextBox Margin="0,20,0,0" HorizontalAlignment="Center" Text="{Binding Amount}" FontSize="25" />
+                    
+                    <StackPanel Orientation="Horizontal" Margin="0,40,0,0">
+                        <Button Margin="0,0,10,0" Width="70" Height="40" Content="Send" Foreground="White" Command="{Binding SendCommand}"
+                                />
+                        <Button Width="70" Height="40" Content="Cancel" Command="{Binding CancelCommand}"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+        </Popup>
     </StackPanel>
 </UserControl>

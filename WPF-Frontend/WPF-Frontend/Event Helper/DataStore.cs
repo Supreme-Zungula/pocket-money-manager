@@ -14,6 +14,9 @@ namespace WPF_Frontend.Event_Helper
         private static string _lastName;
         private static string _role;
         private static string _phone;
+        private static string _accountno;
+        private static decimal _balance;
+
 
         #endregion
 
@@ -86,6 +89,29 @@ namespace WPF_Frontend.Event_Helper
             }
         }
 
+        public static string AccountNo
+        {
+            get
+            {
+                return _accountno;
+            }
+            set
+            {
+                _accountno = value;
+            }
+        }
+
+        public static decimal Balance
+        {
+            get
+            {
+                return _balance;
+            }
+            set
+            {
+                _balance = value;
+            }
+        }
         #endregion
     }
 }

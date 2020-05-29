@@ -9,31 +9,55 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="#bccdd1">
-        <ListView ItemsSource="{Binding TransactionsList}" Width="700" Margin="0, 70, 0, 0" Foreground="Black">
-            <ListView.Resources>
-                <ContextMenu x:Key="ItemContextMenu" HorizontalAlignment="Right">
-                    <MenuItem Header="Edit" Command="{Binding Path=DataContext.EditClicked, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Background="WhiteSmoke"
-                              CommandParameter="{Binding}"
-                              />
-                    <MenuItem Header="Delete"  Command="{Binding Path=DataContext.DeleteClicked, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Background="WhiteSmoke"
-                              CommandParameter="{Binding}"
-                              />
-                </ContextMenu>
-            </ListView.Resources>
+        <ScrollViewer>
+            <StackPanel Margin="20 0">
+                <ItemsControl ItemsSource="{Binding TransactionsList, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,NotifyOnValidationError=True,ValidatesOnDataErrors=True}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="10" Width="500" Height="190" Background="AliceBlue" CornerRadius="5" HorizontalAlignment="Center">
+                                <Border.Effect>
+                                    <DropShadowEffect ShadowDepth="1"/>
+                                </Border.Effect>
+                                <Grid>
+                                    <StackPanel Margin="10,20,0,0" HorizontalAlignment="Left">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="Account no :" FontWeight="DemiBold" FontSize="16"/>
+                                            <TextBlock Margin="10,6,0,0" Text="{Binding AccountNo}" FontSize="14"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="Reference :" FontWeight="DemiBold" FontSize="16"/>
+                                            <TextBlock Margin="10,6,0,0" Text="{Binding Reference}"  FontSize="14"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="Withdrawl :" FontWeight="DemiBold" FontSize="16"/>
+                                            <TextBlock Margin="10,6,0,0" Text="{Binding Withdrawal}" FontSize="14"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="Deposit :" FontWeight="DemiBold" FontSize="16"/>
+                                            <TextBlock Margin="10,6,0,0" Text="{Binding Deposit}" FontSize="14"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="Date :" FontWeight="DemiBold" FontSize="16"/>
+                                            <TextBlock Margin="10,6,0,0" Text="{Binding Date}" FontSize="14"/>
+                                        </StackPanel>
+                                    </StackPanel>
 
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}" >
-                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding}" Header="Transaction Type" Width="200" />
-                    <GridViewColumn DisplayMemberBinding="{Binding}" Header="Recepient Ref" Width="200"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding}" Header="Date" Width="200"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding}" Header="Amount" Width="200"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+                                    <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                                        <Button Margin="0,0,2,2" Background="#c93d3a" Width="90" Height="30" Content="Remove" Command="{Binding Path=DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                                    CommandParameter="{Binding}"/>
+
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

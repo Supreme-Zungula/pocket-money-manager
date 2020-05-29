@@ -3,6 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using WPF_Frontend.ApiHelper;
+using WPF_Frontend.Data;
 using WPF_Frontend.Event_Helper;
 using WPF_Frontend.Models.Family;
 using WPF_Frontend.ViewModels.Application;
@@ -14,6 +15,7 @@ namespace WPF_Frontend.ViewModels.User
     {
         #region Private Memmbers
 
+        private SetAccounts setAccounts;
         private UserModel _user;
         private ICommand _logincommand;
         private ICommand _registercommand;
@@ -62,6 +64,7 @@ namespace WPF_Frontend.ViewModels.User
         {
             _api = new APIHelper();
             User = new UserModel();
+            setAccounts = new SetAccounts();
         }
 
         private void Login()
@@ -75,6 +78,9 @@ namespace WPF_Frontend.ViewModels.User
                 {
                     //set session data
                     //go to dashboard
+                    _ = new AllBankAccounts();
+                    _ = new AllTransactions();
+                    result = setAccounts.SetBankAccounts(result);
                     _ = new CreateData(result);
                     Mediator.Notify(ApplicationPage.Dashboard.ToString(), "");
                 }

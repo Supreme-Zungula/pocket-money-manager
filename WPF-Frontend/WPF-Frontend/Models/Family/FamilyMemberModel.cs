@@ -16,6 +16,8 @@ namespace WPF_Frontend.Models.Family
         [Required]
         [MinLength(10)]
         private string _phone;
+        private string _accountno;
+        private decimal _balance;
 
         public string FirstName
         {
@@ -59,6 +61,28 @@ namespace WPF_Frontend.Models.Family
             }
         }
 
+        public string Accountno
+        {
+            get => _accountno;
+            set
+            {
+                if (value == _accountno) return;
+                _accountno = value;
+                RaisePropertyChanged("Accountno");
+            }
+        }
+
+        public decimal Balance
+        {
+            get => _balance;
+            set
+            {
+                if (value == _balance) return;
+                _balance = value;
+                RaisePropertyChanged("Balance");
+            }
+        }
+
         public string Id
         {
             get => _id;
@@ -89,6 +113,7 @@ namespace WPF_Frontend.Models.Family
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Phone = user.Phone,
+                Accountno = user.AccNo,
                 Relationship = relationship
             };
         }
@@ -102,6 +127,7 @@ namespace WPF_Frontend.Models.Family
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Phone = user.Phone,
+                Accountno = user.Accountno,
                 Relationship = user.Relationship
             };
         }
@@ -114,6 +140,7 @@ namespace WPF_Frontend.Models.Family
                 FamilyId = this.FamilyId,
                 FirstName = this.FirstName,
                 LastName = this.LastName,
+                AccNo = this.Accountno,
                 Phone = this.Phone
             };
         }

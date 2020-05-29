@@ -3,7 +3,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WPF_Frontend.ApiHelper;
+using WPF_Frontend.Data;
 using WPF_Frontend.Event_Helper;
+using WPF_Frontend.Models.BankAccount;
 using WPF_Frontend.Models.Family;
 using WPF_Frontend.ViewModels.Dashboard;
 using WPF_Frontend.ViewModels.Helpers;
@@ -121,6 +123,10 @@ namespace WPF_Frontend.ViewModels.Family
                 Member = Member.ToFamilyMember(User, Member.Relationship);
                 await API.RegisterUser(User);
                 await API.AddMember(Member);
+                UserModel user = API.GetUserByPhone(User.Phone);
+                if (user != null)
+                    await SetBankAccount(user);
+                
                 ClosePopup();
             }
             else
@@ -131,7 +137,19 @@ namespace WPF_Frontend.ViewModels.Family
         {
             DashboardViewModel.addwindow.Close();
             DashboardViewModel.addwindow = null;
-        } 
+        }
+
+        private async Task SetBankAccount(UserModel user)
+        {
+            BankAccountModel details = new BankAccountModel()
+            {
+                Balance = 0.0M,
+                CustomerRef = user.Id
+            };
+            await API.SetBankAccount(details);
+            _ = new AllBankAccounts();
+            _ = new AllTransactions();
+        }
         #endregion
     }
 }

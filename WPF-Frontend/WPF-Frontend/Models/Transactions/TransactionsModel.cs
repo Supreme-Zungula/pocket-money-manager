@@ -16,5 +16,18 @@ namespace WPF_Frontend.Models.Transactions
         { get; set; }
         public DateTime Date
         { get; internal set; }
+
+        public static TransactionsModel Transaction(TransactionsModel trans)
+        {
+            return new TransactionsModel
+            {
+                AccountNo = trans.AccountNo,
+                Deposit = trans.Deposit,
+                Date = trans.Date,
+                Withdrawal = trans.Withdrawal,
+                Reference = trans.Reference,
+                Id = trans.Id
+            };
+        }
     }
 }
