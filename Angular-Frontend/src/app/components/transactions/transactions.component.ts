@@ -107,10 +107,12 @@ export class TransactionsComponent implements OnInit {
         return account.CustomerRef === this._recipient.Id;
       })
 
-      let fromReference = `Payment: -R${this.transactionAmount} transfer money to ${this._recipient.FirstName} ${this._recipient.LastName}`;
-      let toReference = `Deposit: +R${this.transactionAmount} received money from ${this.currentUser.FirstName} ${this.currentUser.LastName}`;
-      this._withdrawCash(fromAccount, parseFloat(this.transactionAmount), fromReference);
-      this._depositCash(toAccount, parseFloat(this.transactionAmount), toReference);
+      this.performTransactions(fromAccount, toAccount);
+
+      // let fromReference = `Payment: -R${this.transactionAmount} transfer money to ${this._recipient.FirstName} ${this._recipient.LastName}`;
+      // let toReference = `Deposit: +R${this.transactionAmount} received money from ${this.currentUser.FirstName} ${this.currentUser.LastName}`;
+      // this._withdrawCash(fromAccount, parseFloat(this.transactionAmount), fromReference);
+      // this._depositCash(toAccount, parseFloat(this.transactionAmount), toReference);
     }
   }
 
@@ -220,31 +222,29 @@ export class TransactionsComponent implements OnInit {
         break;
     }
   }
+  private performTransactions(fromAccount: BankAccount, toAccount: BankAccount) {
+    let fromReference = `Payment: -R${this.transactionAmount} transfer money to ${this._recipient.FirstName} ${this._recipient.LastName}`;
+    let toReference = `Deposit: +R${this.transactionAmount} received money from ${this.currentUser.FirstName} ${this.currentUser.LastName}`;
+    let amount = parseFloat(this.transactionAmount);
 
-  private _depositCash(account: BankAccount, amount: number, reference: string) {
-    this._bankAccount.Balance += amount;
-    this._bankAccountService.updateAccount$(account.Id, account).subscribe({
+    toAccount.Balance += amount;
+    this._bankAccountService.updateAccount$(toAccount.Id, toAccount).subscribe({
       next(data) { console.log('Accounts successfully updated.') },
       error(err) { console.error(`ERROR: ${err}`) },
-      complete() { window.location.reload() }
+      complete() { }
     });
+    this.createTransaction(toAccount, amount, toReference, TransactionType.DEPOSIT);
 
-    this.createTransaction(this._bankAccount, amount, reference, TransactionType.DEPOSIT);
-    this.showDepositForm = false;
-    this.transactionAmount = '';
-  }
-
-  private _withdrawCash(account: BankAccount, amount: number, reference: string) {
-    account.Balance -= amount;
-    this._bankAccountService.updateAccount$(account.Id, account).subscribe({
+    fromAccount.Balance -= amount;
+    this._bankAccountService.updateAccount$(fromAccount.Id, fromAccount).subscribe({
       next(data) { console.log('Accounts successfully updated.') },
       error(err) { console.error(`ERROR: ${err}`) },
-      complete() { window.location.reload() }
+      complete() { }
     });
 
-    this.createTransaction(this._bankAccount, amount, reference, TransactionType.WITHDRAWAL);
-    this.showWithdrawalForm = false;
+    this.createTransaction(fromAccount, amount, fromReference, TransactionType.WITHDRAWAL);
     this.transactionAmount = '';
+    window.location.reload()
   }
 
   private _filter(value: string): User[] {

@@ -17,7 +17,7 @@ export class AccountDetailsComponent implements OnInit {
   private _bankAccounts: BankAccount[];
 
   currentUser: User = new User();
-  bankAccount: BankAccount = new BankAccount() ;
+  bankAccount: BankAccount = new BankAccount();
 
   constructor(
     private _userService: UserService,
@@ -26,19 +26,25 @@ export class AccountDetailsComponent implements OnInit {
     private _router: Router,
   ) { }
 
-  ngOnInit(): void {
-    if (this._authService.isLoggedIn() == false) {
+  async ngOnInit() {
+    this._phoneNumber = this._authService.getUserToken();
+    if (this._authService.isLoggedIn() == false || this._phoneNumber == undefined) {
       this._router.navigate(['login']);
     }
 
-    this._phoneNumber = this._authService.getUserToken();
+    this._userService.getUserByPhone$(this._phoneNumber).subscribe(data => {
+      this.currentUser = User.mapResponseToUser(data);
+    });
 
-    this._bankAccountService.getAllAccounts$().subscribe(data => {
+    this._bankAccountService.getAllAccounts$().subscribe(async data => {
       this._bankAccounts = BankAccount.mapResponseToBankAccountList(data);
-    }) 
-    
-    this.getUserDetails();
-    this.getUserBankDetails();
+      this.bankAccount = await this._bankAccounts.find(account => {
+        return account.CustomerRef === this.currentUser.Id
+      });
+    })
+
+    // this.getUserDetails();
+    // this.getUserBankDetails();
   }
 
   private getUserDetails() {
