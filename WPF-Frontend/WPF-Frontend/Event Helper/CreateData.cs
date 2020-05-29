@@ -10,13 +10,14 @@ namespace WPF_Frontend.Event_Helper
         private void Create(UserModel userObject)
         {
             #region set all datastore values
-            
+            DataStore.AccountNo = userObject.AccNo;
             DataStore.ID = userObject.Id;
             DataStore.FamilyId = userObject.FamilyId;
             DataStore.FirstName = userObject.FirstName;
             DataStore.LastName = userObject.LastName;
             DataStore.Role = userObject.Role;
             DataStore.Phone = userObject.Phone;
+            DataStore.Balance = userObject.Balance;
 
             #endregion
         }

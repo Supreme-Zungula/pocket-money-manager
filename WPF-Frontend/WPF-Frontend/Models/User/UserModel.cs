@@ -18,6 +18,11 @@ namespace WPF_Frontend.Models.Family
         private string _phone;
         [Required]
         private string _password;
+        private decimal _balance;
+       
+
+
+        public string AccNo { get; set; }
 
         public string Id 
         {
@@ -28,6 +33,18 @@ namespace WPF_Frontend.Models.Family
                 _id = value;
             }
         }
+
+        public decimal Balance
+        {
+            get => _balance;
+            set
+            {
+                if (value == _balance) return;
+                _balance = value;
+                RaisePropertyChanged("Balance");
+            }
+        }
+
         public int FamilyId
         {
             get => _familyId;

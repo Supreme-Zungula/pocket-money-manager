@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Windows;
+using WPF_Frontend.Data;
+using WPF_Frontend.Event_Helper;
 using WPF_Frontend.Models.BankAccount;
 using WPF_Frontend.Models.Family;
+using WPF_Frontend.Models.Transactions;
 
 namespace WPF_Frontend.ApiHelper
 {
@@ -38,6 +42,29 @@ namespace WPF_Frontend.ApiHelper
             }
             return null;
         }
+
+        public IEnumerable<BankAccountModel> GetAllAccounts()
+        {
+            HttpResponseMessage response = ApiClient.GetAsync("api/BankAccounts").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                IEnumerable<BankAccountModel> people = response.Content.ReadAsAsync<IEnumerable<BankAccountModel>>().Result;
+                return people;
+            }
+            return null;
+        }
+
+        public IEnumerable<TransactionsModel> GetAllTransactions()
+        {
+            HttpResponseMessage response = ApiClient.GetAsync("api/Transaction/all").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                IEnumerable<TransactionsModel> people = response.Content.ReadAsAsync<IEnumerable<TransactionsModel>>().Result;
+                return people;
+            }
+            return null;
+        }
+
         public UserModel LoginUser(string phone)
         {
             HttpResponseMessage response = ApiClient.GetAsync($"api/user/getbyphone/{phone}").Result;
@@ -69,6 +96,17 @@ namespace WPF_Frontend.ApiHelper
                 return members;
             }
             return null;
+        }
+
+        public List<TransactionsModel> GetTransactionsById(string UserId)
+        {
+            IEnumerable<TransactionsModel> transactions = StoredTransactions.Transactions;
+            if (transactions == null)
+                return null;
+            var result = from trans in transactions
+                         where trans.AccountNo == UserId
+                         select trans;
+            return result.ToList<TransactionsModel>();
         }
 
         #endregion
@@ -104,6 +142,17 @@ namespace WPF_Frontend.ApiHelper
             if (!response.IsSuccessStatusCode)
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
         }
+
+        public async Task SendTransaction(TransactionsModel Details)
+        {
+            using HttpResponseMessage response = await ApiClient.PostAsJsonAsync("api/Transaction", Details);
+            if (response.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Transaction successful");
+            }
+            else
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+        }
         #endregion
 
         #region Put Methods
@@ -123,6 +172,13 @@ namespace WPF_Frontend.ApiHelper
             if (!response.IsSuccessStatusCode)
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
         }
+
+        public async Task UpdateAccount(BankAccountModel acc)
+        {
+            using HttpResponseMessage response = await ApiClient.PutAsJsonAsync($"api/BankAccounts/{acc.Id}", acc);
+            if (!response.IsSuccessStatusCode)
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+        }
         #endregion
 
         #region Delete Methods
@@ -138,7 +194,14 @@ namespace WPF_Frontend.ApiHelper
             using HttpResponseMessage response = await ApiClient.DeleteAsync($"api/user/{member.Phone}");
             if (!response.IsSuccessStatusCode)
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
-        } 
+        }
+
+        public async Task DeleteTransaction(TransactionsModel trans)
+        {
+            using HttpResponseMessage response = await ApiClient.DeleteAsync($"api/Transaction/{trans.Id}");
+            if (!response.IsSuccessStatusCode)
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+        }
         #endregion
     }
 }
