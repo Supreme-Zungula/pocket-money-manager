@@ -108,11 +108,6 @@ export class TransactionsComponent implements OnInit {
       })
 
       this.performTransactions(fromAccount, toAccount);
-
-      // let fromReference = `Payment: -R${this.transactionAmount} transfer money to ${this._recipient.FirstName} ${this._recipient.LastName}`;
-      // let toReference = `Deposit: +R${this.transactionAmount} received money from ${this.currentUser.FirstName} ${this.currentUser.LastName}`;
-      // this._withdrawCash(fromAccount, parseFloat(this.transactionAmount), fromReference);
-      // this._depositCash(toAccount, parseFloat(this.transactionAmount), toReference);
     }
   }
 
