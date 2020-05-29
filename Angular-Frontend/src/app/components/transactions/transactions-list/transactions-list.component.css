@@ -1,5 +1,11 @@
-.transaction-panel {
-    margin: 2px;
+.transaction-list {
+    float: right;
+    position: absolute;
+    margin-bottom: 5px;
+}
+
+.transaction {
+    margin-bottom: 5px;
 }
 
 .transaction-title {

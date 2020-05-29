@@ -3,19 +3,15 @@
     <div class="side-bar">
         <ul>
             <li>
-                <!-- <mat-icon class="side-bar-icon">attach_money</mat-icon> -->
                 <button mat-stroked-button color="accent" (click)="showRelevantForm('Deposit')">Deposit</button>
             </li>
             <li>
-                <!-- <mat-icon class="side-bar-icon">attach_money</mat-icon> -->
                 <button mat-stroked-button color="accent" (click)="showRelevantForm('Withdraw')">Withdraw</button>
             </li>
             <li>
-                <!-- <mat-icon class="side-bar-icon">attach_money</mat-icon> -->
                 <button mat-stroked-button color="accent" (click)="showRelevantForm('Transfer')">Transfer</button>
             </li>
             <li>
-                <!-- <mat-icon class="side-bar-icon">attach_money</mat-icon> -->
                 <button mat-stroked-button color="accent" (click)="showRelevantForm('Transactions')">History</button>
             </li>
         </ul>
@@ -25,7 +21,6 @@
         <div *ngIf="!showTransactionsList">
             <app-account-details></app-account-details>
         </div>
-        <mat-divider></mat-divider>
         <div class="transactions-list" *ngIf="showTransactionsList">
             <app-transactions-list></app-transactions-list>
         </div>
