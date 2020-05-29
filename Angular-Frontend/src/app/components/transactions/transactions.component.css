@@ -10,13 +10,18 @@
 .main-content {
     float: left;
     flex: auto;
-    width: 75%;
+    width: 76%;
     position: relative;
     margin-top: 5px;
-    background: #eee;
+}
+.main-content > div {
+    margin: 5px;
 }
 .deposit-container {
     margin-top: 5px;
+}
+.transactions-list {
+    margin: 5px ;
 }
 li {
     align-content: center;

@@ -23,6 +23,7 @@ export class TransactionsListComponent implements OnInit {
 
   myTransactionsList: Transaction[];
   panelOpenState: boolean = false;
+  transactionsPanelOpenState: boolean = true;
 
   constructor(
     private _authService: AuthService,
