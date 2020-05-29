@@ -33,6 +33,7 @@ import { FamilyComponent } from './components/family/family.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 import { AccountDetailsComponent } from './components/account-details/account-details.component';
+import { TransactionsListComponent } from './components/transactions/transactions-list/transactions-list.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { AccountDetailsComponent } from './components/account-details/account-de
     LogoutComponent,
     TransactionsComponent,
     AccountDetailsComponent,
+    TransactionsListComponent,
   ],
   imports: [
     BrowserModule,

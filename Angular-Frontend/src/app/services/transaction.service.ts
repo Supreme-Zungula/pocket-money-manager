@@ -47,26 +47,40 @@ export class TransactionService {
 	}
 
 	addTransaction$(transactionIn: Transaction): Observable<Transaction> {
-		return this._http.post<Transaction>(this._url, transactionIn).pipe(
+		let transactionData = {
+			"accountNo": transactionIn.AccountNo,
+			"deposit": transactionIn.Deposit,
+			"withdrawal": transactionIn.Withdrawal,
+			"reference": transactionIn.Reference
+		}
+
+		return this._http.post<Transaction>(this._url, transactionData).pipe(
 			tap(data => {
 				console.info(`Added new transaction with id = ${data.Id}`),
 					catchError(this.handleError('addTransaction', transactionIn))
 			})
 		);
 	}
-	
+
 	/**
 	 * Updates a transaction in the DB.
 	 * @param tranID - ID of the transction to update.
 	 * @param transaction -  Transaction with new information
 	 */
-	updateTransaction$(tranID: string, transaction: Transaction): Observable<Transaction> {
+	updateTransaction$(tranID: string, transactionIn: Transaction): Observable<Transaction> {
 		const updateRoute = `${this._url}/${tranID}`;
-
-		return this._http.put<Transaction>(updateRoute, transaction, this.httpOptions).pipe(
+		let transactionData = {
+			"id": transactionIn.Id,
+			"accountNo": transactionIn.AccountNo,
+			"deposit": transactionIn.Deposit,
+			"withdrawal": transactionIn.Withdrawal,
+			"reference": transactionIn.Reference,
+			"date": transactionIn.Date
+		}
+		return this._http.put<Transaction>(updateRoute, transactionData, this.httpOptions).pipe(
 			tap(data => {
 				console.info(`Update transaction with id = ${tranID}`),
-					catchError(this.handleError('updateTransaction', transaction))
+					catchError(this.handleError('updateTransaction', transactionIn))
 			})
 		);
 	}

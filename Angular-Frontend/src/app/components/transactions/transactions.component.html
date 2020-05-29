@@ -4,33 +4,39 @@
         <ul>
             <li>
                 <!-- <mat-icon class="side-bar-icon">attach_money</mat-icon> -->
-                <button mat-stroked-button color="accent">Deposit</button>
+                <button mat-stroked-button color="accent" (click)="showRelevantForm('Deposit')">Deposit</button>
             </li>
             <li>
                 <!-- <mat-icon class="side-bar-icon">attach_money</mat-icon> -->
-                <button mat-stroked-button color="accent">Withdraw</button>
+                <button mat-stroked-button color="accent" (click)="showRelevantForm('Withdraw')">Withdraw</button>
             </li>
             <li>
                 <!-- <mat-icon class="side-bar-icon">attach_money</mat-icon> -->
-                <button mat-stroked-button color="accent">Transfer</button>
+                <button mat-stroked-button color="accent" (click)="showRelevantForm('Transfer')">Transfer</button>
             </li>
             <li>
                 <!-- <mat-icon class="side-bar-icon">attach_money</mat-icon> -->
-                <button mat-stroked-button color="accent">Transactions</button>
+                <button mat-stroked-button color="accent" (click)="showRelevantForm('Transactions')">History</button>
             </li>
         </ul>
     </div>
-    <!-- <mat-divider></mat-divider> -->
-    <div class="main-content">
 
-        <!-- <app-account-details></app-account-details> -->
-        <div class="deposit-container">
+    <div class="main-content">
+        <div *ngIf="!showTransactionsList">
+            <app-account-details></app-account-details>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="transactions-list" *ngIf="showTransactionsList">
+            <app-transactions-list></app-transactions-list>
+        </div>
+        <div class="deposit-container" *ngIf="showDepositForm || showWithdrawalForm">
             <mat-card>
-                <form class="example-form">
+                <form>
                     <mat-form-field class="example-full-width">
-                        <mat-label>Deposit amount.</mat-label>
+                        <mat-label *ngIf="showDepositForm">Deposit amount.</mat-label>
+                        <mat-label *ngIf="showWithdrawalForm">Withdrawal amount.</mat-label>
                         <input matInput [formControl]="depositFormControl" [errorStateMatcher]="matcher"
-                            placeholder="Ex. 250" [(ngModel)]="depositAmount">
+                            placeholder="Ex. 250" [(ngModel)]="transactionAmount">
                         <mat-error *ngIf="depositFormControl.hasError('required')">
                             Deposit amount is <strong>required</strong> {{errorMessage}}
                         </mat-error>
@@ -38,8 +44,46 @@
                     <mat-error>{{errorMessage}}</mat-error>
                 </form>
                 <div class="form-actions">
-                    <button mat-raised-button color="accent">Cancel</button>
-                    <button mat-raised-button disabled="false" color="primary" (click)="depositCash()">Deposit</button>
+                    <button mat-raised-button color="accent" (click)="cancelForm()">Cancel</button>
+                    <button mat-raised-button disabled="false" color="primary" (click)="depositCash()"
+                        *ngIf="showDepositForm">Deposit</button>
+                    <button mat-raised-button disabled="false" color="primary" (click)="withdrawCash()"
+                        *ngIf="showWithdrawalForm">Withdraw</button>
+                </div>
+            </mat-card>
+        </div>
+        <div class="transfer-funds" *ngIf="showTransferForm">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <h2>Transfer funds:</h2>
+                    </mat-card-title>
+                </mat-card-header>
+                <form>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Transfer amount.</mat-label>
+                        <input matInput [formControl]="depositFormControl" [errorStateMatcher]="matcher"
+                            placeholder="Ex. 250" [(ngModel)]="transactionAmount">
+                        <mat-error *ngIf="depositFormControl.hasError('required')">
+                            Deposit amount is <strong>required</strong> {{errorMessage}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-error>{{errorMessage}}</mat-error>
+                    <mat-form-field class="example-full-width">
+                        <input type="text" placeholder="Choose recipient" aria-label="Number" matInput
+                            [formControl]="myControl" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of filteredOptions | async"
+                                [value]="option.FirstName.toString() " (click)="storeRecipient(option)">
+                                {{option.FirstName.toString()}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
+                <div class="form-actions">
+                    <button mat-raised-button color="accent" (click)="cancelForm()">Cancel</button>
+                    <button mat-raised-button disabled="false" color="primary"
+                        (click)="transferFunds()">Transfer</button>
                 </div>
             </mat-card>
         </div>

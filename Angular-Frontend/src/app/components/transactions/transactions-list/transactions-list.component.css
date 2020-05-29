@@ -1,0 +1,19 @@
+.transaction-panel {
+    margin: 2px;
+}
+
+.transaction-title {
+    color: purple;
+    font-weight: bold;
+}
+
+.fullname-label {
+    padding-top: 5px;
+}
+
+.details-label {
+    font-weight: 600;
+    width: 20%;
+    justify-content: center;
+    float: left;
+}
