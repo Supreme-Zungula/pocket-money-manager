@@ -6,21 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /* Import angular material Modules */
 import { MaterialModule } from './material-modules/material-module';
-// import { MatSliderModule } from '@angular/material/slider';
-// import { MatCardModule } from '@angular/material/card';
-// import { MatButtonModule } from '@angular/material/button';
-// import { MatMenuModule } from '@angular/material/menu';
-// import { MatToolbarModule } from '@angular/material/toolbar';
-// import { MatIconModule } from '@angular/material/icon';
-// import { MatFormFieldModule } from '@angular/material/form-field';
-// import { MatSelectModule } from '@angular/material/select';
-// import { MatAutocompleteModule } from '@angular/material/autocomplete';
-// import { MatCheckboxModule } from '@angular/material/checkbox';
-// import { MatInputModule } from '@angular/material/input';
-// import { MatDividerModule } from '@angular/material/divider';
-// import { MatExpansionModule } from '@angular/material/expansion';
-// import { MatChipsModule } from '@angular/material/chips';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
