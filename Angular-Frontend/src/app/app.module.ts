@@ -5,21 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /* Import angular material Modules */
-import { MatSliderModule } from '@angular/material/slider';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatInputModule } from '@angular/material/input';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatChipsModule } from '@angular/material/chips';
-
+import { MaterialModule } from './material-modules/material-module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -30,6 +16,9 @@ import { HomeComponent } from './components/home/home.component';
 import { ErrorComponent } from './components/error/error.component';
 import { FamilyComponent } from './components/family/family.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { TransactionsComponent } from './components/transactions/transactions.component';
+import { AccountDetailsComponent } from './components/account-details/account-details.component';
+import { TransactionsListComponent } from './components/transactions/transactions-list/transactions-list.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +30,9 @@ import { LogoutComponent } from './components/logout/logout.component';
     ErrorComponent,
     FamilyComponent,
     LogoutComponent,
+    TransactionsComponent,
+    AccountDetailsComponent,
+    TransactionsListComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,22 +41,7 @@ import { LogoutComponent } from './components/logout/logout.component';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    /* Angular material modules */
-    MatSliderModule,
-    MatCardModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatAutocompleteModule,
-    MatCheckboxModule,
-    MatInputModule,
-    MatRadioModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatChipsModule,
+    MaterialModule, /* Angular material modules */
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -62,7 +62,7 @@ namespace backend_api.Controllers
       return NoContent();
     }
 
-    // DELETE: api/ApiWithActions/5
+    // DELETE: api/Transaction/5
     [HttpDelete("{id}")]
     public IActionResult Delete(string id)
     {

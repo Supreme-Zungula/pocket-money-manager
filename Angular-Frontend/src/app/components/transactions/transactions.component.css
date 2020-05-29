@@ -1,0 +1,57 @@
+.side-bar {
+    color: white;
+    width: 23%;
+    padding: 5px;
+    float: left;
+    align-content: center;
+    margin-top: 5px;
+    background-color: purple;
+}
+.main-content {
+    float: left;
+    flex: auto;
+    width: 75%;
+    position: relative;
+    margin-top: 5px;
+    background: #eee;
+}
+.deposit-container {
+    margin-top: 5px;
+}
+li {
+    align-content: center;
+}
+li button {
+    width: 80%;
+    color: white;
+    border-color: white;
+    margin: 2px;
+}
+ul {
+    list-style-type: none;
+    margin: 5px;
+    padding: 0;
+    overflow: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+    .side-bar {
+        color: white;
+        width: 100%;
+        float: left;
+        position: relative;
+        margin-top: 5px;
+        background-color: purple;
+    }
+    .main-content {
+        width: 100%;
+    }
+ 
+    li button {
+        padding: 0;
+        float: left;
+        color: white;
+        border-color: white;
+        margin-top: 2px;
+    }
+}

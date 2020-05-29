@@ -140,15 +140,7 @@ export class FamilyComponent implements OnInit {
   }
 
   private createNewUserAccount() {
-    this._userService.addNewUser$(this.newUser).subscribe({
-      next(data) {
-        console.log('New user succesfully added.')
-      },
-      error(err) { console.error("ERROR: new user could not be added.") },
-      complete() { }
-    });
-
-    this._userService.getUserByPhone$(this.newUser.Phone).subscribe(data => {
+    this._userService.addNewUser$(this.newUser).subscribe(data => {
       let userData: User = User.mapResponseToUser(data)
       let newAccount: BankAccount = new BankAccount();
 
@@ -204,7 +196,7 @@ export class FamilyComponent implements OnInit {
       return false;
     }
     if (this.lastnameControl.invalid && (this.lastnameControl.dirty || this.lastnameControl.touched)) {
-      this.lastnameError = "First name can only have letters.";
+      this.lastnameError = "Last name can only have letters.";
       return false;
     }
     if (this.phoneControl.invalid && (this.phoneControl.dirty || this.phoneControl.touched)) {

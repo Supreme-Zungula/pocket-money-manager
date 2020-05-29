@@ -1,0 +1,17 @@
+.details-label {
+  font-weight: 600;
+  width: 30%;
+  justify-content: left;
+  float: left;
+}
+
+.info-value {
+  font-style: italic;
+}
+
+@media only screen and (max-width: 600px) {
+  .details-label {
+    font-weight: 600;
+    float: none;
+  }
+}

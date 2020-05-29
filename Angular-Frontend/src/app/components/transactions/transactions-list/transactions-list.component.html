@@ -1,0 +1,41 @@
+<mat-card>
+    <mat-card-title>
+        <h2>Transactions</h2>
+    </mat-card-title>
+    <div *ngFor="let transaction of myTransactionsList">
+        <mat-accordion class="transaction-panel">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header (opened)="panelOpenState">
+                    <mat-panel-title class="transaction-title">
+                        <h3 class="fullname-label">{{ transaction.Reference }}</h3>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-divider></mat-divider>
+                <div>
+                    <ul>
+                        <li>
+                            <label class="details-label">Account No</label>
+                            <span class="info-value">: {{transaction.AccountNo}}</span>
+                        </li>
+                        <li>
+                            <label class="details-label">Deposit: </label>
+                            <span class="info-value">:R{{transaction.Deposit}}</span>
+                        </li>
+                        <li>
+                            <label class="details-label">Withdrawal</label>
+                            <span class="info-value">:R{{transaction.Withdrawal}}</span>
+                        </li>
+                        <li>
+                            <label class="details-label">Date</label>
+                            <span class="info-value">:{{transaction.Date}}</span>
+                        </li>
+                    </ul>
+                </div>
+                <mat-divider></mat-divider>
+                <button mat-raised-button class="raised-btn" color="accent" (click)="deleteTransaction(transaction)">
+                    <mat-icon>delete</mat-icon>Delete
+                </button>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</mat-card>
