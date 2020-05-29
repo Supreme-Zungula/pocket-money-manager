@@ -46,9 +46,7 @@ ul {
     .main-content {
         width: 100%;
     }
-    .side-bar-icon {
-        display: none;
-    }
+ 
     li button {
         padding: 0;
         float: left;

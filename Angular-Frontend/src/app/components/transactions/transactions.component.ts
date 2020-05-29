@@ -143,7 +143,7 @@ export class TransactionsComponent implements OnInit {
       this.errorMessage = "Please enter a valid withdrawal amount. No spaces or letters allowed."
     }
     else {
-      if (amount > this._bankAccount.Balance) {
+      if (amount >= this._bankAccount.Balance) {
         this.errorMessage = "Not enough founds to perform this transaction.";
       }
       else {
