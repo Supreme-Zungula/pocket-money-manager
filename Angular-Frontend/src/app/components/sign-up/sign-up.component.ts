@@ -96,8 +96,8 @@ export class SignUpComponent implements OnInit {
         error(err) { console.error("ERROR: failed to add new bank account.") },
         complete() { }
       });
-      this.addToFamilyMembers();
     });
+    this.addToFamilyMembers();
   }
 
   private addToFamilyMembers() {
